@@ -12,6 +12,7 @@ For fun mostly. Also because as far as I can tell nothing quite like it exists. 
 - Object-orientated from the start
 - More commenting as I go
 - Choices, Actions and Combat Actions will be combined. The actions that can be performed are determined by Whitelists and Blacklists
+- Items and Equipment will not be difrentiated. Instead equipping 'Iron Sword' will remove it from your inventory and replace it with 'Iron Sword (equipped)' which will Whitelist Actions. Equipment slots will be added later along with other Action conditions.
 - Fewer in-script variables. Instead of actions affecting the scene directly, they will change the scene ID stored in the Character file and trigger a refresh. The script will then print scene description direct from the scene file and assemble valid actions from combined whitelists and blacklists.
 - The only thing that will be stored in-script and not written to the Character file is the effects of equipment and items. On Character load and when equipment is taken off or put on, a script will run through inventory contents and genererate an action whitelist and a action blacklist. An equipment modifier will also be generated for each variable. When a varaible is requested, it will be read from the Character and then have the modifier applied to it.
 - Character creation to be handled by the main engine i.e. based on Actions. A blank character will be created based on parameters provided by the main file with no randomisation or player input. It's up to the 
