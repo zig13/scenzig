@@ -7,5 +7,6 @@ class Adventure :
 		from os import access, R_OK
 		for datafile in self.datafiles :
 			if not access(self.directory+datafile+".scnz", R_OK) : return False
-		print "Pass" #Temporary
 		return True
+	def load(self) :
+		print "Loading..." #Temporary
