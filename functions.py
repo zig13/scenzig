@@ -26,13 +26,15 @@ def yesno() :
 			print "Input not recognised"
 	return output
 
-def choicelist(inlist) :
+def choicelist(inlist, custom=False) :
 	outlist = []
 	for element in range(len(inlist)) :
 		outlist.append("%s) %s" %(element+1,inlist[element]))
 	printout = '\n'.join(outlist)
 	while True :	
-		print "Please enter a number corresponding to an option below:\n", printout
+		if custom == False:
+			print "Please enter a number corresponding to an option below:\n", printout
+		else : print custom+"\n", printout
 		try :		
 			input = raw_input(">")
 			Clr()
