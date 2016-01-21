@@ -58,6 +58,7 @@ target/
 
 # My additions
 *.szc
+!template.szc
 *.pyc
 *.exe
 *.db
