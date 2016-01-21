@@ -17,7 +17,7 @@ except OSError :
 	exit(0)
 from classes.classAdventure import Adventure
 adv = dict((foldername, Adventure(foldername)) for foldername in adventures) #Creates an instance of classAdventure for each folder found in the Adventures folder as a dictionary entry of adv
-from functions import valremove, choicelist, Clr
+from functions import valremove, choicelist, Clr, get_valid_filename
 for adventure in adventures : #Runs the validate function of each instance of classAdventure. If they return False (fail) then they are removed from the Adventures list
 	if adv[adventure].validate() == False : adventures = valremove(adventures, adventure)
 if len(adventures) < 1 :
@@ -38,3 +38,28 @@ else :
 		else :
 			break
 #From here 'a' refers to the classAdventure instance of the active Adventure. All Adventure data will be accessed through it.
+try :
+	characters = listdir(a.directory+"Characters")
+except OSError :
+	raw_input("Characters folder missing or incorrectly named.")
+	exit(0)
+for file in characters : #Removes the template character file and any files without the '.scz' extension from the list of character choices
+	if file != "template.scz" or file[-4:] != ".scz" : characters = valremove(characters, file)
+from configobj import ConfigObj
+c = None #'c' refers to the active character file which will be directly edited and reguarly read by the main script
+if len(characters) != 0 :
+	characters.append("New Character")
+	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
+	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
+		c = ConfigObj(choicelist(characters, temptext)[1], unrepr=True)
+if c == None : from shutil import copy as fileclone
+while c == None : #i.e. If there are no pre-existing characters or New Character was selected
+	filename = get_valid_filename(raw_input("Please enter a name for your new character file:\n"))+".scz"
+	if filename in characters :
+		print "There is already a character file with that name"
+		continue
+	try :
+		fileclone(a.directory+"Characters"+sep+"template.scz", a.directory+"Characters"+sep+filename)
+	except IOError : #Is raised when the file to be cloned is not present
+		raw_input("Character template missing or incorrectly named.")
+		exit(0)	
