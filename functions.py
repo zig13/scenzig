@@ -1,5 +1,8 @@
+from os import name, systemfunction
+from re import sub
+from unicodedata import normalize
+from string import ascii_letters, digits
 def Clr() :
-	from os import name, system
 	if name == 'posix': #If OS is linux-based
 		system('clear') #Executes the shell command 'clear' which clears the terminal in Linux
 	elif (name == 'nt') or (name == 'ce') or (name == 'dos') : #If OS is Windows
@@ -63,3 +66,8 @@ def replace_all(text, dic):
     for k, l in dic.iteritems():
         text = text.replace(k, l)
     return text
+
+def get_valid_filename(filename):
+	validFilenameChars = "-_.() %s%s" % (ascii_letters, digits)
+	cleanedFilename = normalize('NFKD', unicode(filename, errors='ignore')).encode('ASCII', 'ignore')
+	return ''.join(c for c in cleanedFilename if c in validFilenameChars).strip().replace(' ', '_')
