@@ -44,14 +44,14 @@ except OSError :
 	raw_input("Characters folder missing or incorrectly named.")
 	exit(0)
 for file in characters : #Removes the template character file and any files without the '.scz' extension from the list of character choices
-	if file != "template.scz" or file[-4:] != ".scz" : characters = valremove(characters, file)
+	if file == "template.scz" or file[-4:] != ".scz" : characters = valremove(characters, file)
 from configobj import ConfigObj
 c = None #'c' refers to the active character file which will be directly edited and reguarly read by the main script
 if len(characters) != 0 :
 	characters.append("New Character")
 	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
 	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
-		c = ConfigObj(choicelist(characters, temptext)[1], unrepr=True)
+		c = ConfigObj(choice[1], unrepr=True)
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
 	filename = get_valid_filename(raw_input("Please enter a name for your new character file:\n"))+".scz"
@@ -62,4 +62,6 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		fileclone(a.directory+"Characters"+sep+"template.scz", a.directory+"Characters"+sep+filename)
 	except IOError : #Is raised when the file to be cloned is not present
 		raw_input("Character template missing or incorrectly named.")
-		exit(0)	
+		exit(0)
+	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
+print "Character succesfully loaded" #Probs temporary
