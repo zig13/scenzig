@@ -1,12 +1,27 @@
 [0]
 [1]
 [['Master']]
+description = "This is the first scene"
 wlist = [1,2,3]
 blist = []
 wlistagrp = []
 blistagrp = []
 [[1]]
+description = "This is the first state of the first scene"
 wlist = []
 blist =[2]
+wlistagrp = []
+blistagrp = []
+[2]
+[['Master']]
+description = "This is the second scene"
+wlist = [2]
+blist = []
+wlistagrp = []
+blistagrp = []
+[[1]]
+description = "This is the first state of the second scene"
+wlist = [2]
+blist =[]
 wlistagrp = []
 blistagrp = []

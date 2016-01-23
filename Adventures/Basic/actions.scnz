@@ -1,5 +1,17 @@
 [0]
 [1]
-description = 'Dance'
-text = 'You dance like a fool'
-[[Effects]]
+slug = 'Forward'
+description = None
+text = 'You go forward'
+[[effects]]
+[[[1]]]
+function = 'SetScene'
+variables = [2]
+[2]
+slug = 'Back'
+description = None
+text = 'You go back from whence you came'
+[[effects]]
+[[[1]]]
+function = 'RevertScene'
+variables = []
