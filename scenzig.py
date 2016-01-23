@@ -64,8 +64,8 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		raw_input("Character template missing or incorrectly named.")
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
-print "Character succesfully loaded" #Probs temporary
-while True : #Primary loop. Below is run after any action is taken
+from effects import *
+while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['wlist']
 	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['blist']
 	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.
@@ -85,7 +85,29 @@ while True : #Primary loop. Below is run after any action is taken
 		for agrp in a.f['items'][itm]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
 		for agrp in a.f['items'][itm]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
-	print glist #Temporary
-	for action in glist : #Temporary
-		print a.f['actions'][str(action)]['description']
-	break #Temporary
+	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
+		print a.f['scenes'][str(c['Scenes']['Current'])]['Master']['description']+"\n\n"+a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['description']
+		prompt = raw_input(">").strip() #The main prompt
+		try : #Effectively 'if input is a whole number'
+			prompt = int(prompt)
+			if prompt in glist : action = str(prompt) #If the input matches the UID of a valid action then take note of it's UID
+			else :
+				Clr()
+				continue
+		except ValueError : #Effectively 'if input isn't a whole number'
+			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
+			if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break
+			else :
+				actdict = {}
+				for actn in glist : #Builds a dictionary that pairs the slug of each valid action with it's UID
+					actdict[a.f['actions'][str(actn)]['slug'].lower()] = actn
+				if prompt in actdict.keys() : action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
+				else :
+					Clr()
+					continue
+		Clr()
+		print a.f['actions'][action]['text']+"\n"
+		for effect in a.f['actions'][str(action)]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
+			eval(a.f['actions'][action]['effects'][effect]['function']+"(c,a.f['actions'][action]['effects'][effect]['variables'])")
+		break
+	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
