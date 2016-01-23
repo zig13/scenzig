@@ -17,7 +17,7 @@ except OSError :
 	exit(0)
 from classes.classAdventure import Adventure
 adv = dict((foldername, Adventure(foldername)) for foldername in adventures) #Creates an instance of classAdventure for each folder found in the Adventures folder as a dictionary entry of adv
-from functions import valremove, choicelist, Clr, get_valid_filename
+from functions import valremove, choicelist, Clr, get_valid_filename, dupremove
 for adventure in adventures : #Runs the validate function of each instance of classAdventure. If they return False (fail) then they are removed from the Adventures list
 	if adv[adventure].validate() == False : adventures = valremove(adventures, adventure)
 if len(adventures) < 1 :
@@ -51,7 +51,7 @@ if len(characters) != 0 :
 	characters.append("New Character")
 	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
 	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
-		c = ConfigObj(choice[1], unrepr=True)
+		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True)
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
 	filename = get_valid_filename(raw_input("Please enter a name for your new character file:\n"))+".scz"
@@ -65,3 +65,27 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 print "Character succesfully loaded" #Probs temporary
+while True : #Primary loop. Below is run after any action is taken
+	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['wlist']
+	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['blist']
+	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.
+	#Below these lists are added to from any Abilities or Items the Character has and Action Groups listed in the current scene or scene state
+	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlistagrp'] : wlist += a.f['actiongrps'][str(agrp)]['list']
+	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blistagrp'] : blist += a.f['actiongrps'][str(agrp)]['list']
+	for ablty in c['Abilities'] :
+		ablty = str(ablty)
+		wlist += a.f['abilities'][ablty]['wlist']
+		blist += a.f['abilities'][ablty]['blist']
+		for agrp in a.f['abilities'][ablty]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
+		for agrp in a.f['abilities'][ablty]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
+	for itm in c['Items'] :
+		itm = str(itm)
+		wlist += a.f['items'][itm]['wlist']
+		blist += a.f['items'][itm]['blist']
+		for agrp in a.f['items'][itm]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
+		for agrp in a.f['items'][itm]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
+	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
+	print glist #Temporary
+	for action in glist : #Temporary
+		print a.f['actions'][str(action)]['description']
+	break #Temporary
