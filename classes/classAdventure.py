@@ -11,10 +11,8 @@ class Adventure :
 	def load(self) :
 		self.f = dict((datafile, ConfigObj(self.directory+datafile+".scnz", unrepr=True)) for datafile in self.datafiles) #Opens each data file up for reading referenced as an entry in the dictionary 'f'
 		for datafile in self.datafiles :
-			print "checking "+datafile #Temporary
 			try:
 				self.f[datafile]['0'] #Checks that a section exists in each data file entitled 0
 			except:
-				print datafile+" failed" #Temporary
 				return False
 		return True
