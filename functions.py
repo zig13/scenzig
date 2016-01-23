@@ -1,4 +1,4 @@
-from os import name, systemfunction
+from os import name, system
 from re import sub
 from unicodedata import normalize
 from string import ascii_letters, digits
