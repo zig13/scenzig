@@ -15,3 +15,33 @@ text = 'You go back from whence you came'
 [[[1]]]
 function = 'RevertScene'
 variables = []
+[3]
+slug = 'Inventory'
+description = 'Look at what items you are carrying'
+text = None
+[[effects]]
+[[[1]]]
+function = 'PrintItems'
+variables = []
+[6]
+slug = 'Drop stone'
+description = 'Drop the stone onto the ground'
+text = 'The stone falls to the floor'
+[[effects]]
+[[[1]]]
+function = 'RemoveItem'
+variables = [4]
+[[[2]]]
+function = 'SetSceneState'
+variables = [2]
+[7]
+slug = 'Pickup stone'
+description = 'Pick the stone up off the ground'
+text = 'You pick the stone up'
+[[effects]]
+[[[1]]]
+function = 'AddItem'
+variables = [4]
+[[[2]]]
+function = 'SetSceneState'
+variables = [1]
