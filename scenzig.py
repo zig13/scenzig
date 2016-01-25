@@ -108,6 +108,6 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		Clr()
 		if a.f['actions'][action]['text'] != None: print a.f['actions'][action]['text']+"\n"
 		for effect in a.f['actions'][str(action)]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-			eval(a.f['actions'][action]['effects'][effect]['function']+"(c,a.f['actions'][action]['effects'][effect]['variables'])")
+			eval(a.f['actions'][action]['effects'][effect]['function']+"(c,a,a.f['actions'][action]['effects'][effect]['variables'])")
 		break
 	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
