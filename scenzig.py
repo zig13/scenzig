@@ -38,6 +38,8 @@ else :
 		else :
 			break
 #From here 'a' refers to the classAdventure instance of the active Adventure. All Adventure data will be accessed through it.
+from effects import *
+GiveAdv(a)
 try :
 	characters = listdir(a.directory+"Characters")
 except OSError :
@@ -64,7 +66,7 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		raw_input("Character template missing or incorrectly named.")
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
-from effects import *
+GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['wlist']
 	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['blist']
@@ -85,6 +87,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		for agrp in a.f['items'][itm]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
 		for agrp in a.f['items'][itm]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
+	GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
 		print a.f['scenes'][str(c['Scenes']['Current'])]['Master']['description']+"\n\n"+a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['description']
 		prompt = raw_input(">").strip() #The main prompt
@@ -108,6 +111,6 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		Clr()
 		if a.f['actions'][action]['text'] != None: print a.f['actions'][action]['text']+"\n"
 		for effect in a.f['actions'][str(action)]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-			eval(a.f['actions'][action]['effects'][effect]['function']+"(c,a,a.f['actions'][action]['effects'][effect]['variables'])")
+			eval(a.f['actions'][action]['effects'][effect]['function']+"(a.f['actions'][action]['effects'][effect]['variables'])")
 		break
 	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
