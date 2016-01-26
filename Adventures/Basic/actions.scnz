@@ -45,3 +45,11 @@ variables = [4]
 [[[2]]]
 function = 'SetSceneState'
 variables = [1]
+[8]
+slug = 'what can i do?'
+description = None
+text = None
+[[effects]]
+[[[1]]]
+function = 'PrintActions'
+variables = []
