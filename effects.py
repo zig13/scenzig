@@ -1,29 +1,55 @@
-def SetScene(c,a,arguments) :
-	c['Scenes']['Previous'] = c['Scenes']['Current']
-	if arguments[0] not in c['Scenes']['States'].keys() : c['Scenes']['States'][arguments[0]] = 1
-	c['Scenes']['Current'] = arguments[0]
-def RevertScene(c,a,arguments) :
-	temp = c['Scenes']['Current']
-	c['Scenes']['Current'] = c['Scenes']['Previous']
-	c['Scenes']['Previous'] = temp
-def SetSceneState(c,a,arguments) :
+adv = None
+char = None
+listg = None
+def GiveAdv(a) :
+	global adv
+	adv = a
+def GiveChar(c) :
+	global char
+	char = c
+def GiveList(glist) :
+	global listg
+	listg = glist
+
+def SetScene(arguments) :
+	global char
+	char['Scenes']['Previous'] = char['Scenes']['Current']
+	if arguments[0] not in char['Scenes']['States'].keys() : char['Scenes']['States'][arguments[0]] = 1
+	char['Scenes']['Current'] = arguments[0]
+def RevertScene(arguments) :
+	global char
+	temp = char['Scenes']['Current']
+	char['Scenes']['Current'] = char['Scenes']['Previous']
+	char['Scenes']['Previous'] = temp
+def SetSceneState(arguments) :
+	global char
 	try :
 		scene = arguments[1]
 	except IndexError : #If scene is not given then set scene state of current scene
-		scene = c['Scenes']['Current']
-	c['Scenes']['States'][scene] = arguments[0]
-def PrintItems(c,a,arguments) :
-	if len(c['Items']) == 0 : return
+		scene = char['Scenes']['Current']
+	char['Scenes']['States'][scene] = arguments[0]
+def PrintItems(arguments) :
+	global char
+	global adv
+	if len(char['Items']) == 0 : return
 	print "You are carrying:"
-	position = 0
-	for itm in c['Items'] :
-		position += 1
-		if position != len(c['Items']) :
-			print a.f['items'][str(itm)]['description']
+	for itm in char['Items'] :
+			print adv.f['items'][str(itm)]['description']
+	print ""
+def RemoveItem(arguments) :
+	global char
+	if arguments[0] in char['Items'] :
+		char['Items'] = [x for x in char['Items'] if x != arguments[0]]
+def AddItem(arguments) :
+	global char
+	char['Items'].append(arguments[0])
+def PrintActions(arguments) :
+	global listg
+	global adv
+	if len(listg) == 0 : return
+	for action in listg :
+		if adv.f['actions'][str(action)]['description'] == None : 
+			print adv.f['actions'][str(action)]['slug']
 		else :
-			print a.f['items'][str(itm)]['description']+"\n"	
-def RemoveItem(c,a,arguments) :
-	from functions import valremove
-	c['Items'] = valremove(c['Items'],arguments[0])
-def AddItem(c,a,arguments) :
-	c['Items'].append(arguments[0])
+			print adv.f['actions'][str(action)]['slug']+" - "+adv.f['actions'][str(action)]['description']
+	print ""
