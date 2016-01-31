@@ -1,1 +1,125 @@
 [0]
+[1]
+name = 'Strength'
+	[[1]]
+	min = 0
+	max = 10
+	description = 'Incapacitated'
+	entereffects = {}
+	leaveeffects = {}
+	[[2]]
+	min = 11
+	max = 20
+	description = 'Incapacitated'
+	entereffects = {}
+	leaveeffects = {}
+	[[3]]
+	min = 21
+	max = 30
+	description = 'Frail'
+	entereffects = {}
+	leaveeffects = {}
+	[[4]]
+	min = 31
+	max = 40
+	description = 'Feeble'
+	entereffects = {}
+	leaveeffects = {}
+	[[5]]
+	min = 41
+	max = 50
+	description = 'Weak'
+	entereffects = {}
+	leaveeffects = {}
+	[[6]]
+	min = 51
+	max = 60
+	description = 'Very Strong'
+	entereffects = {}
+	leaveeffects = {}
+	[[7]]
+	min = 61
+	max = 70
+	description = 'Mighty'
+	entereffects = {}
+	leaveeffects = {}
+	[[8]]
+	min = 71
+	max = 80
+	description = 'Immensely Strong'
+	entereffects = {}
+	leaveeffects = {}
+	[[9]]
+	min = 81
+	max = 90
+	description = 'Incredibly Strong'
+	entereffects = {}
+	leaveeffects = {}
+	[[10]]
+	min = 91
+	max = 100
+	description = 'Herculean'
+	entereffects = {}
+	leaveeffects = {}
+[2]
+name = 'Knowledge'
+	[[1]]
+	min = 0
+	max = 10
+	description = 'Vegetative'
+	entereffects = {}
+	leaveeffects = {}
+	[[2]]
+	min = 11
+	max = 20
+	description = 'Naive'
+	entereffects = {}
+	leaveeffects = {}
+	[[3]]
+	min = 21
+	max = 30
+	description = 'Ignorant'
+	entereffects = {}
+	leaveeffects = {}
+	[[4]]
+	min = 31
+	max = 40
+	description = 'Dumb'
+	entereffects = {}
+	leaveeffects = {}
+	[[5]]
+	min = 41
+	max = 50
+	description = 'Poorly Educated'
+	entereffects = {}
+	leaveeffects = {}
+	[[6]]
+	min = 51
+	max = 60
+	description = 'Very Knowledgeable'
+	entereffects = {}
+	leaveeffects = {}
+	[[7]]
+	min = 61
+	max = 70
+	description = 'Highly Educated'
+	entereffects = {}
+	leaveeffects = {}
+	[[8]]
+	min = 71
+	max = 80
+	description = 'Learned'
+	entereffects = {}
+	leaveeffects = {}
+	[[9]]
+	min = 81
+	max = 90
+	description = 'Enlightened'
+	entereffects = {}
+	leaveeffects = {}
+	[[10]]
+	min = 91
+	max = 100
+	description = 'Omniscient'
+	entereffects = {}
+	leaveeffects = {}
