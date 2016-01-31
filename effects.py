@@ -15,6 +15,7 @@ def SetScene(arguments) :
 	global char
 	char['Scenes']['Previous'] = char['Scenes']['Current']
 	if arguments[0] not in char['Scenes']['States'].keys() : char['Scenes']['States'][arguments[0]] = 1
+	if arguments[0] not in char['Scenes']['Encounters'].keys() : char['Scenes']['Encounters'][arguments[0]] = [0,1]
 	char['Scenes']['Current'] = arguments[0]
 def RevertScene(arguments) :
 	global char
