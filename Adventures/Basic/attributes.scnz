@@ -4,61 +4,61 @@ name = 'Strength'
 	[[1]]
 	min = 0
 	max = 10
-	description = 'Incapacitated'
+	description = 'You are Incapacitated'
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
 	min = 11
 	max = 20
-	description = 'Incapacitated'
+	description = 'You are Incapacitated'
 	entereffects = {}
 	leaveeffects = {}
 	[[3]]
 	min = 21
 	max = 30
-	description = 'Frail'
+	description = 'You are Frail'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
 	min = 31
 	max = 40
-	description = 'Feeble'
+	description = 'You are Feeble'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
 	min = 41
 	max = 50
-	description = 'Weak'
+	description = 'You are Weak'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
 	min = 51
 	max = 60
-	description = 'Very Strong'
+	description = 'You are Very Strong'
 	entereffects = {}
 	leaveeffects = {}
 	[[7]]
 	min = 61
 	max = 70
-	description = 'Mighty'
+	description = 'You are Mighty'
 	entereffects = {}
 	leaveeffects = {}
 	[[8]]
 	min = 71
 	max = 80
-	description = 'Immensely Strong'
+	description = 'You are Immensely Strong'
 	entereffects = {}
 	leaveeffects = {}
 	[[9]]
 	min = 81
 	max = 90
-	description = 'Incredibly Strong'
+	description = 'You are Incredibly Strong'
 	entereffects = {}
 	leaveeffects = {}
 	[[10]]
 	min = 91
 	max = 100
-	description = 'Herculean'
+	description = 'You are Herculean'
 	entereffects = {}
 	leaveeffects = {}
 [2]
@@ -66,60 +66,60 @@ name = 'Knowledge'
 	[[1]]
 	min = 0
 	max = 10
-	description = 'Vegetative'
+	description = 'You are Vegetative'
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
 	min = 11
 	max = 20
-	description = 'Naive'
+	description = 'You are Naive'
 	entereffects = {}
 	leaveeffects = {}
 	[[3]]
 	min = 21
 	max = 30
-	description = 'Ignorant'
+	description = 'You are Ignorant'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
 	min = 31
 	max = 40
-	description = 'Dumb'
+	description = 'You are Dumb'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
 	min = 41
 	max = 50
-	description = 'Poorly Educated'
+	description = 'You are Poorly Educated'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
 	min = 51
 	max = 60
-	description = 'Very Knowledgeable'
+	description = 'You are Very Knowledgeable'
 	entereffects = {}
 	leaveeffects = {}
 	[[7]]
 	min = 61
 	max = 70
-	description = 'Highly Educated'
+	description = 'You are Highly Educated'
 	entereffects = {}
 	leaveeffects = {}
 	[[8]]
 	min = 71
 	max = 80
-	description = 'Learned'
+	description = 'You are Learned'
 	entereffects = {}
 	leaveeffects = {}
 	[[9]]
 	min = 81
 	max = 90
-	description = 'Enlightened'
+	description = 'You are Enlightened'
 	entereffects = {}
 	leaveeffects = {}
 	[[10]]
 	min = 91
 	max = 100
-	description = 'Omniscient'
+	description = 'You are Omniscient'
 	entereffects = {}
 	leaveeffects = {}
