@@ -1,1 +1,26 @@
 [0]
+[['Master']]
+description = None
+wlist = []
+blist = []
+wlistagrp = []
+blistagrp = []
+[[1]]
+description = None
+wlist = []
+blist =[]
+wlistagrp = []
+blistagrp = []
+[1]
+[['Master']]
+description = "This is an encounter"
+wlist = []
+blist = []
+wlistagrp = []
+blistagrp = []
+[[1]]
+description = "The encounter is unhurt"
+wlist = []
+blist =[]
+wlistagrp = []
+blistagrp = []
