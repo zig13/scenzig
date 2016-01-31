@@ -49,7 +49,7 @@ def PrintActions(arguments) :
 	global adv
 	if len(listg) == 0 : return
 	for action in listg :
-		if adv.f['actions'][str(action)]['description'] == None : 
+		if adv.f['actions'][str(action)]['description'] is None : 
 			print adv.f['actions'][str(action)]['slug']
 		else :
 			print adv.f['actions'][str(action)]['slug']+" - "+adv.f['actions'][str(action)]['description']
