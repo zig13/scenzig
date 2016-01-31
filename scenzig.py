@@ -17,7 +17,7 @@ except OSError :
 	exit(0)
 from classes.classAdventure import Adventure
 adv = dict((foldername, Adventure(foldername)) for foldername in adventures) #Creates an instance of classAdventure for each folder found in the Adventures folder as a dictionary entry of adv
-from functions import valremove, choicelist, Clr, get_valid_filename, dupremove
+from functions import valremove, choicelist, Clr, get_valid_filename, dupremove, nonemptyprint
 for adventure in adventures : #Runs the validate function of each instance of classAdventure. If they return False (fail) then they are removed from the Adventures list
 	if adv[adventure].validate() == False : adventures = valremove(adventures, adventure)
 if len(adventures) < 1 :
@@ -89,7 +89,10 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
-		print a.f['scenes'][str(c['Scenes']['Current'])]['Master']['description']+"\n\n"+a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['description']
+		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])]['Master']['description']) #Scene description will be printed if there is one
+		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['description'])
+		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][c['Scenes']['Current']][0])]['Master']['description'])
+		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][c['Scenes']['Current']][0])][str(c['Scenes']['Encounters'][c['Scenes']['Current']][1])]['description'])
 		prompt = raw_input(">").strip() #The main prompt
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
@@ -109,7 +112,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 					Clr()
 					continue
 		Clr()
-		if a.f['actions'][action]['text'] != None: print a.f['actions'][action]['text']+"\n"
+		nonemptyprint(a.f['actions'][action]['text']) #Action text will be printed if it exists
 		for effect in a.f['actions'][str(action)]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
 			eval(a.f['actions'][action]['effects'][effect]['function']+"(a.f['actions'][action]['effects'][effect]['variables'])")
 		break
