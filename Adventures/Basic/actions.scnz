@@ -53,3 +53,11 @@ text = None
 [[[1]]]
 function = 'PrintActions'
 variables = []
+[9]
+slug = 'teleport'
+description = None
+text = 'BAAM'
+[[effects]]
+[[[1]]]
+function = 'SetScene'
+variables = [3]
