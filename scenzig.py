@@ -93,6 +93,8 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['description'])
 		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][c['Scenes']['Current']][0])]['Master']['description'])
 		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][c['Scenes']['Current']][0])][str(c['Scenes']['Encounters'][c['Scenes']['Current']][1])]['description'])
+		for vital in c['Vitals'].keys() :
+			nonemptyprint(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['description'])
 		prompt = raw_input(">").strip() #The main prompt
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
