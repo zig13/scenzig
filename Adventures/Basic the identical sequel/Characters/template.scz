@@ -8,5 +8,6 @@ Attributes = {1: 0, 2: 0}
 Current = 1
 Previous = None
 States = {1: 1}
+Encounters = {1: [0,1]}
 [Labels]
 1 = "Joe"
