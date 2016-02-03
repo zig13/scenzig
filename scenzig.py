@@ -53,7 +53,7 @@ if len(characters) != 0 :
 	characters.append("New Character")
 	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
 	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
-		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True)
+		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
 	filename = get_valid_filename(raw_input("Please enter a name for your new character file:\n"))+".scz"
@@ -68,8 +68,15 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
-	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['wlist']
-	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['blist']
+	for vital in c['Vitals'].keys() :
+		if not a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['max'] :
+			for state in a.f['vitals'][str(vital)].keys()[1:] :
+				if a.f['vitals'][str(vital)][state]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][state]['max'] :
+					c['Vitals'][vital][0] = int(state)
+					c.write()
+					break	
+	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
+	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
 	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.
 	#Below these lists are added to from any Abilities or Items the Character has and Action Groups listed in the current scene or scene state
 	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlistagrp'] : wlist += a.f['actiongrps'][str(agrp)]['list']
@@ -90,9 +97,9 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
 		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])]['Master']['description']) #Scene description will be printed if there is one
-		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][c['Scenes']['Current']])]['description'])
-		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][c['Scenes']['Current']][0])]['Master']['description'])
-		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][c['Scenes']['Current']][0])][str(c['Scenes']['Encounters'][c['Scenes']['Current']][1])]['description'])
+		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['description'])
+		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])]['Master']['description'])
+		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][1])]['description'])
 		for vital in c['Vitals'].keys() :
 			nonemptyprint(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['description'])
 		prompt = raw_input(">").strip() #The main prompt
