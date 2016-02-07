@@ -35,8 +35,8 @@ name = 'Strength'
 	min = 51
 	max = 60
 	description = 'You are Very Strong'
-	entereffects = {}
-	leaveeffects = {}
+	entereffects = {'AddAbility': [3]}
+	leaveeffects = {'RemoveAbility': [3]}
 	[[7]]
 	min = 61
 	max = 70
