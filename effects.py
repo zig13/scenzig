@@ -54,3 +54,11 @@ def PrintActions(arguments) :
 		else :
 			print adv.f['actions'][str(action)]['slug']+" - "+adv.f['actions'][str(action)]['description']
 	print ""
+def PrintAttributes(arguments) :
+	global char
+	global adv
+	for attribute in char['Attributes'].keys() :
+			try :
+				print adv.f['attributes'][str(attribute)][str(char['Attributes'][attribute][0])]['description']+"\n"
+			except TypeError :
+				pass
