@@ -41,7 +41,7 @@ name = 'Health'
 	min = 0
 	max = 0
 	description = None
-	entereffects = {'CharacterDeath': []}
+	entereffects = {'SetScene': [4]}
 	leaveeffects = {}
 [2]
 name = 'Energy'
@@ -91,5 +91,5 @@ name = 'Energy'
 	min = 0
 	max = 0
 	description = None
-	entereffects = {'CharacterDeath': []}
+	entereffects = {'SetScene': [4]}
 	leaveeffects = {}
