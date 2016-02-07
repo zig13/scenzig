@@ -44,6 +44,13 @@ def RemoveItem(arguments) :
 def AddItem(arguments) :
 	global char
 	char['Items'].append(arguments[0])
+def RemoveAbility(arguments) :
+	global char
+	if arguments[0] in char['Abilities'] :
+		char['Abilities'] = [x for x in char['Abilities'] if x != arguments[0]]
+def AddAbility(arguments) :
+	global char
+	char['Abilities'].append(arguments[0])
 def PrintActions(arguments) :
 	global listg
 	global adv
