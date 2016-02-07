@@ -14,8 +14,8 @@ def GiveList(glist) :
 def SetScene(arguments) :
 	global char
 	char['Scenes']['Previous'] = char['Scenes']['Current']
-	if arguments[0] not in char['Scenes']['States'].keys() : char['Scenes']['States'][arguments[0]] = 1
-	if arguments[0] not in char['Scenes']['Encounters'].keys() : char['Scenes']['Encounters'][arguments[0]] = [0,1]
+	if str(arguments[0]) not in char['Scenes']['States'].keys() : char['Scenes']['States'][str(arguments[0])] = 1
+	if str(arguments[0]) not in char['Scenes']['Encounters'].keys() : char['Scenes']['Encounters'][str(arguments[0])] = [0,1]
 	char['Scenes']['Current'] = arguments[0]
 def RevertScene(arguments) :
 	global char
@@ -71,27 +71,27 @@ def PrintAttributes(arguments) :
 				pass
 def DamageVital(arguments) :
 	global char
-	if arguments[0] in char['Vitals'].keys() :
-		char['Vitals'][arguments[0]][1] -= arguments[1]
-		if char['Vitals'][arguments[0]][1] < 0 : char['Vitals'][arguments[0]][1] = 0
+	if str(str(arguments[0])) in char['Vitals'].keys() :
+		char['Vitals'][str(arguments[0])][1] -= arguments[1]
+		if char['Vitals'][str(arguments[0])][1] < 0 : char['Vitals'][str(arguments[0])][1] = 0
 def BolsterVital(arguments) :
 	global char
-	if arguments[0] in char['Vitals'].keys() :
-		char['Vitals'][arguments[0]][1] += arguments[1]
+	if str(str(arguments[0])) in char['Vitals'].keys() :
+		char['Vitals'][str(arguments[0])][1] += arguments[1]
 		try : #For each vital, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
-			if char['Vitals'][arguments[0]][1] > char['Vitals'][arguments[0]][2] : char['Vitals'][arguments[0]][1] = char['Vitals'][arguments[0]][2]
+			if char['Vitals'][str(arguments[0])][1] > char['Vitals'][str(arguments[0])][2] : char['Vitals'][str(arguments[0])][1] = char['Vitals'][str(arguments[0])][2]
 		except IndexError:
 			pass #Max value is optional
 def DamageAttribute(arguments) :
 	global char
-	if arguments[0] in char['Attributes'].keys() :
-		char['Attributes'][arguments[0]][1] -= arguments[1]
-		if char['Attributes'][arguments[0]][1] < 0 : char['Attributes'][arguments[0]][1] = 0
+	if str(str(arguments[0])) in char['Attributes'].keys() :
+		char['Attributes'][str(arguments[0])][1] -= arguments[1]
+		if char['Attributes'][str(arguments[0])][1] < 0 : char['Attributes'][str(arguments[0])][1] = 0
 def BolsterAttribute(arguments) :
 	global char
-	if arguments[0] in char['Attributes'].keys() :
-		char['Attributes'][arguments[0]][1] += arguments[1]
+	if str(str(arguments[0])) in char['Attributes'].keys() :
+		char['Attributes'][str(str(arguments[0]))][1] += arguments[1]
 		try : #For each attribute, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
-			if char['Attributes'][arguments[0]][1] > char['Attributes'][arguments[0]][2] : char['Attributes'][arguments[0]][1] = char['Attributes'][arguments[0]][2]
+			if char['Attributes'][str(str(arguments[0]))][1] > char['Attributes'][str(str(arguments[0]))][2] : char['Attributes'][str(str(arguments[0]))][1] = char['Attributes'][str(str(arguments[0]))][2]
 		except IndexError:
 			pass #Max value is optional
