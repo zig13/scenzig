@@ -69,3 +69,24 @@ text = None
 [[[1]]]
 function = 'PrintAttributes'
 variables = []
+[11]
+slug = 'Raise the roof'
+description = 'Use your considerable strength to increase the clearance of the room'
+text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
+[[effects]]
+[12]
+slug = 'Drink poison'
+description = None
+text = 'You take a small sip from the bottle. It tastes pretty nasty.'
+[[effects]]
+[[[1]]]
+function = 'DamageVital'
+variables = [1,80]
+[13]
+slug = 'Drink strength potion'
+description = None
+text = 'You take a swig from the bottle. You feel noticeably stronger.'
+[[effects]]
+[[[1]]]
+function = 'BolsterAttribute'
+variables = [1,5]
