@@ -69,3 +69,29 @@ def PrintAttributes(arguments) :
 				print adv.f['attributes'][str(attribute)][str(char['Attributes'][attribute][0])]['description']+"\n"
 			except TypeError :
 				pass
+def DamageVital(arguments) :
+	global char
+	if arguments[0] in char['Vitals'].keys() :
+		char['Vitals'][arguments[0]][1] -= arguments[1]
+		if char['Vitals'][arguments[0]][1] < 0 : char['Vitals'][arguments[0]][1] = 0
+def BolsterVital(arguments) :
+	global char
+	if arguments[0] in char['Vitals'].keys() :
+		char['Vitals'][arguments[0]][1] += arguments[1]
+		try : #For each vital, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
+			if char['Vitals'][arguments[0]][1] > char['Vitals'][arguments[0]][2] : char['Vitals'][arguments[0]][1] = char['Vitals'][arguments[0]][2]
+		except IndexError:
+			pass #Max value is optional
+def DamageAttribute(arguments) :
+	global char
+	if arguments[0] in char['Attributes'].keys() :
+		char['Attributes'][arguments[0]][1] -= arguments[1]
+		if char['Attributes'][arguments[0]][1] < 0 : char['Attributes'][arguments[0]][1] = 0
+def BolsterAttribute(arguments) :
+	global char
+	if arguments[0] in char['Attributes'].keys() :
+		char['Attributes'][arguments[0]][1] += arguments[1]
+		try : #For each attribute, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
+			if char['Attributes'][arguments[0]][1] > char['Attributes'][arguments[0]][2] : char['Attributes'][arguments[0]][1] = char['Attributes'][arguments[0]][2]
+		except IndexError:
+			pass #Max value is optional
