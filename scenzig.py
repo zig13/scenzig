@@ -72,14 +72,22 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		if not a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['max'] :
 			for state in a.f['vitals'][str(vital)].keys()[1:] :
 				if a.f['vitals'][str(vital)][state]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][state]['max'] :
-					c['Vitals'][vital][0] = int(state)
+					for effect in a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+						eval(effect+"(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'][effect])")
+					c['Vitals'][vital][0] = int(state) #Here the vital state is corrected to that vital value is within state range
+					for effect in a.f['vitals'][str(vital)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+						eval(effect+"(a.f['vitals'][str(vital)][state]['entereffects'][effect])")
 					c.write()
 					break
 	for attribute in c['Attributes'].keys() :
 		if not a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['min'] <= c['Attributes'][attribute][1] <= a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['max'] :
 			for state in a.f['attributes'][str(attribute)].keys()[1:] :
 				if a.f['attributes'][str(attribute)][state]['min'] <= c['Attributes'][attribute][1] <= a.f['attributes'][str(attribute)][state]['max'] :
-					c['Attributes'][attribute][0] = int(state)
+					for effect in a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+						eval(effect+"(a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'][effect])")
+					c['Attributes'][attribute][0] = int(state) #Here the attribute state is corrected to that attribute value is within state range
+					for effect in a.f['attributes'][str(attribute)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+						eval(effect+"(a.f['attributes'][str(attribute)][state]['entereffects'][effect])")
 					c.write()
 					break
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
