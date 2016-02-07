@@ -74,7 +74,14 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 				if a.f['vitals'][str(vital)][state]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][state]['max'] :
 					c['Vitals'][vital][0] = int(state)
 					c.write()
-					break	
+					break
+	for attribute in c['Attributes'].keys() :
+		if not a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['min'] <= c['Attributes'][attribute][1] <= a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['max'] :
+			for state in a.f['attributes'][str(attribute)].keys()[1:] :
+				if a.f['attributes'][str(attribute)][state]['min'] <= c['Attributes'][attribute][1] <= a.f['attributes'][str(attribute)][state]['max'] :
+					c['Attributes'][attribute][0] = int(state)
+					c.write()
+					break
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
 	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
 	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.
