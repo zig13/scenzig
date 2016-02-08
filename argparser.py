@@ -10,18 +10,27 @@ def d(sides) :
 	return randint(1,sides)
 def a(id) :
 	global char
+	if char is None:
+		print "Character data not available"
+		return 0
 	if str(id) in char['Attributes'].keys() :
 		return char['Attributes'][str(id)][1]
 	else : #If the character does not a currency of the given ID, it is taken to be 0.
 		return 0
 def v(id) :
 	global char
+	if char is None:
+		print "Character data not available"
+		return 0
 	if str(id) in char['Vitals'].keys() :
 		return char['Vitals'][str(id)][1]
 	else : #If the character does not a vital of the given ID, it is taken to be 0.
 		return 0
 def c(id) :
 	global char
+	if char is None:
+		print "Character data not available"
+		return 0
 	if str(id) in char['Currencies'].keys() :
 		return char['Currencies'][str(id)]
 	else : #If the character does not a currency of the given ID, it is taken to be 0.
@@ -73,7 +82,7 @@ def PrsArg(arg) :
 		return arg
 		
 if __name__ == "__main__":
-	print "Stuff"
+	print "I can roll dice for you!"
 	while True:
 		prompt = str(raw_input(">"))
-		print PrsArg(prompt)
+		if prompt is not "" : print PrsArg(prompt)
