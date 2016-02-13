@@ -51,7 +51,7 @@ def PrsArg(arg) :
 				print "Sorry. The only operators I recognise at the moment are + (add), - (minus) and x (multiply)"
 				return 0
 			except NameError: #This will occur is the input is something like bert or b20
-				print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup) and c (currency lookup). The letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
+				print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup) and c (currency lookup).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
 				return 0
 		elif optotal == 1 :
 			oprtr = {vr: ky for ky, vr in opcounts.iteritems()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
