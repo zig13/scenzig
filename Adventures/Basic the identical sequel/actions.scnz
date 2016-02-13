@@ -81,7 +81,7 @@ text = 'You take a small sip from the bottle. It tastes pretty nasty.'
 [[effects]]
 [[[1]]]
 function = 'DamageVital'
-variables = [1,80]
+variables = [1,'39+d81']
 [13]
 slug = 'Drink strength potion'
 description = None
@@ -90,3 +90,11 @@ text = 'You take a swig from the bottle. You feel noticeably stronger.'
 [[[1]]]
 function = 'BolsterAttribute'
 variables = [1,5]
+[14]
+slug = 'Random'
+description = 'Teleport to a random scene'
+text = 'Whhoosh'
+[[effects]]
+[[[1]]]
+function = 'SetScene'
+variables = ['d3']
