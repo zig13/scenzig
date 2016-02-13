@@ -37,6 +37,8 @@ def c(id) :
 		return 0
 
 def PrsArg(arg) :
+	if isinstance(arg, list) :
+		return [PrsArg(each) for each in arg]	
 	try :
 		opcounts = {'+':arg.count('+'), '-':arg.count('-'), 'x':arg.count('x')}
 		try :
