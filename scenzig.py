@@ -67,6 +67,8 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 GiveChar(c)
+import argparser
+argparser.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	for vital in c['Vitals'].keys() :
 		if not a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['max'] :
@@ -76,7 +78,8 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 						eval(effect+"(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'][effect])")
 					c['Vitals'][vital][0] = int(state) #Here the vital state is corrected to that vital value is within state range
 					for effect in a.f['vitals'][str(vital)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
-						eval(effect+"(a.f['vitals'][str(vital)][state]['entereffects'][effect])")
+						arguments = argparser.PrsArg(a.f['vitals'][str(vital)][state]['entereffects'][effect])
+						eval(effect+"(arguments)")
 					c.write()
 					break
 	for attribute in c['Attributes'].keys() :
@@ -87,7 +90,8 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 						eval(effect+"(a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'][effect])")
 					c['Attributes'][attribute][0] = int(state) #Here the attribute state is corrected to that attribute value is within state range
 					for effect in a.f['attributes'][str(attribute)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
-						eval(effect+"(a.f['attributes'][str(attribute)][state]['entereffects'][effect])")
+						arguments = argparser.PrsArg(a.f['attributes'][str(attribute)][state]['entereffects'][effect])
+						eval(effect+"(arguments)")
 					c.write()
 					break
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
@@ -138,6 +142,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		Clr()
 		nonemptyprint(a.f['actions'][action]['text']) #Action text will be printed if it exists
 		for effect in a.f['actions'][str(action)]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-			eval(a.f['actions'][action]['effects'][effect]['function']+"(a.f['actions'][action]['effects'][effect]['variables'])")
+			arguments = argparser.PrsArg(a.f['actions'][action]['effects'][effect]['variables'])
+			eval(a.f['actions'][action]['effects'][effect]['function']+"(arguments)")
 		break
 	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
