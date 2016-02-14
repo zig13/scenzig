@@ -2,99 +2,160 @@
 [1]
 slug = 'Forward'
 description = None
-text = 'You go forward'
-[[effects]]
-[[[1]]]
-function = 'SetScene'
-variables = [2]
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'You go forward'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'SetScene'
+				variables = [2]
 [2]
 slug = 'Back'
 description = None
-text = 'You go back from whence you came'
-[[effects]]
-[[[1]]]
-function = 'RevertScene'
-variables = []
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'You go back from whence you came'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'RevertScene'
+				variables = []
 [3]
 slug = 'Inventory'
 description = 'Look at what items you are carrying'
-text = None
-[[effects]]
-[[[1]]]
-function = 'PrintItems'
-variables = []
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'None'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'PrintItems'
+				variables = []
 [6]
 slug = 'Drop stone'
 description = 'Drop the stone onto the ground'
-text = 'The stone falls to the floor'
-[[effects]]
-[[[1]]]
-function = 'RemoveItem'
-variables = [4]
-[[[2]]]
-function = 'SetSceneState'
-variables = [2]
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'The stone falls to the floor'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'RemoveItem'
+				variables = [4]
+				[[[[[2]]]]]
+				function = 'SetSceneState'
+				variables = [2]
 [7]
 slug = 'Pickup stone'
 description = 'Pick the stone up off the ground'
-text = 'You pick the stone up'
-[[effects]]
-[[[1]]]
-function = 'AddItem'
-variables = [4]
-[[[2]]]
-function = 'SetSceneState'
-variables = [1]
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'You pick the stone up'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'AddItem'
+				variables = [4]
+				[[[[[2]]]]]
+				function = 'SetSceneState'
+				variables = [1]
 [8]
 slug = 'Help'
 description = 'Display available actions'
-text = None
-[[effects]]
-[[[1]]]
-function = 'PrintActions'
-variables = []
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = None
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'PrintActions'
+				variables = []
 [9]
 slug = 'Teleport'
 description = None
-text = 'BAAM'
-[[effects]]
-[[[1]]]
-function = 'SetScene'
-variables = [3]
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'BAAM'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'SetScene'
+				variables = [3]
 [10]
 slug = 'Stats'
 description = 'Display current state of attributes'
-text = None
-[[effects]]
-[[[1]]]
-function = 'PrintAttributes'
-variables = []
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = None
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'PrintAttributes'
+				variables = []
 [11]
 slug = 'Raise the roof'
 description = 'Use your considerable strength to increase the clearance of the room'
-text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
-[[effects]]
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
+			[[[[effects]]]]
 [12]
 slug = 'Drink poison'
 description = None
-text = 'You take a small sip from the bottle. It tastes pretty nasty.'
-[[effects]]
-[[[1]]]
-function = 'DamageVital'
-variables = [1,'39+d81']
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'You take a small sip from the bottle. It tastes pretty nasty.'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'DamageVital'
+				variables = [1,'39+d81']
 [13]
 slug = 'Drink strength potion'
 description = None
-text = 'You take a swig from the bottle. You feel noticeably stronger.'
-[[effects]]
-[[[1]]]
-function = 'BolsterAttribute'
-variables = [1,5]
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'You take a swig from the bottle. You feel noticeably stronger.'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'BolsterAttribute'
+				variables = [1,5]
 [14]
 slug = 'Random'
 description = 'Teleport to a random scene'
-text = 'Whhoosh'
-[[effects]]
-[[[1]]]
-function = 'SetScene'
-variables = ['d3']
+evaluators = []
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {}
+		text = 'Whhoosh'
+			[[[[effects]]]]
+				[[[[[1]]]]]
+				function = 'SetScene'
+				variables = ['d3']
+[15]
+slug = 'Flip'
+description = 'Flip a coin'
+evaluators = ['d6']
+	[[outcomes]]
+		[[[1]]]
+		evaluations = {0:[1,3]}
+		text = 'The coin lands with Heads facing upwards'
+			[[[[effects]]]]
+		[[[2]]]
+		evaluations = {0:[4,6]}
+		text = 'The coin lands with Tails facing upwards'
+			[[[[effects]]]]

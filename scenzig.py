@@ -140,9 +140,19 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 					Clr()
 					continue
 		Clr()
-		nonemptyprint(a.f['actions'][action]['text']) #Action text will be printed if it exists
-		for effect in a.f['actions'][str(action)]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-			arguments = argparser.PrsArg(a.f['actions'][action]['effects'][effect]['variables'])
-			eval(a.f['actions'][action]['effects'][effect]['function']+"(arguments)")
+		evaluators = [argparser.PrsArg(each) for each in a.f['actions'][action]['evaluators']]
+		for outcome in a.f['actions'][action]['outcomes'].keys() :
+			this = True
+			for test in a.f['actions'][action]['outcomes'][outcome]['evaluations'].keys() :
+				if not a.f['actions'][action]['outcomes'][outcome]['evaluations'][test][0] <= evaluators[test] <= a.f['actions'][action]['outcomes'][outcome]['evaluations'][test][1] :
+					this = False
+					break
+			if this is True : break
+		if this is True :
+			nonemptyprint(a.f['actions'][action]['outcomes'][outcome]['text']) #Action text will be printed if it exists
+			for effect in a.f['actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
+				arguments = argparser.PrsArg(a.f['actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
+				eval(a.f['actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
+		else : print "Nothing Happens\n" #This occurs if no outcomes match 
 		break
 	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
