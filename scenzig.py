@@ -72,12 +72,15 @@ argparser.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	for vital in c['Vitals'].keys() :
 		evaluators = [argparser.PrsArg(each) for each in a.f['vitals'][vital]['evaluators']]
-		for state in a.f['vitals'][str(vital)].keys()[2:] :
+		for state in a.f['vitals'][str(vital)].keys() :
 			this = True
-			for test in a.f['vitals'][vital][state]['evaluations'].keys() :
-				if not a.f['vitals'][vital][state]['evaluations'][test][0] <= evaluators[test] <= a.f['vitals'][vital][state]['evaluations'][test][1] :
-					this = False
-					break
+			try :
+				for test in a.f['vitals'][vital][state]['evaluations'].keys() :
+					print vital, state, test
+					if not a.f['vitals'][vital][state]['evaluations'][test][0] <= evaluators[test] <= a.f['vitals'][vital][state]['evaluations'][test][1] :
+						this = False
+						break
+			except TypeError : this = False
 			if this is True : break
 		if this is True :
 			for effect in a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
@@ -89,12 +92,14 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 			c.write()
 	for attribute in c['Attributes'].keys() :
 		evaluators = [argparser.PrsArg(each) for each in a.f['attributes'][attribute]['evaluators']]
-		for state in a.f['attributes'][str(attribute)].keys()[2:] :
+		for state in a.f['attributes'][str(attribute)].keys() :
 			this = True
-			for test in a.f['attributes'][attribute][state]['evaluations'].keys() :
-				if not a.f['attributes'][attribute][state]['evaluations'][test][0] <= evaluators[test] <= a.f['attributes'][attribute][state]['evaluations'][test][1] :
-					this = False
-					break
+			try :
+				for test in a.f['attributes'][attribute][state]['evaluations'].keys() :
+					if not a.f['attributes'][attribute][state]['evaluations'][test][0] <= evaluators[test] <= a.f['attributes'][attribute][state]['evaluations'][test][1] :
+						this = False
+						break
+			except TypeError : this = False
 			if this is True : break
 		if this is True :
 			for effect in a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
