@@ -71,29 +71,39 @@ import argparser
 argparser.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	for vital in c['Vitals'].keys() :
-		if not a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['max'] :
-			for state in a.f['vitals'][str(vital)].keys()[1:] :
-				if a.f['vitals'][str(vital)][state]['min'] <= c['Vitals'][vital][1] <= a.f['vitals'][str(vital)][state]['max'] :
-					for effect in a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
-						eval(effect+"(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'][effect])")
-					c['Vitals'][vital][0] = int(state) #Here the vital state is corrected to that vital value is within state range
-					for effect in a.f['vitals'][str(vital)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
-						arguments = argparser.PrsArg(a.f['vitals'][str(vital)][state]['entereffects'][effect])
-						eval(effect+"(arguments)")
-					c.write()
+		evaluators = [argparser.PrsArg(each) for each in a.f['vitals'][vital]['evaluators']]
+		for state in a.f['vitals'][str(vital)].keys()[2:] :
+			this = True
+			for test in a.f['vitals'][vital][state]['evaluations'].keys() :
+				if not a.f['vitals'][vital][state]['evaluations'][test][0] <= evaluators[test] <= a.f['vitals'][vital][state]['evaluations'][test][1] :
+					this = False
 					break
+			if this is True : break
+		if this is True :
+			for effect in a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+				eval(effect+"(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['leaveeffects'][effect])")
+			c['Vitals'][vital][0] = int(state) #Here the vital state is corrected to that vital value is within state range
+			for effect in a.f['vitals'][str(vital)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+				arguments = argparser.PrsArg(a.f['vitals'][str(vital)][state]['entereffects'][effect])
+				eval(effect+"(arguments)")
+			c.write()
 	for attribute in c['Attributes'].keys() :
-		if not a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['min'] <= c['Attributes'][attribute][1] <= a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['max'] :
-			for state in a.f['attributes'][str(attribute)].keys()[1:] :
-				if a.f['attributes'][str(attribute)][state]['min'] <= c['Attributes'][attribute][1] <= a.f['attributes'][str(attribute)][state]['max'] :
-					for effect in a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
-						eval(effect+"(a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'][effect])")
-					c['Attributes'][attribute][0] = int(state) #Here the attribute state is corrected to that attribute value is within state range
-					for effect in a.f['attributes'][str(attribute)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
-						arguments = argparser.PrsArg(a.f['attributes'][str(attribute)][state]['entereffects'][effect])
-						eval(effect+"(arguments)")
-					c.write()
+		evaluators = [argparser.PrsArg(each) for each in a.f['attributes'][attribute]['evaluators']]
+		for state in a.f['attributes'][str(attribute)].keys()[2:] :
+			this = True
+			for test in a.f['attributes'][attribute][state]['evaluations'].keys() :
+				if not a.f['attributes'][attribute][state]['evaluations'][test][0] <= evaluators[test] <= a.f['attributes'][attribute][state]['evaluations'][test][1] :
+					this = False
 					break
+			if this is True : break
+		if this is True :
+			for effect in a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+				eval(effect+"(a.f['attributes'][str(attribute)][str(c['Attributes'][attribute][0])]['leaveeffects'][effect])")
+			c['Attributes'][attribute][0] = int(state) #Here the attribute state is corrected to that attribute value is within state range
+			for effect in a.f['attributes'][str(attribute)][state]['entereffects'].keys() : #The line below runs the function requested by each effect and passes it any arguments
+				arguments = argparser.PrsArg(a.f['attributes'][str(attribute)][state]['entereffects'][effect])
+				eval(effect+"(arguments)")
+			c.write()
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
 	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
 	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.

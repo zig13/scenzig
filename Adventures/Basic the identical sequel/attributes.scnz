@@ -1,125 +1,107 @@
 [0]
 [1]
 name = 'Strength'
+evaluators = ['a1']
 	[[1]]
-	min = 0
-	max = 10
+	evaluations = {0:[0,10]}
 	description = 'You are Incapacitated'
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
-	min = 11
-	max = 20
+	evaluations = {0:[11,20]}
 	description = 'You are Incapacitated'
 	entereffects = {}
 	leaveeffects = {}
 	[[3]]
-	min = 21
-	max = 30
+	evaluations = {0:[21,30]}
 	description = 'You are Frail'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
-	min = 31
-	max = 40
+	evaluations = {0:[31,40]}
 	description = 'You are Feeble'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
-	min = 41
-	max = 50
+	evaluations = {0:[41,50]}
 	description = 'You are Weak'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
-	min = 51
-	max = 60
+	evaluations = {0:[51,60]}
 	description = 'You are Very Strong'
 	entereffects = {'AddAbility': [3]}
 	leaveeffects = {'RemoveAbility': [3]}
 	[[7]]
-	min = 61
-	max = 70
+	evaluations = {0:[61,70]}
 	description = 'You are Mighty'
 	entereffects = {}
 	leaveeffects = {}
 	[[8]]
-	min = 71
-	max = 80
+	evaluations = {0:[71,80]}
 	description = 'You are Immensely Strong'
 	entereffects = {}
 	leaveeffects = {}
 	[[9]]
-	min = 81
-	max = 90
+	evaluations = {0:[81,90]}
 	description = 'You are Incredibly Strong'
 	entereffects = {}
 	leaveeffects = {}
 	[[10]]
-	min = 91
-	max = 100
+	evaluations = {0:[91,100]}
 	description = 'You are Herculean'
 	entereffects = {}
 	leaveeffects = {}
 [2]
 name = 'Knowledge'
+evaluators = ['a2']
 	[[1]]
-	min = 0
-	max = 10
+	evaluations = {0:[0,10]}
 	description = 'You are Vegetative'
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
-	min = 11
-	max = 20
+	evaluations = {0:[11,20]}
 	description = 'You are Naive'
 	entereffects = {}
 	leaveeffects = {}
 	[[3]]
-	min = 21
-	max = 30
+	evaluations = {0:[21,30]}
 	description = 'You are Ignorant'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
-	min = 31
-	max = 40
+	evaluations = {0:[31,40]}
 	description = 'You are Dumb'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
-	min = 41
-	max = 50
+	evaluations = {0:[41,50]}
 	description = 'You are Poorly Educated'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
-	min = 51
-	max = 60
+	evaluations = {0:[51,60]}
 	description = 'You are Very Knowledgeable'
 	entereffects = {}
 	leaveeffects = {}
 	[[7]]
-	min = 61
-	max = 70
+	evaluations = {0:[61,70]}
 	description = 'You are Highly Educated'
 	entereffects = {}
 	leaveeffects = {}
 	[[8]]
-	min = 71
-	max = 80
+	evaluations = {0:[71,80]}
 	description = 'You are Learned'
 	entereffects = {}
 	leaveeffects = {}
 	[[9]]
-	min = 81
-	max = 90
+	evaluations = {0:[81,90]}
 	description = 'You are Enlightened'
 	entereffects = {}
 	leaveeffects = {}
 	[[10]]
-	min = 91
-	max = 100
+	evaluations = {0:[91,100]}
 	description = 'You are Omniscient'
 	entereffects = {}
 	leaveeffects = {}
