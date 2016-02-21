@@ -95,3 +95,9 @@ def BolsterAttribute(arguments) :
 			if char['Attributes'][str(str(arguments[0]))][1] > char['Attributes'][str(str(arguments[0]))][2] : char['Attributes'][str(str(arguments[0]))][1] = char['Attributes'][str(str(arguments[0]))][2]
 		except IndexError:
 			pass #Max value is optional
+def TakeAction(arguments) :
+	action = arguments[0]
+	nonemptyprint(adv.f['actions'][action]['outcomes'][outcome]['text']) #Action text will be printed if it exists
+	for effect in adv.f['actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
+		arguments = argparser.PrsArg(adv.f['actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
+		eval(adv.f['actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
