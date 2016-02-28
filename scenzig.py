@@ -75,6 +75,8 @@ statecheck.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	statecheck.AutoState('vitals')
 	statecheck.AutoState('attributes')
+	statecheck.AutoState('scenes')
+	statecheck.AutoState('encounters')
 	c.write()
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
 	blist = a.f['scenes'][str(c['Scenes']['Current'])]['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
