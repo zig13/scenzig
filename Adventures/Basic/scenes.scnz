@@ -5,13 +5,16 @@ wlist = [1,2,3]
 blist = []
 wlistagrp = []
 blistagrp = []
+evaluators = ['i4']
 	[[1]]
+	evaluations = {0:[1,1]}
 	description = "This is the first state of the first scene"
 	wlist = [6]
 	blist =[2,7]
 	wlistagrp = []
 	blistagrp = []
 	[[2]]
+	evaluations = {0:[0,0]}
 	description = "There is a stone on the ground"
 	wlist = [7,9]
 	blist =[6]
@@ -23,13 +26,16 @@ wlist = [2]
 blist = []
 wlistagrp = []
 blistagrp = []
+evaluators = ['i4']
 	[[1]]
+	evaluations = {0:[1,1]}
 	description = "This is the first state of the second scene"
 	wlist = [2]
 	blist =[]
 	wlistagrp = []
 	blistagrp = []
 	[[2]]
+	evaluations = {0:[0,0]}
 	description = "There is a stone on the ground"
 	wlist = [7,9]
 	blist =[6]
