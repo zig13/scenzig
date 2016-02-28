@@ -47,9 +47,6 @@ evaluators = []
 				[[[[[1]]]]]
 				function = 'RemoveItem'
 				variables = [4]
-				[[[[[2]]]]]
-				function = 'SetSceneState'
-				variables = [2]
 [7]
 slug = 'Pickup stone'
 description = 'Pick the stone up off the ground'
@@ -62,9 +59,6 @@ evaluators = []
 				[[[[[1]]]]]
 				function = 'AddItem'
 				variables = [4]
-				[[[[[2]]]]]
-				function = 'SetSceneState'
-				variables = [1]
 [8]
 slug = 'Help'
 description = 'Display available actions'
