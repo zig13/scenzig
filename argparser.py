@@ -35,6 +35,15 @@ def c(id) :
 		return char['Currencies'][str(id)]
 	else : #If the character does not a currency of the given ID, it is taken to be 0.
 		return 0
+		
+def i(id) :
+	global char
+	if char is None:
+		print "Character data not available"
+		return 0
+	if id in char['Items'] :
+		return 1
+	else : return 0
 
 def PrsArg(arg) :
 	if isinstance(arg, list) :
@@ -48,15 +57,15 @@ def PrsArg(arg) :
 		optotal = sum(opcounts.values())
 		if optotal == 0 : #If the argument is not yet a number but has no operators. At this point the argument is expected to be something like d8 or v4.
 			try :
-				return eval(arg[0]+"("+arg[1:]+")") #Calls d, a, v or c with the rest of the argument as sides or id
+				return eval(arg[0]+"("+arg[1:]+")") #Calls d, a, v, i or c with the rest of the argument as sides or id
 			except TypeError: #This will occur is the input is something like 8/2. The code attempts to call 8 as a function which fails because it is an integer
 				print "Sorry. The only operators I recognise at the moment are + (add), - (minus) and x (multiply)"
 				return 0
 			except NameError: #This will occur is the input is something like bert or b20
-				print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup) and c (currency lookup).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
+				print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup), i (character has item) and c (currency lookup).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
 				return 0
 			except SyntaxError:
-				print "Only intergers can follow d (dice roll), v (vital lookup), a (attribute lookup) and c (currency lookup)"
+				print "Only integers can follow d (dice roll), v (vital lookup), a (attribute lookup), i (character has item) and c (currency lookup)"
 				return 0
 		elif optotal == 1 :
 			oprtr = {vr: ky for ky, vr in opcounts.iteritems()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
