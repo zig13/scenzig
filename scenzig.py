@@ -76,12 +76,12 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	statecheck.AutoState('vitals')
 	statecheck.AutoState('attributes')
 	c.write()
-	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
-	blist = a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
+	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
+	blist = a.f['scenes'][str(c['Scenes']['Current'])]['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
 	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.
 	#Below these lists are added to from any Abilities or Items the Character has and Action Groups listed in the current scene or scene state
-	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['Master']['wlistagrp'] : wlist += a.f['actiongrps'][str(agrp)]['list']
-	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['Master']['blistagrp'] : blist += a.f['actiongrps'][str(agrp)]['list']
+	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['wlistagrp'] : wlist += a.f['actiongrps'][str(agrp)]['list']
+	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['blistagrp'] : blist += a.f['actiongrps'][str(agrp)]['list']
 	for ablty in c['Abilities'] :
 		ablty = str(ablty)
 		wlist += a.f['abilities'][ablty]['wlist']
@@ -97,9 +97,9 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])]['Master']['description']) #Scene description will be printed if there is one
+		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])]['description']) #Scene description will be printed if there is one
 		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['description'])
-		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])]['Master']['description'])
+		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])]['description'])
 		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][1])]['description'])
 		for vital in c['Vitals'].keys() :
 			nonemptyprint(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['description'])
