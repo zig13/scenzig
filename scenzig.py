@@ -38,8 +38,8 @@ else :
 		else :
 			break
 #From here 'a' refers to the classAdventure instance of the active Adventure. All Adventure data will be accessed through it.
-from effects import *
-GiveAdv(a)
+import effects as efunc
+efunc.GiveAdv(a)
 import statecheck
 statecheck.GiveAdv(a)
 try :
@@ -68,15 +68,20 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		raw_input("Character template missing or incorrectly named.")
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
-GiveChar(c)
+efunc.GiveChar(c)
+statecheck.GiveChar(c)
 import argparser
 argparser.GiveChar(c)
-statecheck.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
-	statecheck.AutoState('vitals')
-	statecheck.AutoState('attributes')
-	statecheck.AutoState('scenes')
-	statecheck.AutoState('encounters')
+	effects = []
+	effects += statecheck.CheckScene()
+	effects += statecheck.CheckEncounter()
+	effects += statecheck.CheckAttributes()
+	effects += statecheck.CheckVitals()
+	for set in effects :
+		for effect in set.keys() :
+			arguments = argparser.PrsArg(set[effect])
+			eval("efunc."+effect+"(arguments)")
 	c.write()
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
 	blist = a.f['scenes'][str(c['Scenes']['Current'])]['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
@@ -97,7 +102,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		for agrp in a.f['items'][itm]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
 		for agrp in a.f['items'][itm]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
-	GiveList(glist)
+	efunc.GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
 		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])]['description']) #Scene description will be printed if there is one
 		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['description'])
@@ -124,21 +129,9 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 					Clr()
 					continue
 		Clr()
-		evaluators = [argparser.PrsArg(each) for each in a.f['actions'][action]['evaluators']]
-		for outcome in a.f['actions'][action]['outcomes'].keys() :
-			this = True
-			for test in a.f['actions'][action]['outcomes'][outcome]['evaluations'].keys() :
-				if not a.f['actions'][action]['outcomes'][outcome]['evaluations'][test][0] <= evaluators[test] <= a.f['actions'][action]['outcomes'][outcome]['evaluations'][test][1] :
-					this = False
-					break
-			if this is True : break
-		if this is True :
-			nonemptyprint(a.f['actions'][action]['outcomes'][outcome]['text']) #Action text will be printed if it exists
-			try :
-				for effect in a.f['actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-					arguments = argparser.PrsArg(a.f['actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
-					eval(a.f['actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
-			except KeyError : pass #If an action has no effects, don't sweat it - just carry on
-		else : print "Nothing Happens\n" #This occurs if no outcomes match 
+		effects = statecheck.DetermineOutcome(action)
+		for effect in effects.keys() :
+			arguments = argparser.PrsArg(effects[effect])
+			eval("efunc."+effect+"(arguments)")
 		break
 	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
