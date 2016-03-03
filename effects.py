@@ -56,10 +56,12 @@ def PrintActions(arguments) :
 	global adv
 	if len(listg) == 0 : return
 	for action in listg :
-		if adv.f['actions'][str(action)]['description'] is None : 
-			print adv.f['actions'][str(action)]['slug']
-		else :
+		try :
 			print adv.f['actions'][str(action)]['slug']+" - "+adv.f['actions'][str(action)]['description']
+		except KeyError :
+			try :
+				print adv.f['actions'][str(action)]['slug']
+			except KeyError : continue
 	print ""
 def PrintAttributes(arguments) :
 	global char
