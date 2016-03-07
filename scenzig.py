@@ -42,6 +42,7 @@ import effects as efunc
 efunc.GiveAdv(a)
 import statecheck
 statecheck.GiveAdv(a)
+#import listgen
 try :
 	characters = listdir(a.directory+"Characters")
 except OSError :
@@ -70,8 +71,8 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 efunc.GiveChar(c)
 statecheck.GiveChar(c)
-import argparser
-argparser.GiveChar(c)
+import argsolve
+argsolve.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
 	effects = []
 	effects += statecheck.CheckScene()
@@ -80,7 +81,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	effects += statecheck.CheckVitals()
 	for set in effects :
 		for effect in set.keys() :
-			arguments = argparser.PrsArg(set[effect])
+			arguments = argsolve.Solve(set[effect])
 			eval("efunc."+effect+"(arguments)")
 	c.write()
 	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
@@ -131,7 +132,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 		Clr()
 		effects = statecheck.DetermineOutcome(action)
 		for effect in effects.keys() :
-			arguments = argparser.PrsArg(effects[effect])
+			arguments = argsolve.Solve(effects[effect])
 			eval("efunc."+effect+"(arguments)")
 		break
 	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually

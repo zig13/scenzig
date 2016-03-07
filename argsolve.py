@@ -45,9 +45,9 @@ def i(id) :
 		return 1
 	else : return 0
 
-def PrsArg(arg) :
+def Solve(arg) :
 	if isinstance(arg, list) :
-		return [PrsArg(each) for each in arg]	
+		return [Solve(each) for each in arg]	
 	try :
 		opcounts = {'+':arg.count('+'), '-':arg.count('-'), 'x':arg.count('x'), '^':arg.count('^'), '_':arg.count('_'), '~':arg.count('~'), '%':arg.count('%')}
 		try :
@@ -70,28 +70,28 @@ def PrsArg(arg) :
 		elif optotal == 1 :
 			oprtr = {vr: ky for ky, vr in opcounts.iteritems()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
 			tup = arg.partition(oprtr) #Creates a tuple that will look something like 'd8', '+', '4'
-			operandA = PrsArg(tup[0])
-			operandB = PrsArg(tup[2])
+			operandA = Solve(tup[0])
+			operandB = Solve(tup[2])
 		elif optotal == 2 :
 			if arg[-1] is not ")" :
 				tup = arg.partition(")") #Creates a tuple that will look something like '(d8+4', ')', 'x2'
-				operandA = PrsArg(tup[0][1:]) #From the example above cuts out just d8+4
+				operandA = Solve(tup[0][1:]) #From the example above cuts out just d8+4
 				oprtr = tup[2][0] #From the example above cuts out just x
-				operandB = PrsArg(tup[2][1:]) #From the example above cuts out just 2
+				operandB = Solve(tup[2][1:]) #From the example above cuts out just 2
 			elif arg[0] is not "(" :
 				tup = arg.partition("(") #Creates a tuple that will look something like '6+', '(', 'd6x2)'
-				operandA = PrsArg(tup[0][:-1]) #From the example above cuts out just 6
+				operandA = Solve(tup[0][:-1]) #From the example above cuts out just 6
 				oprtr = tup[0][-1] #From the example above cuts out just +
-				operandB = PrsArg(tup[2][:-1]) #From the example above cuts out just d6x2
+				operandB = Solve(tup[2][:-1]) #From the example above cuts out just d6x2
 			else : #This should only happen if someone has put in something like (d8+4)x(2)
 				print "Please don't use brackets unnecessarily"
 				return 0
 		else : #This will occur if the input is something like (d8+4)x(2+d4) or ((d8+4)x2)-d10
 			print "Sorry I can't deal with nested brackets at the moment :("
 			return 0
-		if oprtr is '+': return PrsArg(operandA)+PrsArg(operandB)
-		elif oprtr is '-': return PrsArg(operandA)-PrsArg(operandB)
-		elif oprtr is 'x': return PrsArg(operandA)*PrsArg(operandB)
+		if oprtr is '+': return Solve(operandA)+Solve(operandB)
+		elif oprtr is '-': return Solve(operandA)-Solve(operandB)
+		elif oprtr is 'x': return Solve(operandA)*Solve(operandB)
 		elif oprtr is '^': return max(operandA,operandB) #Returns the greater of two operands
 		elif oprtr is '_': return min(operandA,operandB)
 		elif oprtr is '~': return (operandA+operandB)/2
@@ -103,4 +103,4 @@ if __name__ == "__main__":
 	print "I can roll dice for you!"
 	while True:
 		prompt = str(raw_input(">"))
-		if prompt is not "" : print PrsArg(prompt)
+		if prompt is not "" : print Solve(prompt)
