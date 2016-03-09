@@ -75,5 +75,5 @@ def get_valid_filename(filename):
 def nonemptyprint(string):
 	try :
 		print string+"\n"
-	except TypeError :
+	except TypeError, KeyError:
 		return
