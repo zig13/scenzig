@@ -1,6 +1,6 @@
 adv = None
 char = None
-import argparser
+import argsolve
 from functions import nonemptyprint
 def GiveAdv(a) :
 	global adv
@@ -8,7 +8,7 @@ def GiveAdv(a) :
 def GiveChar(c) :
 	global char
 	char = c
-	argparser.GiveChar(char)
+	argsolve.GiveChar(char)
 	
 def CheckScene() :
 	global adv
@@ -16,7 +16,7 @@ def CheckScene() :
 	scene = char['Scenes']['Current']
 	currentstate = char['Scenes']['States'][str(scene)]
 	effects = []
-	evaluators = [argparser.PrsArg(each) for each in adv.f['scenes'][str(scene)]['evaluators']]
+	evaluators = [argsolve.Solve(each) for each in adv.f['scenes'][str(scene)]['evaluators']]
 	try :
 		resultstate = int(FindState(adv.f['scenes'][str(scene)],evaluators))
 	except TypeError:
@@ -37,7 +37,7 @@ def CheckVitals() :
 	effects = []
 	for vital in char['Vitals'].keys() :
 		currentstate = char['Vitals'][vital][0]
-		evaluators = [argparser.PrsArg(each) for each in adv.f['vitals'][vital]['evaluators']]
+		evaluators = [argsolve.Solve(each) for each in adv.f['vitals'][vital]['evaluators']]
 		try :
 			resultstate = int(FindState(adv.f['vitals'][vital],evaluators))
 		except TypeError :
@@ -58,7 +58,7 @@ def CheckAttributes() :
 	effects = []
 	for attribute in char['Attributes'].keys() :
 		currentstate = char['Attributes'][attribute][0]
-		evaluators = [argparser.PrsArg(each) for each in adv.f['attributes'][attribute]['evaluators']]
+		evaluators = [argsolve.Solve(each) for each in adv.f['attributes'][attribute]['evaluators']]
 		try :
 			resultstate = int(FindState(adv.f['attributes'][attribute],evaluators))
 		except TypeError :
@@ -80,7 +80,7 @@ def CheckEncounter() :
 	encounter = char['Scenes']['Encounters'][str(scene)][0]
 	currentstate = char['Scenes']['Encounters'][str(scene)][1]
 	effects = []
-	evaluators = [argparser.PrsArg(each) for each in adv.f['encounters'][str(encounter)]['evaluators']]
+	evaluators = [argsolve.Solve(each) for each in adv.f['encounters'][str(encounter)]['evaluators']]
 	try :
 		resultstate = int(FindState(adv.f['encounters'][str(encounter)],evaluators))
 	except TypeError:
@@ -99,7 +99,7 @@ def DetermineOutcome(action) :
 	global adv
 	global char
 	effects = {}
-	evaluators = [argparser.PrsArg(each) for each in adv.f['actions'][str(action)]['evaluators']]
+	evaluators = [argsolve.Solve(each) for each in adv.f['actions'][str(action)]['evaluators']]
 	outcome = FindState(adv.f['actions'][action],evaluators)
 	if outcome is None : 
 		print "Nothing Happens\n" #This occurs if no outcomes match
