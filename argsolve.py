@@ -41,7 +41,7 @@ def i(id) :
 	if char is None:
 		print "Character data not available"
 		return 0
-	if id in char['Items'] :
+	if str(id) in char['Items'].keys() :
 		return 1
 	else : return 0
 

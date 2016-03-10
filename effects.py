@@ -39,11 +39,11 @@ def PrintItems(arguments) :
 	print ""
 def RemoveItem(arguments) :
 	global char
-	if arguments[0] in char['Items'] :
-		char['Items'] = [x for x in char['Items'] if x != arguments[0]]
+	if str(arguments[0]) in char['Items'].keys() :
+		del char['Items'][str(arguments[0])]
 def AddItem(arguments) :
 	global char
-	char['Items'].append(arguments[0])
+	char['Items'][str(arguments[0])] = 1
 def RemoveAbility(arguments) :
 	global char
 	if arguments[0] in char['Abilities'] :

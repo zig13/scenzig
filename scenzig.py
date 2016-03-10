@@ -42,7 +42,8 @@ import effects as efunc
 efunc.GiveAdv(a)
 import statecheck
 statecheck.GiveAdv(a)
-#import listgen
+import listcollate
+listcollate.GiveAdv(a)
 try :
 	characters = listdir(a.directory+"Characters")
 except OSError :
@@ -71,6 +72,7 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 efunc.GiveChar(c)
 statecheck.GiveChar(c)
+listcollate.GiveChar(c)
 import argsolve
 argsolve.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
@@ -84,24 +86,14 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 			arguments = argsolve.Solve(set[effect])
 			eval("efunc."+effect+"(arguments)")
 	c.write()
-	wlist = a.f['scenes'][str(c['Scenes']['Current'])]['wlist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['wlist']
-	blist = a.f['scenes'][str(c['Scenes']['Current'])]['blist'] + a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['blist']
-	#Above the Actions Whitelist and Blacklist are initalised by combining the lists from the current scene and it's current state.
-	#Below these lists are added to from any Abilities or Items the Character has and Action Groups listed in the current scene or scene state
-	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['wlistagrp'] : wlist += a.f['actiongrps'][str(agrp)]['list']
-	for agrp in a.f['scenes'][str(c['Scenes']['Current'])]['blistagrp'] : blist += a.f['actiongrps'][str(agrp)]['list']
-	for ablty in c['Abilities'] :
-		ablty = str(ablty)
-		wlist += a.f['abilities'][ablty]['wlist']
-		blist += a.f['abilities'][ablty]['blist']
-		for agrp in a.f['abilities'][ablty]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
-		for agrp in a.f['abilities'][ablty]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
-	for itm in c['Items'] :
-		itm = str(itm)
-		wlist += a.f['items'][itm]['wlist']
-		blist += a.f['items'][itm]['blist']
-		for agrp in a.f['items'][itm]['wlistagrp'] : wlist += a.f['actiongrps'][agrp]['wlist']
-		for agrp in a.f['items'][itm]['blistagrp'] : blist += a.f['actiongrps'][agrp]['blist']
+	scenelist = listcollate.CollateScene()
+	encounterlist = listcollate.CollateEncounter()
+	abilitylist = listcollate.CollateAbilities()
+	itemlist = listcollate.CollateItems()
+	vitallist = listcollate.CollateVitals()
+	attributelist = listcollate.CollateAttributes()
+	wlist = scenelist['white'] + encounterlist['white'] + abilitylist['white'] + itemlist['white'] + vitallist['white'] + attributelist['white']
+	blist = scenelist['black'] + encounterlist['black'] + abilitylist['black'] + itemlist['black'] + vitallist['black'] + attributelist['black']
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.

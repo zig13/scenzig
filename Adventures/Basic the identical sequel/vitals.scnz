@@ -5,6 +5,7 @@ evaluators = ['v1']
 	[[1]]
 	evaluations = {0:[976,1000]}
 	description = None
+	wlist = []
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]

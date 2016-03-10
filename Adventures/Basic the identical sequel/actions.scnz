@@ -1,7 +1,6 @@
 [0]
 [1]
 slug = 'Forward'
-description = None
 evaluators = []
 	[[1]]
 	evaluations = {}
@@ -9,7 +8,6 @@ evaluators = []
 	effects = {'SetScene':[2]}
 [2]
 slug = 'Back'
-description = None
 evaluators = []
 	[[1]]
 	evaluations = {}
@@ -49,7 +47,6 @@ evaluators = []
 	effects = {'PrintActions':[]}
 [9]
 slug = 'Teleport'
-description = None
 evaluators = []
 	[[1]]
 	evaluations = {}
@@ -72,7 +69,6 @@ evaluators = []
 	text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
 [12]
 slug = 'Drink poison'
-description = None
 evaluators = []
 	[[1]]
 	evaluations = {}
@@ -80,7 +76,6 @@ evaluators = []
 	effects = {'DamageVital':[1,'39+d81']}
 [13]
 slug = 'Drink strength potion'
-description = None
 evaluators = []
 	[[1]]
 	evaluations = {}

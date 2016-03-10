@@ -5,53 +5,43 @@ evaluators = ['a1']
 	[[1]]
 	evaluations = {0:[0,10]}
 	description = 'You are Incapacitated'
-	entereffects = {}
-	leaveeffects = {}
+	blist = [11]
 	[[2]]
 	evaluations = {0:[11,20]}
 	description = 'You are Incapacitated'
-	entereffects = {}
-	leaveeffects = {}
-	[[3]]
+	blist = [11]
+	[[11]]
 	evaluations = {0:[21,30]}
 	description = 'You are Frail'
-	entereffects = {}
-	leaveeffects = {}
+	blist = [11]
 	[[4]]
 	evaluations = {0:[31,40]}
 	description = 'You are Feeble'
-	entereffects = {}
-	leaveeffects = {}
+	blist = [11]
 	[[5]]
 	evaluations = {0:[41,50]}
 	description = 'You are Weak'
-	entereffects = {}
-	leaveeffects = {}
+	blist = [11]
 	[[6]]
 	evaluations = {0:[51,60]}
 	description = 'You are Very Strong'
-	entereffects = {'AddAbility': [3]}
-	leaveeffects = {'RemoveAbility': [3]}
+	wlist = [11]
 	[[7]]
 	evaluations = {0:[61,70]}
 	description = 'You are Mighty'
-	entereffects = {}
-	leaveeffects = {}
+	wlist = [11]
 	[[8]]
 	evaluations = {0:[71,80]}
 	description = 'You are Immensely Strong'
-	entereffects = {}
-	leaveeffects = {}
+	wlist = [11]
 	[[9]]
 	evaluations = {0:[81,90]}
 	description = 'You are Incredibly Strong'
-	entereffects = {}
-	leaveeffects = {}
+	wlist = [11]
 	[[10]]
 	evaluations = {0:[91,100]}
 	description = 'You are Herculean'
-	entereffects = {}
-	leaveeffects = {}
+	wlist = [11]
 [2]
 name = 'Knowledge'
 evaluators = ['a2']
@@ -65,7 +55,7 @@ evaluators = ['a2']
 	description = 'You are Naive'
 	entereffects = {}
 	leaveeffects = {}
-	[[3]]
+	[[11]]
 	evaluations = {0:[21,30]}
 	description = 'You are Ignorant'
 	entereffects = {}
