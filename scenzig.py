@@ -81,6 +81,8 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	effects += statecheck.CheckEncounter()
 	effects += statecheck.CheckAttributes()
 	effects += statecheck.CheckVitals()
+	effects += statecheck.CheckItems()
+	effects += statecheck.CheckAbilities()
 	for set in effects :
 		for effect in set.keys() :
 			arguments = argsolve.Solve(set[effect])

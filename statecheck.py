@@ -72,6 +72,48 @@ def CheckAttributes() :
 			except KeyError : pass #enter effects are optional
 			char['Attributes'][attribute][0] = resultstate
 	return effects
+	
+def CheckItems() :
+	global adv
+	global char
+	effects = []
+	for item in char['Items'].keys() :
+		currentstate = char['Items'][item]
+		evaluators = [argsolve.Solve(each) for each in adv.f['items'][item]['evaluators']]
+		try :
+			resultstate = int(FindState(adv.f['items'][item],evaluators))
+		except TypeError :
+			continue #If FindState returns None or another non-string then leave the Vital state alone
+		if resultstate != currentstate :
+			try :
+				effects.append(adv.f['items'][item][str(currentstate)]['leaveeffects'])
+			except KeyError : pass #leave effects are optional
+			try :
+				effects.append(adv.f['items'][item][str(resultstate)]['entereffects'])
+			except KeyError : pass #enter effects are optional
+			char['Items'][item] = resultstate
+	return effects
+	
+def CheckAbilities() :
+	global adv
+	global char
+	effects = []
+	for ability in char['Abilities'].keys() :
+		currentstate = char['Abilities'][ability]
+		evaluators = [argsolve.Solve(each) for each in adv.f['abilities'][ability]['evaluators']]
+		try :
+			resultstate = int(FindState(adv.f['abilities'][ability],evaluators))
+		except TypeError :
+			continue #If FindState returns None or another non-string then leave the Vital state alone
+		if resultstate != currentstate :
+			try :
+				effects.append(adv.f['abilities'][ability][str(currentstate)]['leaveeffects'])
+			except KeyError : pass #leave effects are optional
+			try :
+				effects.append(adv.f['abilities'][ability][str(resultstate)]['entereffects'])
+			except KeyError : pass #enter effects are optional
+			char['Abilities'][ability] = resultstate
+	return effects
 			
 def CheckEncounter() :
 	global adv
