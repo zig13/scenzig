@@ -1,7 +1,7 @@
 from os import curdir, sep, access, R_OK #sep and curdir produce the correct characters for the operating system in use
 from configobj import ConfigObj
 class Adventure :
-	datafiles = ['abilities', 'actions',  'actiongrps', 'attributes', 'classifications', 'currencies', 'encounters', 'items', 'main', 'scenes', 'vitals']
+	datafiles = ['abilities', 'actions',  'actiongrps', 'attributes', 'currencies', 'encounters', 'items', 'main', 'scenes', 'vitals']
 	def __init__(self, foldername) :
 		self.directory = curdir+sep+"Adventures"+sep+foldername+sep
 	def validate(self) :
