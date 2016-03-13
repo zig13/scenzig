@@ -13,14 +13,14 @@ def GiveChar(c) :
 def CollateScene() :
 	global adv
 	global char
-	scenedata = adv.f['scenes'][str(char['Scenes']['Current'])]	
-	stateid = str(char['Scenes']['States'][str(char['Scenes']['Current'])])
+	scenedata = adv.f['scenes'][str(char['Scene']['Current'])]	
+	stateid = str(char['SceneStates'][str(char['Scene']['Current'])])
 	return Collate(scenedata, stateid)	
 	
 def CollateEncounter() :
 	global adv
 	global char
-	encounterinfo = char['Scenes']['Encounters'][str(char['Scenes']['Current'])]
+	encounterinfo = char['Encounters'][str(char['Scene']['Current'])]
 	encounterdata = adv.f['encounters'][str(encounterinfo[0])]
 	stateid = str(encounterinfo[1])
 	return Collate(encounterdata, stateid)

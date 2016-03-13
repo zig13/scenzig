@@ -1,11 +1,11 @@
 Chapter = 0
-[Scenes]
+[Scene]
 Current = 1
 Previous = None
-	[[States]]
-	1 = 1
-	[[Encounters]]
-	1 = [0, 1]
+[SceneStates]
+1 = 1
+[Encounters]
+1 = [0, 1]
 [Items]
 4 = 1
 5 = 1

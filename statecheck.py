@@ -13,8 +13,8 @@ def GiveChar(c) :
 def CheckScene() :
 	global adv
 	global char
-	scene = char['Scenes']['Current']
-	currentstate = char['Scenes']['States'][str(scene)]
+	scene = char['Scene']['Current']
+	currentstate = char['SceneStates'][str(scene)]
 	effects = []
 	evaluators = [argsolve.Solve(each) for each in adv.f['scenes'][str(scene)]['evaluators']]
 	try :
@@ -28,7 +28,7 @@ def CheckScene() :
 		try :
 			effects.append(adv.f['scenes'][str(scene)][str(resultstate)]['entereffects'])
 		except KeyError : pass #enter effects are optional
-		char['Scenes']['States'][str(scene)] = resultstate
+		char['SceneStates'][str(scene)] = resultstate
 	return effects
 		
 def CheckVitals() :
@@ -118,9 +118,9 @@ def CheckAbilities() :
 def CheckEncounter() :
 	global adv
 	global char
-	scene = char['Scenes']['Current']
-	encounter = char['Scenes']['Encounters'][str(scene)][0]
-	currentstate = char['Scenes']['Encounters'][str(scene)][1]
+	scene = char['Scene']['Current']
+	encounter = char['Encounters'][str(scene)][0]
+	currentstate = char['Encounters'][str(scene)][1]
 	effects = []
 	evaluators = [argsolve.Solve(each) for each in adv.f['encounters'][str(encounter)]['evaluators']]
 	try :
@@ -134,7 +134,7 @@ def CheckEncounter() :
 		try :
 			effects.append(adv.f['encounters'][str(encounter)][str(resultstate)]['entereffects'])
 		except KeyError : pass #enter effects are optional
-		char['Scenes']['Encounters'][str(scene)][1] = resultstate
+		char['Encounters'][str(scene)][1] = resultstate
 	return effects
 			
 def DetermineOutcome(action) :

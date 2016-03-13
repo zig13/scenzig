@@ -99,10 +99,10 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])]['description']) #Scene description will be printed if there is one
-		nonemptyprint(a.f['scenes'][str(c['Scenes']['Current'])][str(c['Scenes']['States'][str(c['Scenes']['Current'])])]['description'])
-		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])]['description'])
-		nonemptyprint(a.f['encounters'][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][0])][str(c['Scenes']['Encounters'][str(c['Scenes']['Current'])][1])]['description'])
+		nonemptyprint(a.f['scenes'][str(c['Scene']['Current'])]['description']) #Scene description will be printed if there is one
+		nonemptyprint(a.f['scenes'][str(c['Scene']['Current'])][str(c['SceneStates'][str(c['Scene']['Current'])])]['description'])
+		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(c['Scene']['Current'])][0])]['description'])
+		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(c['Scene']['Current'])][0])][str(c['Encounters'][str(c['Scene']['Current'])][1])]['description'])
 		for vital in c['Vitals'].keys() :
 			nonemptyprint(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])]['description'])
 		prompt = raw_input(">").strip() #The main prompt

@@ -13,22 +13,22 @@ def GiveList(glist) :
 
 def SetScene(arguments) :
 	global char
-	char['Scenes']['Previous'] = char['Scenes']['Current']
-	if str(arguments[0]) not in char['Scenes']['States'].keys() : char['Scenes']['States'][str(arguments[0])] = 1
-	if str(arguments[0]) not in char['Scenes']['Encounters'].keys() : char['Scenes']['Encounters'][str(arguments[0])] = [0,1]
-	char['Scenes']['Current'] = arguments[0]
+	char['Scene']['Previous'] = char['Scene']['Current']
+	if str(arguments[0]) not in char['SceneStates'].keys() : char['SceneStates'][str(arguments[0])] = 1
+	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0,1]
+	char['Scene']['Current'] = arguments[0]
 def RevertScene(arguments) :
 	global char
-	temp = char['Scenes']['Current']
-	char['Scenes']['Current'] = char['Scenes']['Previous']
-	char['Scenes']['Previous'] = temp
+	temp = char['Scene']['Current']
+	char['Scene']['Current'] = char['Scene']['Previous']
+	char['Scene']['Previous'] = temp
 def SetSceneState(arguments) :
 	global char
 	try :
 		scene = arguments[1]
 	except IndexError : #If scene is not given then set scene state of current scene
-		scene = char['Scenes']['Current']
-	char['Scenes']['States'][str(scene)] = arguments[0]
+		scene = char['Scene']['Current']
+	char['SceneStates'][str(scene)] = arguments[0]
 def PrintItems(arguments) :
 	global char
 	global adv
