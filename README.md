@@ -28,12 +28,15 @@ The plan is to have the computer handle all the math so the player can focus on 
 - Script finds Characters and offers to load them
 - Script offers to create a new character
 - Script generates a list of valid actions based on White/Black-lists
+- Script prints scene text and scene state text (idea is scene state text is the detail)
+- Scenes, Encounters, Items, Abilities, Attributes and Vitals all have states which are automatically updated based on custom criteria
+- Actions have a number of outcomes. Which one occurs is based on custom criteria and evaluations.
 
 ## Roadmap
 
-- Print scene description and scene state description (idea is scene state description is the detail)
+- Write more varied demo adventures
+- Implement a bonus system. Plan is to borrow code from White/Black/Grey-listing so encounters, abilities, items etc can control whether bonuses are active.
 - New .py file with some basic effects as functions
-- Remove classes
 - Allow labels (replacement for classes) to be replaced into Scene descriptions
 - Equipment slots
 - Implement encounters
