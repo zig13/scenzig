@@ -1,0 +1,7 @@
+[0]
+[1]
+text = "You stand on a dance floor"
+wlist = [1]
+evaluators = []
+	[[1]]
+	wlist = [2]
