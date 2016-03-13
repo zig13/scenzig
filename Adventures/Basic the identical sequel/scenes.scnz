@@ -1,6 +1,6 @@
 [0]
 [1]
-description = "This is the first scene"
+text = "This is the first scene"
 wlist = [1,2,3]
 blist = []
 wlistagrp = []
@@ -8,20 +8,20 @@ blistagrp = []
 evaluators = ['i4']
 	[[1]]
 	evaluations = {0:[1,1]}
-	description = "This is the first state of the first scene"
+	text = "This is the first state of the first scene"
 	wlist = [6]
 	blist =[2,7]
 	wlistagrp = []
 	blistagrp = []
 	[[2]]
 	evaluations = {0:[0,0]}
-	description = "There is a stone on the ground"
+	text = "There is a stone on the ground"
 	wlist = [7,9]
 	blist =[6]
 	wlistagrp = []
 	blistagrp = []
 [2]
-description = "This is the second scene"
+text = "This is the second scene"
 wlist = [2]
 blist = []
 wlistagrp = []
@@ -29,40 +29,39 @@ blistagrp = []
 evaluators = ['i4']
 	[[1]]
 	evaluations = {0:[1,1]}
-	description = "This is the first state of the second scene"
+	text = "This is the first state of the second scene"
 	wlist = [2]
 	blist =[]
 	wlistagrp = []
 	blistagrp = []
 	[[2]]
 	evaluations = {0:[0,0]}
-	description = "There is a stone on the ground"
+	text = "There is a stone on the ground"
 	wlist = [7,9]
 	blist =[6]
 	wlistagrp = []
 	blistagrp = []
 [3]
-description = None
 wlist = []
 blist = []
 wlistagrp = []
 blistagrp = []
 evaluators = []
 	[[1]]
-	description = "Peggle"
+	text = "Peggle"
 	wlist = [2]
 	blist =[]
 	wlistagrp = []
 	blistagrp = []
 [4]
-description = "You are dead"
+text = "You are dead"
 wlist = []
 blist = [3,6,8,10]
 wlistagrp = []
 blistagrp = []
 evaluators = []
 	[[1]]
-	description = None
+	text = None
 	wlist = []
 	blist =[]
 	wlistagrp = []

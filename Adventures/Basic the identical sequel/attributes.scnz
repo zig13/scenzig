@@ -4,94 +4,94 @@ name = 'Strength'
 evaluators = ['a1']
 	[[1]]
 	evaluations = {0:[0,10]}
-	description = 'You are Incapacitated'
+	text = 'You are Incapacitated'
 	blist = [11]
 	[[2]]
 	evaluations = {0:[11,20]}
-	description = 'You are Incapacitated'
+	text = 'You are Incapacitated'
 	blist = [11]
 	[[11]]
 	evaluations = {0:[21,30]}
-	description = 'You are Frail'
+	text = 'You are Frail'
 	blist = [11]
 	[[4]]
 	evaluations = {0:[31,40]}
-	description = 'You are Feeble'
+	text = 'You are Feeble'
 	blist = [11]
 	[[5]]
 	evaluations = {0:[41,50]}
-	description = 'You are Weak'
+	text = 'You are Weak'
 	blist = [11]
 	[[6]]
 	evaluations = {0:[51,60]}
-	description = 'You are Very Strong'
+	text = 'You are Very Strong'
 	wlist = [11]
 	[[7]]
 	evaluations = {0:[61,70]}
-	description = 'You are Mighty'
+	text = 'You are Mighty'
 	wlist = [11]
 	[[8]]
 	evaluations = {0:[71,80]}
-	description = 'You are Immensely Strong'
+	text = 'You are Immensely Strong'
 	wlist = [11]
 	[[9]]
 	evaluations = {0:[81,90]}
-	description = 'You are Incredibly Strong'
+	text = 'You are Incredibly Strong'
 	wlist = [11]
 	[[10]]
 	evaluations = {0:[91,100]}
-	description = 'You are Herculean'
+	text = 'You are Herculean'
 	wlist = [11]
 [2]
 name = 'Knowledge'
 evaluators = ['a2']
 	[[1]]
 	evaluations = {0:[0,10]}
-	description = 'You are Vegetative'
+	text = 'You are Vegetative'
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
 	evaluations = {0:[11,20]}
-	description = 'You are Naive'
+	text = 'You are Naive'
 	entereffects = {}
 	leaveeffects = {}
 	[[11]]
 	evaluations = {0:[21,30]}
-	description = 'You are Ignorant'
+	text = 'You are Ignorant'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
 	evaluations = {0:[31,40]}
-	description = 'You are Dumb'
+	text = 'You are Dumb'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
 	evaluations = {0:[41,50]}
-	description = 'You are Poorly Educated'
+	text = 'You are Poorly Educated'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
 	evaluations = {0:[51,60]}
-	description = 'You are Very Knowledgeable'
+	text = 'You are Very Knowledgeable'
 	entereffects = {}
 	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[61,70]}
-	description = 'You are Highly Educated'
+	text = 'You are Highly Educated'
 	entereffects = {}
 	leaveeffects = {}
 	[[8]]
 	evaluations = {0:[71,80]}
-	description = 'You are Learned'
+	text = 'You are Learned'
 	entereffects = {}
 	leaveeffects = {}
 	[[9]]
 	evaluations = {0:[81,90]}
-	description = 'You are Enlightened'
+	text = 'You are Enlightened'
 	entereffects = {}
 	leaveeffects = {}
 	[[10]]
 	evaluations = {0:[91,100]}
-	description = 'You are Omniscient'
+	text = 'You are Omniscient'
 	entereffects = {}
 	leaveeffects = {}

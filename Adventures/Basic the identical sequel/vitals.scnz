@@ -4,38 +4,37 @@ name = 'Health'
 evaluators = ['v1']
 	[[1]]
 	evaluations = {0:[976,1000]}
-	description = None
 	wlist = []
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
 	evaluations = {0:[901,975]}
-	description = 'You are a bit worse for wear'
+	text = 'You are a bit worse for wear'
 	entereffects = {}
 	leaveeffects = {}
 	[[3]]
 	evaluations = {0:[801,900]}
-	description = 'You are hurt'
+	text = 'You are hurt'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
 	evaluations = {0:[501,800]}
-	description = 'You are injured'
+	text = 'You are injured'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
 	evaluations = {0:[181,500]}
-	description = 'You are severely injured'
+	text = 'You are severely injured'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
 	evaluations = {0:[1,180]}
-	description = 'You are near death'
+	text = 'You are near death'
 	entereffects = {}
 	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[0,0]}
-	description = None
+	text = None
 	entereffects = {'SetScene': [4]}
 	leaveeffects = {}
 [2]
@@ -43,41 +42,39 @@ name = 'Energy'
 evaluators = ['v2']
 	[[1]]
 	evaluations = {0:[976,1000]}
-	description = None
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
 	evaluations = {0:[901,975]}
-	description = 'You are mildly fatigued'
+	text = 'You are mildly fatigued'
 	entereffects = {}
 	leaveeffects = {}
 	[[3]]
 	evaluations = {0:[801,900]}
-	description = 'You are weary'
+	text = 'You are weary'
 	entereffects = {}
 	leaveeffects = {}
 	[[4]]
 	evaluations = {0:[501,800]}
-	description = 'You are tired'
+	text = 'You are tired'
 	entereffects = {}
 	leaveeffects = {}
 	[[5]]
 	evaluations = {0:[251,500]}
-	description = 'You are worn out'
+	text = 'You are worn out'
 	entereffects = {}
 	leaveeffects = {}
 	[[6]]
 	evaluations = {0:[181,250]}
-	description = 'You are exhausted'
+	text = 'You are exhausted'
 	entereffects = {}
 	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[1,180]}
-	description = 'You are totally cream crackered'
+	text = 'You are totally cream crackered'
 	entereffects = {}
 	leaveeffects = {}
 	[[8]]
 	evaluations = {0:[0,0]}
-	description = None
 	entereffects = {'SetScene': [4]}
 	leaveeffects = {}

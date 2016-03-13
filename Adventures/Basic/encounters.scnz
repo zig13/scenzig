@@ -1,25 +1,23 @@
 [0]
-description = None
 wlist = []
 blist = []
 wlistagrp = []
 blistagrp = []
 evaluators = []
 	[[1]]
-	description = None
 	wlist = []
 	blist =[]
 	wlistagrp = []
 	blistagrp = []
 [1]
-description = "This is an encounter"
+text = "This is an encounter"
 wlist = []
 blist = []
 wlistagrp = []
 blistagrp = []
 evaluators = []
 	[[1]]
-	description = "The encounter is unhurt"
+	text = "The encounter is unhurt"
 	wlist = []
 	blist =[]
 	wlistagrp = []

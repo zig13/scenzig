@@ -149,7 +149,7 @@ def DetermineOutcome(action) :
 		try :
 			effects = adv.f['actions'][action][outcome]['effects']
 		except KeyError : pass #effects are optional
-		nonemptyprint(adv.f['actions'][action][outcome]['text'])
+		nonemptyprint(adv.f['actions'][action][outcome])
 	return effects
 	
 def FindState(thing,evaluators) :

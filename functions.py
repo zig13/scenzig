@@ -72,8 +72,8 @@ def get_valid_filename(filename):
 	cleanedFilename = normalize('NFKD', unicode(filename, errors='ignore')).encode('ASCII', 'ignore')
 	return ''.join(c for c in cleanedFilename if c in validFilenameChars).strip().replace(' ', '_')
 	
-def nonemptyprint(string):
+def nonemptyprint(thing):
 	try :
-		print string+"\n"
-	except TypeError, KeyError:
+		print thing['text']+"\n"
+	except (TypeError, KeyError):
 		return
