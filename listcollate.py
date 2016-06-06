@@ -31,7 +31,7 @@ def CollateAbilities() :
 	result = {'white':[],'black':[]}
 	for ability in char['Abilities'].keys() :
 		abilitydata = adv.f['abilities'][str(ability)]
-		stateid = char['Abilities'][str(ability)]
+		stateid = str(char['Abilities'][str(ability)])
 		lists = Collate(abilitydata, stateid)
 		result['white'] += lists['white']
 		result['black'] += lists['black']
@@ -43,7 +43,7 @@ def CollateItems() :
 	result = {'white':[],'black':[]}
 	for item in char['Items'].keys() :
 		itemdata = adv.f['items'][str(item)]
-		stateid = char['Items'][str(item)]
+		stateid = str(char['Items'][str(item)])
 		lists = Collate(itemdata, stateid)
 		result['white'] += lists['white']
 		result['black'] += lists['black']
@@ -55,7 +55,7 @@ def CollateVitals() :
 	result = {'white':[],'black':[]}
 	for vital in char['Vitals'].keys() :
 		itemdata = adv.f['vitals'][str(vital)]
-		stateid = char['Vitals'][str(vital)][0]
+		stateid = str(char['Vitals'][str(vital)][0])
 		lists = Collate(itemdata, str(stateid))
 		result['white'] += lists['white']
 		result['black'] += lists['black']
@@ -67,7 +67,7 @@ def CollateAttributes() :
 	result = {'white':[],'black':[]}
 	for attribute in char['Attributes'].keys() :
 		itemdata = adv.f['attributes'][str(attribute)]
-		stateid = char['Attributes'][str(attribute)][0]
+		stateid = str(char['Attributes'][str(attribute)][0])
 		lists = Collate(itemdata, str(stateid))
 		result['white'] += lists['white']
 		result['black'] += lists['black']
