@@ -49,14 +49,16 @@ def RemoveItem(arguments) :
 		del char['Items'][str(arguments[0])]
 def AddItem(arguments) : #Is also able to change the state of an existing item
 	global char
-	char['Items'][str(arguments[0])] = 1
+	if len(arguments) < 2 : arguments.append(1) #If no state is provided use state 1
+	char['Items'][str(arguments[0])] = arguments[1]
 def RemoveAbility(arguments) :
 	global char
 	if str(arguments[0]) in char['Abilities'].keys() :
 		del char['Abilities'][str(arguments[0])]
 def AddAbility(arguments) : #Is also able to change the state of an existing ability
 	global char
-	char['Abilities'][str(arguments[0])] = 1
+	if len(arguments) < 2 : arguments.append(1) #If no state is provided use state 1
+	char['Abilities'][str(arguments[0])] = arguments[1]
 def PrintActions(arguments) :
 	global listg
 	global adv
