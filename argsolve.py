@@ -15,7 +15,7 @@ def a(id) :
 		return 0
 	if str(id) in char['Attributes'].keys() :
 		return char['Attributes'][str(id)][1]
-	else : #If the character does not a currency of the given ID, it is taken to be 0.
+	else : #If the character does not have an attribute of the given ID, it is taken to be 0.
 		return 0
 def v(id) :
 	global char
@@ -24,7 +24,7 @@ def v(id) :
 		return 0
 	if str(id) in char['Vitals'].keys() :
 		return char['Vitals'][str(id)][1]
-	else : #If the character does not a vital of the given ID, it is taken to be 0.
+	else : #If the character does not have a vital of the given ID, it is taken to be 0.
 		return 0
 def c(id) :
 	global char
@@ -33,10 +33,9 @@ def c(id) :
 		return 0
 	if str(id) in char['Currencies'].keys() :
 		return char['Currencies'][str(id)]
-	else : #If the character does not a currency of the given ID, it is taken to be 0.
+	else : #If the character does not have a currency of the given ID, it is taken to be 0.
 		return 0
-		
-def i(id) :
+def i(id) : #i will return 1 if the character has an item of the given id in thier inventory else 0
 	global char
 	if char is None:
 		print "Character data not available"
@@ -44,6 +43,18 @@ def i(id) :
 	if str(id) in char['Items'].keys() :
 		return 1
 	else : return 0
+def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
+	global char
+	if char is None:
+		print "Character data not available"
+		return 0
+	if id is 0 :
+		return char['Scene']['Current']
+	else :
+		try :
+			return char['SceneStates'][str(id)]
+		except KeyError :
+			return 0
 
 def Solve(arg) :
 	if isinstance(arg, list) :
@@ -62,10 +73,10 @@ def Solve(arg) :
 				print "Sorry. The only operators I recognise at the moment are + (add), - (minus) and x (multiply)"
 				return 0
 			except NameError: #This will occur is the input is something like bert or b20
-				print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup), i (character has item) and c (currency lookup).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
+				print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) s0 (current scene) and s# (gives state of given scene).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
 				return 0
 			except SyntaxError:
-				print "Only integers can follow d (dice roll), v (vital lookup), a (attribute lookup), i (character has item) and c (currency lookup)"
+				print "Only integers can follow d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) and s (gives state of given scene)."
 				return 0
 		elif optotal == 1 :
 			oprtr = {vr: ky for ky, vr in opcounts.iteritems()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
