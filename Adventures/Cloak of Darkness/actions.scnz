@@ -1,0 +1,74 @@
+[0]
+[1]
+slug = 'Enter the Opera House'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'SetScene':[2]}
+[2]
+slug = 'Go North'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	text = "You've only just arrived, and besides, the weather outside seems to be getting worse."
+[3]
+slug = 'Go South'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'SetScene':[4]}
+[4]
+slug = 'Go West'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'SetScene':[3]}
+[5]
+slug = 'Inventory'
+description = 'Look at what items you are carrying'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'PrintItems':[]}
+[6]
+slug = 'Help'
+description = 'Display available actions'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'PrintActions':[]}
+[7]
+slug = 'Go North'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'SetScene':[2]}
+[8]
+slug = 'Go East'
+evaluators = []
+	[[1]]
+	evaluations = {}
+	effects = {'SetScene':[2]}
+[9]
+slug = 'Take Off Cloak'
+evaluators = ['s0']
+	[[1]]
+	evaluations = {0:[1,1]}
+	text = "Why not wait until you're somewhere dry before taking of your cloak."
+	[[2]]
+	evaluations = {0:[2,3]}
+	text = "You fold the cloak over your arm. It feels distinctly damp."
+	effects = {'AddItem':[1,2]}
+	[[3]]
+	evaluations = {0:[4,4]}
+	text = "You fumble with the clasp in the dark but fail to achieve anything."
+[9]
+slug = 'Drop Cloak'
+evaluators = ['s0']
+	[[1]]
+	evaluations = {0:[2,2]}
+	text = "This dosn't seem an appropriate place to leave your cloak. Someone is likely to tread on it."
+	[[2]]
+	evaluations = {0:[3,3]}
+	text = "You dump the cloak on the floor despite the availability of a perfectly good hook."
+	effects = {'RemoveItem':[1]}

@@ -1,0 +1,17 @@
+Chapter = 0
+[Scene]
+Current = 1
+Previous = None
+[SceneStates]
+1 = 1
+[Encounters]
+1 = [0, 1]
+[Items]
+1 = 1
+[Abilities]
+1 = 1
+[Vitals]
+
+[Attributes]
+
+[Currencies]
