@@ -35,7 +35,13 @@ def PrintItems(arguments) :
 	if len(char['Items']) == 0 : return
 	print "You are carrying:"
 	for itm in char['Items'] :
-			print adv.f['items'][str(itm)]['description']
+			try :
+				print adv.f['items'][str(itm)][str(char['Items'][str(itm)])]['description']
+			except KeyError :
+				try :
+					print adv.f['items'][str(itm)]['description']
+				except KeyError :
+					pass
 	print ""
 def RemoveItem(arguments) :
 	global char
