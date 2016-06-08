@@ -17,18 +17,19 @@ def CheckScene() :
 	currentstate = char['SceneStates'][str(scene)]
 	effects = []
 	evaluators = [argsolve.Solve(each) for each in adv.f['scenes'][str(scene)]['evaluators']]
-	try :
-		resultstate = int(FindState(adv.f['scenes'][str(scene)],evaluators))
-	except TypeError:
-		return effects #If FindState returns None or another non-string then leave the Scene state alone
-	if resultstate != currentstate :
+	if FindState(dict([(str(currentstate), adv.f['scenes'][str(scene)][str(currentstate)])]),evaluators) is None : #Passes the current state only to FindState to test it
 		try :
-			effects.append(adv.f['scenes'][str(scene)][str(currentstate)]['leaveeffects'])
-		except KeyError : pass #leave effects are optional
-		try :
-			effects.append(adv.f['scenes'][str(scene)][str(resultstate)]['entereffects'])
-		except KeyError : pass #enter effects are optional
-		char['SceneStates'][str(scene)] = resultstate
+			resultstate = int(FindState(adv.f['scenes'][str(scene)],evaluators))
+		except TypeError:
+			return effects #If FindState returns None or another non-string then leave the Scene state alone
+		if resultstate != currentstate :
+			try :
+				effects.append(adv.f['scenes'][str(scene)][str(currentstate)]['leaveeffects'])
+			except KeyError : pass #leave effects are optional
+			try :
+				effects.append(adv.f['scenes'][str(scene)][str(resultstate)]['entereffects'])
+			except KeyError : pass #enter effects are optional
+			char['SceneStates'][str(scene)] = resultstate
 	return effects
 		
 def CheckVitals() :
@@ -38,18 +39,19 @@ def CheckVitals() :
 	for vital in char['Vitals'].keys() :
 		currentstate = char['Vitals'][vital][0]
 		evaluators = [argsolve.Solve(each) for each in adv.f['vitals'][vital]['evaluators']]
-		try :
-			resultstate = int(FindState(adv.f['vitals'][vital],evaluators))
-		except TypeError :
-			continue #If FindState returns None or another non-string then leave the Vital state alone
-		if resultstate != currentstate :
+		if FindState(dict([(str(currentstate), adv.f['vitals'][vital][str(currentstate)])]),evaluators) is None : #Passes the current state only to FindState to test it
 			try :
-				effects.append(adv.f['vitals'][vital][str(currentstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-			try :
-				effects.append(adv.f['vitals'][vital][str(resultstate)]['entereffects'])
-			except KeyError : pass #enter effects are optional
-			char['Vitals'][vital][0] = resultstate
+				resultstate = int(FindState(adv.f['vitals'][vital],evaluators))
+			except TypeError :
+				continue #If FindState returns None or another non-string then leave the Vital state alone
+			if resultstate != currentstate :
+				try :
+					effects.append(adv.f['vitals'][vital][str(currentstate)]['leaveeffects'])
+				except KeyError : pass #leave effects are optional
+				try :
+					effects.append(adv.f['vitals'][vital][str(resultstate)]['entereffects'])
+				except KeyError : pass #enter effects are optional
+				char['Vitals'][vital][0] = resultstate
 	return effects	
 		
 def CheckAttributes() :
@@ -59,18 +61,19 @@ def CheckAttributes() :
 	for attribute in char['Attributes'].keys() :
 		currentstate = char['Attributes'][attribute][0]
 		evaluators = [argsolve.Solve(each) for each in adv.f['attributes'][attribute]['evaluators']]
-		try :
-			resultstate = int(FindState(adv.f['attributes'][attribute],evaluators))
-		except TypeError :
-			continue #If FindState returns None or another non-string then leave the Vital state alone
-		if resultstate != currentstate :
+		if FindState(dict([(str(currentstate), adv.f['attributes'][attribute][str(currentstate)])]),evaluators) is None : #Passes the current state only to FindState to test it
 			try :
-				effects.append(adv.f['attributes'][attribute][str(currentstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-			try :
-				effects.append(adv.f['attributes'][attribute][str(resultstate)]['entereffects'])
-			except KeyError : pass #enter effects are optional
-			char['Attributes'][attribute][0] = resultstate
+				resultstate = int(FindState(adv.f['attributes'][attribute],evaluators))
+			except TypeError :
+				continue #If FindState returns None or another non-string then leave the Vital state alone
+			if resultstate != currentstate :
+				try :
+					effects.append(adv.f['attributes'][attribute][str(currentstate)]['leaveeffects'])
+				except KeyError : pass #leave effects are optional
+				try :
+					effects.append(adv.f['attributes'][attribute][str(resultstate)]['entereffects'])
+				except KeyError : pass #enter effects are optional
+				char['Attributes'][attribute][0] = resultstate
 	return effects
 	
 def CheckItems() :
@@ -80,18 +83,19 @@ def CheckItems() :
 	for item in char['Items'].keys() :
 		currentstate = char['Items'][item]
 		evaluators = [argsolve.Solve(each) for each in adv.f['items'][item]['evaluators']]
-		try :
-			resultstate = int(FindState(adv.f['items'][item],evaluators))
-		except TypeError :
-			continue #If FindState returns None or another non-string then leave the Vital state alone
-		if resultstate != currentstate :
+		if FindState(dict([(str(currentstate), adv.f['items'][item][str(currentstate)])]),evaluators) is None : #Passes the current state only to FindState to test it
 			try :
-				effects.append(adv.f['items'][item][str(currentstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-			try :
-				effects.append(adv.f['items'][item][str(resultstate)]['entereffects'])
-			except KeyError : pass #enter effects are optional
-			char['Items'][item] = resultstate
+				resultstate = int(FindState(adv.f['items'][item],evaluators))
+			except TypeError :
+				continue #If FindState returns None or another non-string then leave the Vital state alone
+			if resultstate != currentstate :
+				try :
+					effects.append(adv.f['items'][item][str(currentstate)]['leaveeffects'])
+				except KeyError : pass #leave effects are optional
+				try :
+					effects.append(adv.f['items'][item][str(resultstate)]['entereffects'])
+				except KeyError : pass #enter effects are optional
+				char['Items'][item] = resultstate
 	return effects
 	
 def CheckAbilities() :
@@ -101,18 +105,19 @@ def CheckAbilities() :
 	for ability in char['Abilities'].keys() :
 		currentstate = char['Abilities'][ability]
 		evaluators = [argsolve.Solve(each) for each in adv.f['abilities'][ability]['evaluators']]
-		try :
-			resultstate = int(FindState(adv.f['abilities'][ability],evaluators))
-		except TypeError :
-			continue #If FindState returns None or another non-string then leave the Vital state alone
-		if resultstate != currentstate :
+		if FindState(dict([(str(currentstate), adv.f['abilities'][ability][str(currentstate)])]),evaluators) is None : #Passes the current state only to FindState to test it
 			try :
-				effects.append(adv.f['abilities'][ability][str(currentstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-			try :
-				effects.append(adv.f['abilities'][ability][str(resultstate)]['entereffects'])
-			except KeyError : pass #enter effects are optional
-			char['Abilities'][ability] = resultstate
+				resultstate = int(FindState(adv.f['abilities'][ability],evaluators))
+			except TypeError :
+				continue #If FindState returns None or another non-string then leave the Vital state alone
+			if resultstate != currentstate :
+				try :
+					effects.append(adv.f['abilities'][ability][str(currentstate)]['leaveeffects'])
+				except KeyError : pass #leave effects are optional
+				try :
+					effects.append(adv.f['abilities'][ability][str(resultstate)]['entereffects'])
+				except KeyError : pass #enter effects are optional
+				char['Abilities'][ability] = resultstate
 	return effects
 			
 def CheckEncounter() :
