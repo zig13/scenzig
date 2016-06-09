@@ -62,7 +62,7 @@ evaluators = ['s0']
 	[[3]]
 	evaluations = {0:[4,4]}
 	text = "You fumble with the clasp in the dark but fail to achieve anything."
-[9]
+[10]
 slug = 'Drop Cloak'
 evaluators = ['s0']
 	[[1]]

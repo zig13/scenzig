@@ -8,4 +8,4 @@ evaluators = []
 	[[2]]
 	evaluations = {}
 	description = 'a velvet cloak'
-	wlist = []
+	wlist = [10]
