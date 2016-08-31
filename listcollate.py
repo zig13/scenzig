@@ -14,16 +14,16 @@ def CollateScene() :
 	global adv
 	global char
 	scenedata = adv.f['scenes'][str(char['Scene']['Current'])]	
-	stateid = str(char['SceneStates'][str(char['Scene']['Current'])])
-	return Collate(scenedata, stateid)	
+	states = str(char['SceneStates'][str(char['Scene']['Current'])])
+	return Collate(scenedata, states)	
 	
 def CollateEncounter() :
 	global adv
 	global char
 	encounterinfo = char['Encounters'][str(char['Scene']['Current'])]
 	encounterdata = adv.f['encounters'][str(encounterinfo[0])]
-	stateid = str(encounterinfo[1])
-	return Collate(encounterdata, stateid)
+	states = str(encounterinfo[1])
+	return Collate(encounterdata, states)
 	
 def CollateAbilities() :
 	global adv
@@ -31,8 +31,8 @@ def CollateAbilities() :
 	result = {'white':[],'black':[]}
 	for ability in char['Abilities'].keys() :
 		abilitydata = adv.f['abilities'][str(ability)]
-		stateid = str(char['Abilities'][str(ability)])
-		lists = Collate(abilitydata, stateid)
+		states = str(char['Abilities'][str(ability)])
+		lists = Collate(abilitydata, states)
 		result['white'] += lists['white']
 		result['black'] += lists['black']
 	return result
@@ -43,8 +43,8 @@ def CollateItems() :
 	result = {'white':[],'black':[]}
 	for item in char['Items'].keys() :
 		itemdata = adv.f['items'][str(item)]
-		stateid = str(char['Items'][str(item)])
-		lists = Collate(itemdata, stateid)
+		states = str(char['Items'][str(item)])
+		lists = Collate(itemdata, states)
 		result['white'] += lists['white']
 		result['black'] += lists['black']
 	return result
@@ -55,8 +55,8 @@ def CollateVitals() :
 	result = {'white':[],'black':[]}
 	for vital in char['Vitals'].keys() :
 		itemdata = adv.f['vitals'][str(vital)]
-		stateid = str(char['Vitals'][str(vital)][0])
-		lists = Collate(itemdata, str(stateid))
+		states = str(char['Vitals'][str(vital)][0])
+		lists = Collate(itemdata, str(states))
 		result['white'] += lists['white']
 		result['black'] += lists['black']
 	return result
@@ -67,29 +67,20 @@ def CollateAttributes() :
 	result = {'white':[],'black':[]}
 	for attribute in char['Attributes'].keys() :
 		itemdata = adv.f['attributes'][str(attribute)]
-		stateid = str(char['Attributes'][str(attribute)][0])
-		lists = Collate(itemdata, str(stateid))
+		states = str(char['Attributes'][str(attribute)][0])
+		lists = Collate(itemdata, str(states))
 		result['white'] += lists['white']
 		result['black'] += lists['black']
 	return result
 
-def Collate(aspectdata,stateid) :
+def Collate(aspectdata,states) :
 	global actiongroups
-	result = {'white':[],'black':[]}
+	result = {'white':[],'black':[]}	
 	try :
 		result['white'] += aspectdata['wlist']
 	except KeyError : pass
 	try :
 		for grp in aspectdata['wlistagrp'] :
-			try :
-				result['white'] += actiongroups[str(agrp)]['list']
-			except KeyError : pass
-	except KeyError : pass
-	try :
-		result['white'] += aspectdata[stateid]['wlist']
-	except KeyError : pass
-	try :
-		for grp in aspectdata[stateid]['wlistagrp'] :
 			try :
 				result['white'] += actiongroups[str(agrp)]['list']
 			except KeyError : pass
@@ -103,13 +94,24 @@ def Collate(aspectdata,stateid) :
 				result['black'] += actiongroups[str(agrp)]['list']
 			except KeyError : pass
 	except KeyError : pass
-	try :
-		result['black'] += aspectdata[stateid]['blist']
-	except KeyError : pass
-	try :
-		for grp in aspectdata[stateid]['blistagrp'] :
-			try :
-				result['black'] += actiongroups[str(agrp)]['list']
-			except KeyError : pass
-	except KeyError : pass
+
+	for state in states :
+		try :
+			result['white'] += aspectdata[str(state)]['wlist']
+		except KeyError : pass
+		try :
+			for grp in aspectdata[str(state)]['wlistagrp'] :
+				try :
+					result['white'] += actiongroups[str(agrp)]['list']
+				except KeyError : pass
+		except KeyError : pass	
+		try :
+			result['black'] += aspectdata[str(state)]['blist']
+		except KeyError : pass
+		try :
+			for grp in aspectdata[str(state)]['blistagrp'] :
+				try :
+					result['black'] += actiongroups[str(agrp)]['list']
+				except KeyError : pass
+		except KeyError : pass
 	return result

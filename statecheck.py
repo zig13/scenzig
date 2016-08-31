@@ -7,6 +7,9 @@ inventory = None
 auto_scene_states = {}
 auto_encounter_states = {}
 auto_item_states = {}
+auto_ability_states = {}
+auto_vital_states = {}
+auto_attribute_states = {}
 import argsolve
 from functions import nonemptyprint
 
@@ -29,17 +32,18 @@ def PrepareScene() :
 	scene_data = adv.f['scenes'][str(scene)]
 	global auto_scene_states
 	if str(scene) not in auto_scene_states.keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
-		auto_scene_states[str(scene)] = :[x for x in StripNonStates(scene_data.keys()) if HasEvaluations(scene_data[x])]]		
+		auto_scene_states[str(scene)] = [x for x in StripNonStates(scene_data.keys()) if HasEvaluations(scene_data[x])]	
 def PrepareEncounter() :
 	global adv
 	global char
 	global scene
+	global encounter
 	encounter = char['Encounters'][str(scene)][0]
 	global encounter_data
 	encounter_data = adv.f['encounters'][str(encounter)]
 	global auto_encounter_states
 	if str(encounter) not in auto_encounter_states.keys() : #Creates a dictionary that lists the states that have evaluations for each Encounter encountered
-		auto_encounter_states[str(encounter)] = :[x for x in StripNonStates(scene_data.keys()) if HasEvaluations(scene_data[x])]]	
+		auto_encounter_states[str(encounter)] = [x for x in StripNonStates(encounter_data.keys()) if HasEvaluations(encounter_data[x])]
 def PrepareItems() :
 	global adv
 	global char
@@ -48,7 +52,7 @@ def PrepareItems() :
 	global auto_item_states
 	for item in inventory :	
 		if str(item) not in auto_item_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Item encountered
-			auto_item_states[str(item]] = [x for x in StripNonStates(adv.f['items'][str(item)].keys()) if HasEvaluations(StripNonStates(adv.f['items'][str(item)][x])]]
+			auto_item_states[str(item)] = [x for x in StripNonStates(adv.f['items'][str(item)].keys()) if HasEvaluations(adv.f['items'][str(item)][x])]
 def PrepareAbilities() :
 	global adv
 	global char
@@ -57,7 +61,7 @@ def PrepareAbilities() :
 	global auto_ability_states
 	for ability in inventory :	
 		if str(ability) not in auto_ability_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Item encountered
-			auto_ability_states[str(ability]] = [x for x in StripNonStates(adv.f['abilities'][str(ability)].keys()) if HasEvaluations(StripNonStates(adv.f['abilities'][str(ability)][x])]]
+			auto_ability_states[str(ability)] = [x for x in StripNonStates(adv.f['abilities'][str(ability)].keys()) if HasEvaluations(adv.f['abilities'][str(ability)][x])]
 def PrepareVitals() :
 	global adv
 	global char
@@ -66,7 +70,7 @@ def PrepareVitals() :
 	global auto_vital_states
 	for vital in inventory :	
 		if str(vital) not in auto_vital_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Vital encountered
-			auto_vital_states[str(vital]] = [x for x in StripNonStates(adv.f['vitals'][str(vital)].keys()) if HasEvaluations(StripNonStates(adv.f['vitals'][str(vital)][x])]]
+			auto_vital_states[str(vital)] = [x for x in StripNonStates(adv.f['vitals'][str(vital)].keys()) if HasEvaluations(adv.f['vitals'][str(vital)][x])]
 def PrepareAttributes() :
 	global adv
 	global char
@@ -75,7 +79,7 @@ def PrepareAttributes() :
 	global auto_attribute_states
 	for attribute in inventory :	
 		if str(attribute) not in auto_attribute_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Attribute encountered
-			auto_attribute_states[str(attribute]] = [x for x in StripNonStates(adv.f['attributes'][str(attribute)].keys()) if HasEvaluations(StripNonStates(adv.f['attributes'][str(attribute)][x])]]
+			auto_attribute_states[str(attribute)] = [x for x in StripNonStates(adv.f['attributes'][str(attribute)].keys()) if HasEvaluations(adv.f['attributes'][str(attribute)][x])]
 
 def StripNonStates(keys) :
 	return [ x for x in keys if x.isdigit() ]
@@ -95,7 +99,7 @@ def CheckScene() :
 	global auto_scene_states
 	current_states = char['SceneStates'][str(scene)][1]
 	evaluators = [argsolve.Solve(each) for each in scene_data['evaluators']]
-	new_states = [x for x in auto_scene_states if TestState(scene_data[str(x)],evaluators)]
+	new_states = [x for x in auto_scene_states[str(scene)] if TestState(scene_data[str(x)],evaluators)]
 	effects = {}
 	leaving_states = set(current_states).difference(set(new_states))
 	for leavingstate in leaving_states :
@@ -112,11 +116,12 @@ def CheckScene() :
 def CheckEncounter() :
 	global char
 	global scene
+	global encounter
 	global encounter_data
 	global auto_encounter_states
 	current_states = char['Encounters'][str(scene)][1][1]
 	evaluators = [argsolve.Solve(each) for each in encounter_data['evaluators']]
-	new_states = [x for x in auto_encounter_states if TestState(encounter_data[str(x)],evaluators)]
+	new_states = [x for x in auto_encounter_states[str(encounter)] if TestState(encounter_data[str(x)],evaluators)]
 	effects = {}
 	leaving_states = set(current_states).difference(set(new_states))
 	for leavingstate in leaving_states :
@@ -136,10 +141,10 @@ def CheckItems() :
 	global auto_item_states
 	effects = {}
 	for item in char['Items'].keys() :
-		currentstates = char['Items'][item][1]
+		current_states = char['Items'][item][1]
 		item_data = adv.f['items'][item]
 		evaluators = [argsolve.Solve(each) for each in item_data['evaluators']]
-		new_states = [x for x in auto_item_states if TestState(item_data[str(x)],evaluators)]
+		new_states = [x for x in auto_item_states[item] if TestState(item_data[str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
@@ -158,10 +163,10 @@ def CheckAbilities() :
 	global auto_ability_states
 	effects = {}
 	for ability in char['Abilities'].keys() :
-		currentstates = char['Abilities'][ability][1]
+		current_states = char['Abilities'][ability][1]
 		ability_data = adv.f['abilities'][ability]
 		evaluators = [argsolve.Solve(each) for each in ability_data['evaluators']]
-		new_states = [x for x in auto_ability_states if TestState(ability_data[str(x)],evaluators)]
+		new_states = [x for x in auto_ability_states[ability] if TestState(ability_data[str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
@@ -180,10 +185,10 @@ def CheckVitals() :
 	global auto_vital_states
 	effects = {}
 	for vital in char['Vitals'].keys() :
-		currentstates = char['Vitals'][vital][1]
+		current_states = char['Vitals'][vital][1]
 		vital_data = adv.f['vitals'][vital]
 		evaluators = [argsolve.Solve(each) for each in vital_data['evaluators']]
-		new_states = [x for x in auto_vital_states if TestState(vital_data[str(x)],evaluators)]
+		new_states = [x for x in auto_vital_states[vital] if TestState(vital_data[str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
@@ -202,10 +207,10 @@ def CheckAttributes() :
 	global auto_attribute_states
 	effects = {}
 	for attribute in char['Attributes'].keys() :
-		currentstates = char['Attributes'][attribute][1]
+		current_states = char['Attributes'][attribute][1]
 		attribute_data = adv.f['attributes'][attribute]
 		evaluators = [argsolve.Solve(each) for each in attribute_data['evaluators']]
-		new_states = [x for x in auto_attribute_states if TestState(attribute_data[str(x)],evaluators)]
+		new_states = [x for x in auto_attribute_states[attribute] if TestState(attribute_data[str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
@@ -226,8 +231,16 @@ def DetermineOutcomes(action) :
 	action_data = adv.f['actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
 	effects = {}
-	evaluators = [argsolve.Solve(each) for each in action_data['evaluators']]
-	outcomes = [x for x in all_outcomes if TestState(action_data[str(x)],evaluators)]
+	print all_outcomes
+	if len(all_outcomes) == 1 :
+		outcomes = all_outcomes
+	else :
+		evaluators = [argsolve.Solve(each) for each in action_data['evaluators']]
+		outcomes = [x for x in all_outcomes if TestState(action_data[str(x)],evaluators)]
+	print action_data['1']
+	print TestState(action_data['1'],evaluators)
+	print evaluators
+	print outcomes
 	if not outcomes :
 		print "Nothing Happens\n" #This occurs if no outcomes match
 	else :
@@ -241,8 +254,10 @@ def DetermineOutcomes(action) :
 	return effects
 
 def TestState(statedata,evaluators) :
+	print statedata['evaluations'].keys()
 	for test in statedata['evaluations'].keys() :
-		verdict = CompareEval(thing[state]['evaluations'][test],evaluators[test])
+		verdict = CompareEval(statedata['evaluations'][test],evaluators[test])
+	return verdict
 	
 def CompareEval(valrange,value) :
 	verdict = True

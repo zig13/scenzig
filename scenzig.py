@@ -72,6 +72,12 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 efunc.GiveChar(c)
 statecheck.GiveChar(c)
+statecheck.PrepareScene()
+statecheck.PrepareEncounter()
+statecheck.PrepareItems()
+statecheck.PrepareAbilities()
+statecheck.PrepareVitals()
+statecheck.PrepareAttributes()
 listcollate.GiveChar(c)
 import argsolve
 argsolve.GiveChar(c)
@@ -99,12 +105,15 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['scenes'][str(c['Scene']['Current'])]) #Scene description will be printed if there is one
-		nonemptyprint(a.f['scenes'][str(c['Scene']['Current'])][str(c['SceneStates'][str(c['Scene']['Current'])])])
-		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(c['Scene']['Current'])][0])])
-		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(c['Scene']['Current'])][0])][str(c['Encounters'][str(c['Scene']['Current'])][1])])
+		nonemptyprint(a.f['scenes'][str(statecheck.scene)]) #Scene description will be printed if there is one
+		for state in sorted(c['SceneStates'][str(statecheck.scene)][0] + c['SceneStates'][str(statecheck.scene)][1]) :
+			nonemptyprint(a.f['scenes'][str(statecheck.scene)][str(state)])
+		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(statecheck.scene)][0])]) #Encounter description will be printed if there is one
+		for state in sorted(c['Encounters'][str(statecheck.scene)][1][0] + c['Encounters'][str(statecheck.scene)][1][1]) :
+			nonemptyprint(a.f['encounters'][str(c['Encounters'][str(statecheck.scene)][0])][str(state)])
 		for vital in c['Vitals'].keys() :
-			nonemptyprint(a.f['vitals'][str(vital)][str(c['Vitals'][vital][0])])
+			for state in sorted(c['Vitals'][vital][0][0] + c['Vitals'][vital][0][1]) :
+				nonemptyprint(a.f['vitals'][vital][str(state)])
 		prompt = raw_input(">").strip() #The main prompt
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
@@ -124,7 +133,7 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 					Clr()
 					continue
 		Clr()
-		effects = statecheck.DetermineOutcome(action)
+		effects = statecheck.DetermineOutcomes(action)
 		for effect in effects.keys() :
 			arguments = argsolve.Solve(effects[effect])
 			eval("efunc."+effect+"(arguments)")
