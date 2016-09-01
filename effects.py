@@ -15,11 +15,15 @@ def GiveList(glist) :
 def SetScene(arguments) :
 	global char
 	char['Scene']['Previous'] = char['Scene']['Current']
-	if str(arguments[0]) not in char['SceneStates'].keys() : char['SceneStates'][str(arguments[0])] = [[1],[]]
-	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0, [[1],[]]]
 	char['Scene']['Current'] = arguments[0]
-	statecheck.PrepareScene()
+	if str(arguments[0]) not in char['SceneStates'].keys() : char['SceneStates'][str(arguments[0])] = [[],[]]
+	statecheck.PrepareScene() #PrepareScene needs there to be a record for the new scene so the above generates an empty one
+	statecheck.CheckScene() #If CheckScene dosn't come up with anything then the below line sets the state to 1
+	if char['SceneStates'][str(arguments[0])] is [[],[]] : char['SceneStates'][str(arguments[0])] = [[1],[]]
+	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0, [[],[]]]
 	statecheck.PrepareEncounter()
+	statecheck.CheckEncounter()
+	if char['Encounters'][str(arguments[0])] is [0, [[],[]]] : char['Encounters'][str(arguments[0])] = [0, [[1],[]]]
 def RevertScene(arguments) :
 	global char
 	temp = char['Scene']['Current']
