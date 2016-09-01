@@ -54,7 +54,7 @@ def RemoveItem(arguments) :
 def AddItem(arguments) : #Is also able to change the state of an existing item
 	global char
 	if len(arguments) < 2 : arguments.append(1) #If no state is provided use state 1
-	char['Items'][str(arguments[0])] = arguments[1]
+	char['Items'][str(arguments[0])] = [[arguments[1]],[]]
 	statecheck.PrepareItems()
 def RemoveAbility(arguments) :
 	global char
@@ -64,7 +64,7 @@ def RemoveAbility(arguments) :
 def AddAbility(arguments) : #Is also able to change the state of an existing ability
 	global char
 	if len(arguments) < 2 : arguments.append(1) #If no state is provided use state 1
-	char['Abilities'][str(arguments[0])] = arguments[1]
+	char['Abilities'][str(arguments[0])] = [[arguments[1]],[]]
 	statecheck.PrepareAbilities()
 def PrintActions(arguments) :
 	global listg
