@@ -21,12 +21,14 @@ wlist = [7]
 evaluators = ['i1']
 	[[1]]
 	text = "The only light is from the open door behind you. The far reaches of the room are filled with impenetrable darkness."
-	wlist = []
 	evaluations = {0:[1,1]}
 	[[2]]
 	text = "There seems to be some sort of message scrawled in the sawdust on the floor."
-	wlist = []
+	wlist = [11]
 	evaluations = {0:[0,0]}
 [5]
-text = 'The message reads "You win the game."'
-blist = []
+evaluators =[]
+	[[1]]
+	text = 'The message, neatly marked in the sawdust, reads "You have won"'
+	[[2]]
+	text = 'The message has been carelessly trampled, making it difficult to read. You can just distinguish the words "You have lost"'
