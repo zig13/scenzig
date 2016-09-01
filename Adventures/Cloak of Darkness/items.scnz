@@ -2,10 +2,8 @@
 [1]
 evaluators = []
 	[[1]]
-	evaluations = {}
 	description = 'a velvet cloak (worn)'
 	wlist = [9]
 	[[2]]
-	evaluations = {}
 	description = 'a velvet cloak'
 	wlist = [10]
