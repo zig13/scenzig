@@ -25,6 +25,8 @@ def RevertScene(arguments) :
 	temp = char['Scene']['Current']
 	char['Scene']['Current'] = char['Scene']['Previous']
 	char['Scene']['Previous'] = temp
+	statecheck.PrepareScene()
+	statecheck.CheckScene()
 def SetSceneState(arguments) :
 	global char
 	try :
