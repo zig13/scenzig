@@ -1,6 +1,7 @@
 [0]
 [1]
 evaluators = []
+wlist = [12]
 	[[1]]
 	description = 'a velvet cloak (worn)'
 	wlist = [9]
