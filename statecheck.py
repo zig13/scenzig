@@ -231,16 +231,11 @@ def DetermineOutcomes(action) :
 	action_data = adv.f['actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
 	effects = {}
-	print all_outcomes
 	if len(all_outcomes) == 1 :
 		outcomes = all_outcomes
 	else :
 		evaluators = [argsolve.Solve(each) for each in action_data['evaluators']]
 		outcomes = [x for x in all_outcomes if TestState(action_data[str(x)],evaluators)]
-	print action_data['1']
-	print TestState(action_data['1'],evaluators)
-	print evaluators
-	print outcomes
 	if not outcomes :
 		print "Nothing Happens\n" #This occurs if no outcomes match
 	else :
@@ -254,7 +249,6 @@ def DetermineOutcomes(action) :
 	return effects
 
 def TestState(statedata,evaluators) :
-	print statedata['evaluations'].keys()
 	for test in statedata['evaluations'].keys() :
 		verdict = CompareEval(statedata['evaluations'][test],evaluators[test])
 	return verdict
