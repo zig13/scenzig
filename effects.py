@@ -37,7 +37,7 @@ def SetSceneState(arguments) :
 		scene = arguments[1]
 	except IndexError : #If scene is not given then set scene state of current scene
 		scene = char['Scene']['Current']
-	char['SceneStates'][str(scene)][0] = [arguments[0]]
+	char['SceneStates'][str(scene)][0] = [[[arguments[0]]],[]]
 def PrintItems(arguments) :
 	global char
 	global adv
