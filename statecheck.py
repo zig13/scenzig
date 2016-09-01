@@ -231,6 +231,9 @@ def DetermineOutcomes(action) :
 	action_data = adv.f['actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
 	effects = {}
+	try :
+		effects.update(adv.f['actions'][str(action)]['effects'])
+	except KeyError : pass #effects are optional
 	if len(all_outcomes) == 1 :
 		outcomes = all_outcomes
 	else :
