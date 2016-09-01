@@ -19,11 +19,11 @@ def SetScene(arguments) :
 	if str(arguments[0]) not in char['SceneStates'].keys() : char['SceneStates'][str(arguments[0])] = [[],[]]
 	statecheck.PrepareScene() #PrepareScene needs there to be a record for the new scene so the above generates an empty one
 	statecheck.CheckScene() #If CheckScene dosn't come up with anything then the below line sets the state to 1
-	if char['SceneStates'][str(arguments[0])] is [[],[]] : char['SceneStates'][str(arguments[0])] = [[1],[]]
+	if (not char['SceneStates'][str(arguments[0])][0]) and (not char['SceneStates'][str(arguments[0])][1]) : char['SceneStates'][str(arguments[0])] = [[1],[]]
 	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0, [[],[]]]
 	statecheck.PrepareEncounter()
 	statecheck.CheckEncounter()
-	if char['Encounters'][str(arguments[0])] is [0, [[],[]]] : char['Encounters'][str(arguments[0])] = [0, [[1],[]]]
+	if (not char['Encounters'][str(arguments[0])][1][0]) and (not char['Encounters'][str(arguments[0])][1][1]) : char['Encounters'][str(arguments[0])] = [0, [[1],[]]]
 def RevertScene(arguments) :
 	global char
 	temp = char['Scene']['Current']
