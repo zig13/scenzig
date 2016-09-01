@@ -62,6 +62,7 @@ evaluators = ['s0']
 	[[3]]
 	evaluations = {0:[4,4]}
 	text = "You fumble with the clasp in the dark but fail to achieve anything."
+	effects = {'SetSceneState':[2,5]}
 [10]
 slug = 'Drop Cloak'
 evaluators = ['s0']
@@ -72,3 +73,21 @@ evaluators = ['s0']
 	evaluations = {0:[3,3]}
 	text = "You dump the cloak on the floor despite the availability of a perfectly good hook."
 	effects = {'RemoveItem':[1]}
+[11]
+slug = 'Read Message'
+evaluators = []
+effects = {'RemoveAbility':[1],'SetScene':[5]}
+	[[1]]
+[12]
+slug = 'Examine Cloak'
+evaluators = ['s0']
+	[[1]]
+	evaluations = {0:[1,1]}
+	text = "It's keeping you dry. That's all that matters at the moment."
+	[[2]]
+	evaluations = {0:[2,3]}
+	text = "A handsome cloak, of velvet trimmed with satin, and slightly spattered with raindrops. Its blackness is so deep that it almost seems to suck light from the room."
+	[[3]]
+	evaluations = {0:[4,4]}
+	text = "The room is far too dark to discern anything about the cloak."
+	effects = {'SetSceneState':[2,5]}
