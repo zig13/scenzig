@@ -104,12 +104,12 @@ def CheckScene() :
 	leaving_states = set(current_states).difference(set(new_states))
 	for leavingstate in leaving_states :
 		try :
-			effects.append(scene_data[str(leavingstate)]['leaveeffects'])
+			effects.update(scene_data[str(leavingstate)]['leaveeffects'])
 		except KeyError : pass #leave effects are optional
 	entering_states = set(new_states).difference(set(current_states))
 	for enteringstate in entering_states :
 		try :
-			effects.append(scene_data[str(leavingstate)]['entereffects'])
+			effects.update(scene_data[str(enteringstate)]['entereffects'])
 		except KeyError : pass #leave effects are optional
 	char['SceneStates'][str(scene)][1] = new_states
 	return effects	
@@ -126,12 +126,12 @@ def CheckEncounter() :
 	leaving_states = set(current_states).difference(set(new_states))
 	for leavingstate in leaving_states :
 		try :
-			effects.append(encounter_data[str(leavingstate)]['leaveeffects'])
+			effects.update(encounter_data[str(leavingstate)]['leaveeffects'])
 		except KeyError : pass #leave effects are optional
 	entering_states = set(new_states).difference(set(current_states))
 	for enteringstate in entering_states :
 		try :
-			effects.append(encounter_data[str(leavingstate)]['entereffects'])
+			effects.update(encounter_data[str(enteringstate)]['entereffects'])
 		except KeyError : pass #leave effects are optional
 	char['Encounters'][str(scene)][1][1] = new_states
 	return effects	
@@ -148,12 +148,12 @@ def CheckItems() :
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
-				effects.append(item_data[str(leavingstate)]['leaveeffects'])
+				effects.update(item_data[str(leavingstate)]['leaveeffects'])
 			except KeyError : pass #leave effects are optional
 		entering_states = set(new_states).difference(set(current_states))
 		for enteringstate in entering_states :
 			try :
-				effects.append(item_data[str(leavingstate)]['entereffects'])
+				effects.update(item_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
 		char['Items'][item][1] = new_states
 	return effects	
@@ -170,12 +170,12 @@ def CheckAbilities() :
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
-				effects.append(ability_data[str(leavingstate)]['leaveeffects'])
+				effects.update(ability_data[str(leavingstate)]['leaveeffects'])
 			except KeyError : pass #leave effects are optional
 		entering_states = set(new_states).difference(set(current_states))
 		for enteringstate in entering_states :
 			try :
-				effects.append(ability_data[str(leavingstate)]['entereffects'])
+				effects.update(ability_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
 		char['Abilities'][ability][1] = new_states
 	return effects		
@@ -192,12 +192,12 @@ def CheckVitals() :
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
-				effects.append(vital_data[str(leavingstate)]['leaveeffects'])
+				effects.update(vital_data[str(leavingstate)]['leaveeffects'])
 			except KeyError : pass #leave effects are optional
 		entering_states = set(new_states).difference(set(current_states))
 		for enteringstate in entering_states :
 			try :
-				effects.append(vital_data[str(leavingstate)]['entereffects'])
+				effects.update(vital_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
 		char['Vitals'][vital][1] = new_states
 	return effects		
@@ -214,12 +214,12 @@ def CheckAttributes() :
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
-				effects.append(attribute_data[str(leavingstate)]['leaveeffects'])
+				effects.update(attribute_data[str(leavingstate)]['leaveeffects'])
 			except KeyError : pass #leave effects are optional
 		entering_states = set(new_states).difference(set(current_states))
 		for enteringstate in entering_states :
 			try :
-				effects.append(attribute_data[str(leavingstate)]['entereffects'])
+				effects.update(attribute_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
 		char['Attributes'][attribute][1] = new_states
 	return effects
