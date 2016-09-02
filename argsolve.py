@@ -52,7 +52,7 @@ def s(id) : #s has two functions. If passed 0 it will return the current scene e
 		return char['Scene']['Current']
 	else :
 		try :
-			return char['SceneStates'][str(id)]
+			return (sorted(c['SceneStates'][str(statecheck.scene)][0] + c['SceneStates'][str(statecheck.scene)][1]))[0]
 		except KeyError :
 			return 0
 
