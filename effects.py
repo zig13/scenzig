@@ -113,7 +113,7 @@ def DamageAttribute(arguments) :
 def BolsterAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
-		char['Attributes'][str(str(arguments[0]))][1] += arguments[1]
+		char['Attributes'][str(arguments[0])][1] += arguments[1]
 		try : #For each attribute, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
 			if char['Attributes'][str(str(arguments[0]))][1] > char['Attributes'][str(str(arguments[0]))][2] : char['Attributes'][str(str(arguments[0]))][1] = char['Attributes'][str(str(arguments[0]))][2]
 		except IndexError:
