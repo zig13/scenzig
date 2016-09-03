@@ -58,6 +58,10 @@ if len(characters) != 0 :
 	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
 	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
 		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
+		efunc.GiveChar(c)
+		statecheck.GiveChar(c)
+		statecheck.PrepareScene()
+		statecheck.PrepareEncounter()		
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
 	filename = get_valid_filename(raw_input("Please enter a name for your new character file:\n"))+".scz"
@@ -70,10 +74,9 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		raw_input("Character template missing or incorrectly named.")
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
-efunc.GiveChar(c)
-statecheck.GiveChar(c)
-statecheck.PrepareScene()
-statecheck.PrepareEncounter()
+	efunc.GiveChar(c)
+	statecheck.GiveChar(c)
+	efunc.SetScene([c['Scene']['Current']])
 statecheck.PrepareItems()
 statecheck.PrepareAbilities()
 statecheck.PrepareVitals()
