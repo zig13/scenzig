@@ -1,4 +1,5 @@
 import statecheck
+from functions import nonemptyprint
 adv = None
 char = None
 listg = None
@@ -37,7 +38,10 @@ def SetSceneState(arguments) :
 		scene = arguments[1]
 	except IndexError : #If scene is not given then set scene state of current scene
 		scene = char['Scene']['Current']
-	char['SceneStates'][str(scene)][0] = [[[arguments[0]]],[]]
+	try :
+		char['SceneStates'][str(scene)][0] = [arguments[0]]
+	except KeyError :
+		char['SceneStates'][str(scene)] = [[arguments[0]],[]]
 def PrintItems(arguments) :
 	global char
 	global adv
@@ -88,10 +92,8 @@ def PrintAttributes(arguments) :
 	global char
 	global adv
 	for attribute in char['Attributes'].keys() :
-			try :
-				print adv.f['attributes'][str(attribute)][str(char['Attributes'][attribute][0])]['description']+"\n"
-			except TypeError :
-				pass
+		firststate = (sorted(char['Attributes'][attribute][0][0] + char['Attributes'][attribute][0][1]))[0] #Merges the two state lists into 1, sorts them and takes the first numerically
+		nonemptyprint(adv.f['attributes'][str(attribute)][str(firststate)])
 def DamageVital(arguments) :
 	global char
 	if str(arguments[0]) in char['Vitals'].keys() :
