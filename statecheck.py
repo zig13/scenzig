@@ -4,6 +4,9 @@ scene = None
 scene_data = None
 encounter_data = None
 inventory = None
+abilities = None
+vitals = None
+attributes = None
 auto_scene_states = {}
 auto_encounter_states = {}
 auto_item_states = {}
@@ -56,28 +59,28 @@ def PrepareItems() :
 def PrepareAbilities() :
 	global adv
 	global char
-	global inventory
-	inventory = char['Abilities'].keys()
+	global abilities
+	abilities = char['Abilities'].keys()
 	global auto_ability_states
-	for ability in inventory :	
+	for ability in abilities :	
 		if str(ability) not in auto_ability_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Item encountered
 			auto_ability_states[str(ability)] = [x for x in StripNonStates(adv.f['abilities'][str(ability)].keys()) if HasEvaluations(adv.f['abilities'][str(ability)][x])]
 def PrepareVitals() :
 	global adv
 	global char
-	global inventory
-	inventory = char['Vitals'].keys()
+	global vitals
+	vitals = char['Vitals'].keys()
 	global auto_vital_states
-	for vital in inventory :	
+	for vital in vitals :	
 		if str(vital) not in auto_vital_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Vital encountered
 			auto_vital_states[str(vital)] = [x for x in StripNonStates(adv.f['vitals'][str(vital)].keys()) if HasEvaluations(adv.f['vitals'][str(vital)][x])]
 def PrepareAttributes() :
 	global adv
 	global char
-	global inventory
-	inventory = char['Attributes'].keys()
+	global attributes
+	attributes = char['Attributes'].keys()
 	global auto_attribute_states
-	for attribute in inventory :	
+	for attribute in attributes :	
 		if str(attribute) not in auto_attribute_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Attribute encountered
 			auto_attribute_states[str(attribute)] = [x for x in StripNonStates(adv.f['attributes'][str(attribute)].keys()) if HasEvaluations(adv.f['attributes'][str(attribute)][x])]
 
@@ -185,10 +188,10 @@ def CheckVitals() :
 	global auto_vital_states
 	effects = {}
 	for vital in char['Vitals'].keys() :
-		current_states = char['Vitals'][vital][1]
+		current_states = char['Vitals'][vital][0][1]
 		vital_data = adv.f['vitals'][vital]
 		evaluators = [argsolve.Solve(each) for each in vital_data['evaluators']]
-		new_states = [x for x in auto_vital_states[vital] if TestState(vital_data[str(x)],evaluators)]
+		new_states = [int(x) for x in auto_vital_states[vital] if TestState(vital_data[str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
@@ -199,7 +202,7 @@ def CheckVitals() :
 			try :
 				effects.update(vital_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
-		char['Vitals'][vital][1] = new_states
+		char['Vitals'][vital][0][1] = new_states
 	return effects		
 def CheckAttributes() :
 	global adv
@@ -207,10 +210,10 @@ def CheckAttributes() :
 	global auto_attribute_states
 	effects = {}
 	for attribute in char['Attributes'].keys() :
-		current_states = char['Attributes'][attribute][1]
+		current_states = char['Attributes'][attribute][0][1]
 		attribute_data = adv.f['attributes'][attribute]
 		evaluators = [argsolve.Solve(each) for each in attribute_data['evaluators']]
-		new_states = [x for x in auto_attribute_states[attribute] if TestState(attribute_data[str(x)],evaluators)]
+		new_states = [int(x) for x in auto_attribute_states[attribute] if TestState(attribute_data[str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
 			try :
@@ -221,7 +224,7 @@ def CheckAttributes() :
 			try :
 				effects.update(attribute_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
-		char['Attributes'][attribute][1] = new_states
+		char['Attributes'][attribute][0][1] = new_states
 	return effects
 
 #Outcomes of actions are determined much the same way as states are so code is shared	
