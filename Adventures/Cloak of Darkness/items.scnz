@@ -5,6 +5,7 @@ wlist = [12]
 	[[1]]
 	description = 'a velvet cloak (worn)'
 	wlist = [9]
+	blist = [10,14]
 	[[2]]
 	description = 'a velvet cloak'
-	wlist = [10]
+	wlist = [16]

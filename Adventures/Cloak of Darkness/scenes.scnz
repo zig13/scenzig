@@ -14,7 +14,13 @@ text = "The walls of this small room were clearly once lined with hooks, though 
 wlist = [8]
 evaluators = []
 	[[1]]
-	wlist = [10]
+	wlist = [10,14]
+	[[2]]
+	text = "There is a cloak piled messily in the centre of the floor"
+	wlist = [13]
+	[[3]]
+	text = "Hanging from the hook is a dark cloak."
+	wlist = [15]
 [4]
 text = "The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty."
 wlist = [7]
