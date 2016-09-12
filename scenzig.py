@@ -82,6 +82,8 @@ statecheck.PrepareAbilities()
 statecheck.PrepareVitals()
 statecheck.PrepareAttributes()
 listcollate.GiveChar(c)
+listcollate.SetBaseVitals()
+listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
 while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
@@ -97,6 +99,8 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 			arguments = argsolve.Solve(set[effect])
 			eval("efunc."+effect+"(arguments)")
 	c.write()
+	listcollate.reBaseVitals()
+	listcollate.reBaseAttributes()
 	scenelist = listcollate.CollateScene()
 	encounterlist = listcollate.CollateEncounter()
 	abilitylist = listcollate.CollateAbilities()
