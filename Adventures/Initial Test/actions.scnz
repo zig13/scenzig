@@ -19,7 +19,6 @@ description = 'Look at what items you are carrying'
 evaluators = []
 	[[1]]
 	evaluations = {}
-	text = 'None'
 	effects = {'PrintItems':[]}
 [6]
 slug = 'Drop stone'
