@@ -1,6 +1,10 @@
 adv = None
 actiongroups = None
 char = None
+vitalsbase = None
+vital = None
+attributesbase = None
+attributes = None
 def GiveAdv(a) :
 	global adv
 	adv = a
@@ -9,6 +13,23 @@ def GiveAdv(a) :
 def GiveChar(c) :
 	global char
 	char = c
+
+def SetBaseVitals() :
+	global char
+	global vitalsbase
+	vitalsbase = dict((vital, char['Attributes'][vital][1]) for vital in char['Vitals'].keys())
+def reBaseVitals() :
+	global vitalsbase
+	global vitals
+	vitals = vitalsbase
+def SetBaseAttributes() :
+	global char
+	global attributesbase
+	attributesbase = dict((attribute, char['Attributes'][attribute][1]) for attribute in char['Attributes'].keys())
+def reBaseAttributes() :
+	global attributesbase
+	global attributes
+	attributes = attributesbase
 	
 def CollateScene() :
 	global adv
