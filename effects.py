@@ -1,5 +1,6 @@
 import statecheck
 from functions import nonemptyprint
+from listcollate import SetBaseVitals, SetBaseAttributes
 adv = None
 char = None
 listg = None
@@ -99,6 +100,7 @@ def DamageVital(arguments) :
 	if str(arguments[0]) in char['Vitals'].keys() :
 		char['Vitals'][str(arguments[0])][1] -= arguments[1]
 		if char['Vitals'][str(arguments[0])][1] < 0 : char['Vitals'][str(arguments[0])][1] = 0
+		SetBaseVitals()
 def BolsterVital(arguments) :
 	global char
 	if str(arguments[0]) in char['Vitals'].keys() :
@@ -107,11 +109,13 @@ def BolsterVital(arguments) :
 			if char['Vitals'][str(arguments[0])][1] > char['Vitals'][str(arguments[0])][2] : char['Vitals'][str(arguments[0])][1] = char['Vitals'][str(arguments[0])][2]
 		except IndexError:
 			pass #Max value is optional
+		SetBaseVitals()
 def DamageAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
 		char['Attributes'][str(arguments[0])][1] -= arguments[1]
 		if char['Attributes'][str(arguments[0])][1] < 0 : char['Attributes'][str(arguments[0])][1] = 0
+		SetBaseAttributes()
 def BolsterAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
@@ -120,6 +124,7 @@ def BolsterAttribute(arguments) :
 			if char['Attributes'][str(str(arguments[0]))][1] > char['Attributes'][str(str(arguments[0]))][2] : char['Attributes'][str(str(arguments[0]))][1] = char['Attributes'][str(str(arguments[0]))][2]
 		except IndexError:
 			pass #Max value is optional
+		SetBaseAttributes()
 def TakeAction(arguments) :
 	action = arguments[0]
 	nonemptyprint(adv.f['actions'][action]['outcomes'][outcome]) #Action text will be printed if it exists
