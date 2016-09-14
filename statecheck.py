@@ -231,9 +231,10 @@ def CheckAttributes() :
 def DetermineOutcomes(action) :
 	global adv
 	global char
+	effects = {}
+	if action == 0 : return effects
 	action_data = adv.f['actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
-	effects = {}
 	try :
 		effects.update(adv.f['actions'][str(action)]['effects'])
 	except KeyError : pass #effects are optional
