@@ -2,7 +2,7 @@ adv = None
 actiongroups = None
 char = None
 vitalsbase = None
-vital = None
+vitals = None
 attributesbase = None
 attributes = None
 def GiveAdv(a) :
@@ -96,8 +96,16 @@ def CollateAttributes() :
 
 def Collate(aspectdata,states) :
 	global actiongroups
-	result = {'white':[],'black':[]}	
-	try :
+	result = {'white':[],'black':[]}
+	for vital in vitals :
+		try :
+			vitals[vital] += aspectdata['vitalbonuses'][vital]
+		except KeyError : pass
+	for attribute in attributes :
+		try :
+			attributes[attribute] += aspectdata['attributebonuses'][attribute]
+		except KeyError : pass
+	try : 
 		result['white'] += aspectdata['wlist']
 	except KeyError : pass
 	try :
@@ -117,6 +125,14 @@ def Collate(aspectdata,states) :
 	except KeyError : pass
 
 	for state in states :
+		for vital in vitals :
+			try :
+				vitals[vital] += aspectdata['vitalbonuses'][vital]
+			except KeyError : pass
+		for attribute in attributes :
+			try :
+				attributes[attribute] += aspectdata['attributebonuses'][attribute]
+			except KeyError : pass
 		try :
 			result['white'] += aspectdata[str(state)]['wlist']
 		except KeyError : pass
