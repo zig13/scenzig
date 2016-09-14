@@ -86,19 +86,11 @@ listcollate.SetBaseVitals()
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
-while True : #Primary loop. Is only broken by the quit command. Below is run after any action is taken
-	effects = []
-	effects += statecheck.CheckScene()
-	effects += statecheck.CheckEncounter()
-	effects += statecheck.CheckAttributes()
-	effects += statecheck.CheckVitals()
-	effects += statecheck.CheckItems()
-	effects += statecheck.CheckAbilities()
-	for set in effects :
-		for effect in set.keys() :
-			arguments = argsolve.Solve(set[effect])
-			eval("efunc."+effect+"(arguments)")
-	c.write()
+while True : #Primary loop. Below is run after an effect happens
+	effecthappened = False
+	
+	listcollate.reBaseVitals()
+	listcollate.reBaseAttributes()
 	listcollate.reBaseVitals()
 	listcollate.reBaseAttributes()
 	scenelist = listcollate.CollateScene()
@@ -107,11 +99,27 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 	itemlist = listcollate.CollateItems()
 	vitallist = listcollate.CollateVitals()
 	attributelist = listcollate.CollateAttributes()
+	
+	effects = []
+	effects.append(statecheck.CheckScene())
+	effects.append(statecheck.CheckEncounter())
+	effects.append(statecheck.CheckAttributes())
+	effects.append(statecheck.CheckVitals())
+	effects.append(statecheck.CheckItems())
+	effects.append(statecheck.CheckAbilities())
+	for set in effects :
+		for effect in set.keys() :
+			effecthappened = True
+			arguments = argsolve.Solve(set[effect])
+			eval("efunc."+effect+"(arguments)")
+	if effecthappened :
+		continue #Restarts the primary loop early if an effect happens
+	c.write()
 	wlist = scenelist['white'] + encounterlist['white'] + abilitylist['white'] + itemlist['white'] + vitallist['white'] + attributelist['white']
 	blist = scenelist['black'] + encounterlist['black'] + abilitylist['black'] + itemlist['black'] + vitallist['black'] + attributelist['black']
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
-	while True : #Secondary loop. Is broken when an action is taken. The code below is repeated when anything is put into the prompt regardless of validity.
+	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		nonemptyprint(a.f['scenes'][str(statecheck.scene)]) #Scene description will be printed if there is one
 		for state in sorted(c['SceneStates'][str(statecheck.scene)][0] + c['SceneStates'][str(statecheck.scene)][1]) :
 			nonemptyprint(a.f['scenes'][str(statecheck.scene)][str(state)])
@@ -122,27 +130,24 @@ while True : #Primary loop. Is only broken by the quit command. Below is run aft
 			for state in sorted(c['Vitals'][vital][0][0] + c['Vitals'][vital][0][1]) :
 				nonemptyprint(a.f['vitals'][vital][str(state)])
 		prompt = raw_input(">").strip() #The main prompt
+		action = 0
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
-			if prompt in glist : action = str(prompt) #If the input matches the UID of a valid action then take note of it's UID
-			else :
-				Clr()
-				continue
+			if prompt in glist : 
+				action = str(prompt) #If the input matches the UID of a valid action then take note of it's UID
 		except ValueError : #Effectively 'if input isn't a whole number'
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
-			if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break
-			else :
-				actdict = {}
-				for actn in glist : #Builds a dictionary that pairs the slug of each valid action with it's UID
-					actdict[a.f['actions'][str(actn)]['slug'].lower()] = actn
-				if prompt in actdict.keys() : action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
-				else :
-					Clr()
-					continue
+			actdict = {}
+			for actn in glist : #Builds a dictionary that pairs the slug of each valid action with it's UID
+				actdict[a.f['actions'][str(actn)]['slug'].lower()] = actn
+			if prompt in actdict.keys() : 
+				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
 		Clr()
-		effects = statecheck.DetermineOutcomes(action)
-		for effect in effects.keys() :
-			arguments = argsolve.Solve(effects[effect])
-			eval("efunc."+effect+"(arguments)")
-		break
-	if (prompt == 'quit') or (prompt == 'exit') or (prompt == 'esc') or (prompt == 'q') : break #Temporary. I'll work out a better way of quitting eventually
+		effects.append(statecheck.DetermineOutcomes(action))
+		for set in effects :
+			for effect in set.keys() :
+				effecthappened = True
+				arguments = argsolve.Solve(set[effect])
+				eval("efunc."+effect+"(arguments)")
+		if effecthappened :
+			break #Leave the secondary loop and re-enter the primary loop
