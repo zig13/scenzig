@@ -17,7 +17,7 @@ def GiveChar(c) :
 def SetBaseVitals() :
 	global char
 	global vitalsbase
-	vitalsbase = dict((vital, char['Attributes'][vital][1]) for vital in char['Vitals'].keys())
+	vitalsbase = dict((vital, char['Vitals'][vital][1]) for vital in char['Vitals'].keys())
 def reBaseVitals() :
 	global vitalsbase
 	global vitals
