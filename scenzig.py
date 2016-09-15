@@ -91,8 +91,6 @@ while True : #Primary loop. Below is run after an effect happens
 	
 	listcollate.reBaseVitals()
 	listcollate.reBaseAttributes()
-	listcollate.reBaseVitals()
-	listcollate.reBaseAttributes()
 	scenelist = listcollate.CollateScene()
 	encounterlist = listcollate.CollateEncounter()
 	abilitylist = listcollate.CollateAbilities()
