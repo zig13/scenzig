@@ -1,6 +1,5 @@
 from random import randint
 char = None
-from listcollate import vitals, attributes #listcollate provides a dictionary of attributes and vitals modified by bonuses
 
 def GiveChar(c) : #Called from the main script to give this module access to the character configobj (i.e. as a dictionary)
 	global char
@@ -11,6 +10,7 @@ def d(sides) :
 	return randint(1,sides)
 def a(id) :
 	global char
+	from listcollate import attributes
 	if char is None:
 		print "Character data not available"
 		return 0
@@ -20,6 +20,7 @@ def a(id) :
 		return 0
 def v(id) :
 	global char
+	from listcollate import vitals
 	if char is None:
 		print "Character data not available"
 		return 0
