@@ -127,11 +127,11 @@ def Collate(aspectdata,states) :
 	for state in states :
 		for vital in vitals :
 			try :
-				vitals[vital] += aspectdata['vitalbonuses'][vital]
+				vitals[vital] += aspectdata[str(state)]['vitalbonuses'][vital]
 			except KeyError : pass
 		for attribute in attributes :
 			try :
-				attributes[attribute] += aspectdata['attributebonuses'][attribute]
+				attributes[attribute] += aspectdata[str(state)]['attributebonuses'][attribute]
 			except KeyError : pass
 		try :
 			result['white'] += aspectdata[str(state)]['wlist']
