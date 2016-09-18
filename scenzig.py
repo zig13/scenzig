@@ -61,7 +61,8 @@ if len(characters) != 0 :
 		efunc.GiveChar(c)
 		statecheck.GiveChar(c)
 		statecheck.PrepareScene()
-		statecheck.PrepareEncounter()		
+		statecheck.PrepareEncounter()
+		firstrun = False
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
 	filename = get_valid_filename(raw_input("Please enter a name for your new character file:\n"))+".scz"
@@ -77,6 +78,7 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	efunc.GiveChar(c)
 	statecheck.GiveChar(c)
 	efunc.SetScene([c['Scene']['Current']])
+	firstrun = True
 statecheck.PrepareItems()
 statecheck.PrepareAbilities()
 statecheck.PrepareVitals()
@@ -110,7 +112,8 @@ while True : #Primary loop. Below is run after an effect happens
 			effecthappened = True
 			arguments = argsolve.Solve(set[effect])
 			eval("efunc."+effect+"(arguments)")
-	if effecthappened :
+	if effecthappened or firstrun :
+		firstrun = False
 		continue #Restarts the primary loop early if an effect happens
 	c.write()
 	wlist = scenelist['white'] + encounterlist['white'] + abilitylist['white'] + itemlist['white'] + vitallist['white'] + attributelist['white']
