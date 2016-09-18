@@ -1,4 +1,6 @@
 from random import randint
+import listcollate
+from sys import modules
 char = None
 
 def GiveChar(c) : #Called from the main script to give this module access to the character configobj (i.e. as a dictionary)
@@ -10,7 +12,7 @@ def d(sides) :
 	return randint(1,sides)
 def a(id) :
 	global char
-	from listcollate import attributes
+	attributes = listcollate.attributes
 	if char is None:
 		print "Character data not available"
 		return 0
@@ -20,7 +22,7 @@ def a(id) :
 		return 0
 def v(id) :
 	global char
-	from listcollate import vitals
+	vitals = listcollate.vitals
 	if char is None:
 		print "Character data not available"
 		return 0
