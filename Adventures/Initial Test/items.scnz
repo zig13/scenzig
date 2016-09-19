@@ -3,6 +3,7 @@
 description = 'A Stone'
 wlist = [6]
 blist = [7]
+attributebonuses = {'1':5}
 evaluators = []
 	[[1]]
 [5]
