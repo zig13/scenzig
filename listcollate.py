@@ -97,14 +97,7 @@ def CollateAttributes() :
 def Collate(aspectdata,states) :
 	global actiongroups
 	result = {'white':[],'black':[]}
-	for vital in vitals :
-		try :
-			vitals[vital] += aspectdata['vitalbonuses'][vital]
-		except KeyError : pass
-	for attribute in attributes :
-		try :
-			attributes[attribute] += aspectdata['attributebonuses'][attribute]
-		except KeyError : pass
+	CollateModifiers(aspectdata)
 	try : 
 		result['white'] += aspectdata['wlist']
 	except KeyError : pass
@@ -125,14 +118,7 @@ def Collate(aspectdata,states) :
 	except KeyError : pass
 
 	for state in states :
-		for vital in vitals :
-			try :
-				vitals[vital] += aspectdata[str(state)]['vitalbonuses'][vital]
-			except KeyError : pass
-		for attribute in attributes :
-			try :
-				attributes[attribute] += aspectdata[str(state)]['attributebonuses'][attribute]
-			except KeyError : pass
+		CollateModifiers(aspectdata,state)
 		try :
 			result['white'] += aspectdata[str(state)]['wlist']
 		except KeyError : pass
@@ -152,3 +138,27 @@ def Collate(aspectdata,states) :
 				except KeyError : pass
 		except KeyError : pass
 	return result
+
+def CollateModifiers(aspectdata,state=False) :
+	if state :
+		for vital in vitals :
+			try : vitals[vital] += aspectdata[str(state)]['vitalbonuses'][vital]
+			except KeyError : pass
+			try : vitals[vital] -= aspectdata[str(state)]['vitalpenalites'][vital]
+			except KeyError : pass
+		for attribute in attributes :
+			try : attributes[attribute] += aspectdata[str(state)]['attributebonuses'][attribute]
+			except KeyError : pass
+			try : attributes[attribute] -= aspectdata[str(state)]['attributepenalties'][attribute]
+			except KeyError : pass
+	else :
+		for vital in vitals :
+			try : vitals[vital] += aspectdata['vitalbonuses'][vital]
+			except KeyError : pass
+			try : vitals[vital] -= aspectdata['vitalpenalites'][vital]
+			except KeyError : pass
+		for attribute in attributes :
+			try : attributes[attribute] += aspectdata['attributebonuses'][attribute]
+			except KeyError : pass
+			try : attributes[attribute] -= aspectdata['attributepenalties'][attribute]
+			except KeyError : pass
