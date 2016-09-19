@@ -21,7 +21,7 @@ def SetBaseVitals() :
 def reBaseVitals() :
 	global vitalsbase
 	global vitals
-	vitals = vitalsbase
+	vitals = dict(vitalsbase)
 def SetBaseAttributes() :
 	global char
 	global attributesbase
@@ -29,7 +29,7 @@ def SetBaseAttributes() :
 def reBaseAttributes() :
 	global attributesbase
 	global attributes
-	attributes = attributesbase
+	attributes = dict(attributesbase)
 	
 def CollateScene() :
 	global adv
