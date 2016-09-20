@@ -3,9 +3,9 @@
 description = 'A Stone'
 wlist = [6]
 blist = [7]
-attributebonuses = {'1':5}
 evaluators = []
 	[[1]]
+	attributepenalties = {'1':15}
 [5]
 description = 'A big bag of dick'
 evaluators = []
