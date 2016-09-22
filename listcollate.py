@@ -141,24 +141,36 @@ def Collate(aspectdata,states) :
 
 def CollateModifiers(aspectdata,state=False) :
 	if state :
-		for vital in vitals :
+		for vital in vitals.keys() :
 			try : vitals[vital] += aspectdata[str(state)]['vitalbonuses'][vital]
 			except KeyError : pass
 			try : vitals[vital] -= aspectdata[str(state)]['vitalpenalites'][vital]
 			except KeyError : pass
-		for attribute in attributes :
+		for attribute in attributes.keys() :
 			try : attributes[attribute] += aspectdata[str(state)]['attributebonuses'][attribute]
 			except KeyError : pass
 			try : attributes[attribute] -= aspectdata[str(state)]['attributepenalties'][attribute]
 			except KeyError : pass
 	else :
-		for vital in vitals :
+		for vital in vitals.keys() :
 			try : vitals[vital] += aspectdata['vitalbonuses'][vital]
 			except KeyError : pass
 			try : vitals[vital] -= aspectdata['vitalpenalites'][vital]
 			except KeyError : pass
-		for attribute in attributes :
+		for attribute in attributes.keys() :
 			try : attributes[attribute] += aspectdata['attributebonuses'][attribute]
 			except KeyError : pass
 			try : attributes[attribute] -= aspectdata['attributepenalties'][attribute]
 			except KeyError : pass
+def CapModifiers() :
+	global vitals
+	for vital in vitals.keys() :
+		if vitals[vital] > char['Vitals'][vital][2] :
+			vitals[vital] = char['Vitals'][vitals][2]
+		elif vitals[vital] < 0 :
+			vitals[vital] = 0
+	for attribute in attributes.keys() :
+		if attributes[attribute] > char['Attributes'][attribute][2]:
+			attributes[attribute] = char['Attributes'][attribute][2]
+		elif attributes[attribute] < 0 :
+			attributes[attribute] = 0

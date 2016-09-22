@@ -99,6 +99,7 @@ while True : #Primary loop. Below is run after an effect happens
 	itemlist = listcollate.CollateItems()
 	vitallist = listcollate.CollateVitals()
 	attributelist = listcollate.CollateAttributes()
+	listcollate.CapModifiers() #Ensures Vitals and Attributes do not exceed thier maximum values
 	
 	effects = []
 	effects.append(statecheck.CheckScene())
