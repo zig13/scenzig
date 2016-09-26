@@ -247,12 +247,12 @@ def DetermineOutcomes(action) :
 		print "Nothing Happens\n" #This occurs if no outcomes match
 	else :
 		for outcome in outcomes :
-			try :
-				effects.update(adv.f['actions'][str(action)][outcome]['effects'])
+			try : effects.update(adv.f['actions'][str(action)][outcome]['effects'])
 			except KeyError : pass #effects are optional
-			try :
-				nonemptyprint(adv.f['actions'][action][outcome])
+			try : nonemptyprint(adv.f['actions'][action][outcome])
 			except KeyError : pass #text is optional
+			try : char['Beats'] += adv.f['actions'][action][outcome]['duration']
+			except KeyError : pass #duration is optional
 	return effects
 
 def TestState(statedata,evaluators) :
