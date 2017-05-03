@@ -46,13 +46,13 @@ The plan is to have the computer handle all the math so the player can focus on 
 scenzig Copyright Thomas Sturges-Allard
 Licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. http://creativecommons.org/licenses/by-nc-sa/3.0/
 
-configobj Copyright (c) 2003-2010, Michael Foord & Nicola Larosa
-All rights reserved.
-E-mail : fuzzyman AT voidspace DOT org DOT uk
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
+configobj used under the BSD license.
+Copyright (C) 2005-2014:
+(name) : (email)
+Michael Foord: fuzzyman AT voidspace DOT org DOT uk
+Nicola Larosa: nico AT tekNico DOT net
+Rob Dennis: rdennis AT gmail DOT com
+Eli Courtwright: eli AT courtwright DOT org
 
     * Redistributions of source code must retain the above copyright
       notice, this list of conditions and the following disclaimer.
@@ -62,9 +62,9 @@ met:
       disclaimer in the documentation and/or other materials provided
       with the distribution.
 
-    * Neither the name of Michael Foord nor the name of Voidspace
-      may be used to endorse or promote products derived from this
-      software without specific prior written permission.
+    * None of the authors names may be used to endorse or
+      promote products derived from this software without
+      specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
