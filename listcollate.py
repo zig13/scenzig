@@ -25,7 +25,7 @@ def reBaseVitals() :
 def SetBaseAttributes() :
 	global char
 	global attributesbase
-	attributesbase = dict((attribute, char['Attributes'][attribute][1]) for attribute in char['Attributes'].keys())
+	attributesbase = dict((attribute, char['Attributes'][attribute][1]) for attribute in char['Attributes'].keys()[2:])
 def reBaseAttributes() :
 	global attributesbase
 	global attributes
@@ -69,24 +69,12 @@ def CollateItems() :
 		result['white'] += lists['white']
 		result['black'] += lists['black']
 	return result
-	
-def CollateVitals() :
-	global adv
-	global char
-	result = {'white':[],'black':[]}
-	for vital in char['Vitals'].keys() :
-		itemdata = adv.f['vitals'][str(vital)]
-		states = str(char['Vitals'][str(vital)][0])
-		lists = Collate(itemdata, str(states))
-		result['white'] += lists['white']
-		result['black'] += lists['black']
-	return result
 
 def CollateAttributes() :
 	global adv
 	global char
 	result = {'white':[],'black':[]}
-	for attribute in char['Attributes'].keys() :
+	for attribute in char['Attributes'].keys()[2:] :
 		itemdata = adv.f['attributes'][str(attribute)]
 		states = str(char['Attributes'][str(attribute)][0])
 		lists = Collate(itemdata, str(states))
@@ -141,22 +129,12 @@ def Collate(aspectdata,states) :
 
 def CollateModifiers(aspectdata,state=False) :
 	if state :
-		for vital in vitals.keys() :
-			try : vitals[vital] += aspectdata[str(state)]['vitalbonuses'][vital]
-			except KeyError : pass
-			try : vitals[vital] -= aspectdata[str(state)]['vitalpenalites'][vital]
-			except KeyError : pass
 		for attribute in attributes.keys() :
 			try : attributes[attribute] += aspectdata[str(state)]['attributebonuses'][attribute]
 			except KeyError : pass
 			try : attributes[attribute] -= aspectdata[str(state)]['attributepenalties'][attribute]
 			except KeyError : pass
 	else :
-		for vital in vitals.keys() :
-			try : vitals[vital] += aspectdata['vitalbonuses'][vital]
-			except KeyError : pass
-			try : vitals[vital] -= aspectdata['vitalpenalites'][vital]
-			except KeyError : pass
 		for attribute in attributes.keys() :
 			try : attributes[attribute] += aspectdata['attributebonuses'][attribute]
 			except KeyError : pass
@@ -164,11 +142,6 @@ def CollateModifiers(aspectdata,state=False) :
 			except KeyError : pass
 def CapModifiers() :
 	global vitals
-	for vital in vitals.keys() :
-		if vitals[vital] > char['Vitals'][vital][2] :
-			vitals[vital] = char['Vitals'][vitals][2]
-		elif vitals[vital] < 0 :
-			vitals[vital] = 0
 	for attribute in attributes.keys() :
 		if attributes[attribute] > char['Attributes'][attribute][2]:
 			attributes[attribute] = char['Attributes'][attribute][2]

@@ -65,20 +65,11 @@ def PrepareAbilities() :
 	for ability in abilities :	
 		if str(ability) not in auto_ability_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Item encountered
 			auto_ability_states[str(ability)] = [x for x in StripNonStates(adv.f['abilities'][str(ability)].keys()) if HasEvaluations(adv.f['abilities'][str(ability)][x])]
-def PrepareVitals() :
-	global adv
-	global char
-	global vitals
-	vitals = char['Vitals'].keys()
-	global auto_vital_states
-	for vital in vitals :	
-		if str(vital) not in auto_vital_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Vital encountered
-			auto_vital_states[str(vital)] = [x for x in StripNonStates(adv.f['vitals'][str(vital)].keys()) if HasEvaluations(adv.f['vitals'][str(vital)][x])]
 def PrepareAttributes() :
 	global adv
 	global char
 	global attributes
-	attributes = char['Attributes'].keys()
+	attributes = char['Attributes'].keys()[2:]
 	global auto_attribute_states
 	for attribute in attributes :	
 		if str(attribute) not in auto_attribute_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Attribute encountered
@@ -181,35 +172,14 @@ def CheckAbilities() :
 				effects.update(ability_data[str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
 		char['Abilities'][ability][1] = new_states
-	return effects		
-def CheckVitals() :
-	global adv
-	global char
-	global auto_vital_states
-	effects = {}
-	for vital in char['Vitals'].keys() :
-		current_states = char['Vitals'][vital][0][1]
-		vital_data = adv.f['vitals'][vital]
-		evaluators = [argsolve.Solve(each) for each in vital_data['evaluators']]
-		new_states = [int(x) for x in auto_vital_states[vital] if TestState(vital_data[str(x)],evaluators)]
-		leaving_states = set(current_states).difference(set(new_states))
-		for leavingstate in leaving_states :
-			try :
-				effects.update(vital_data[str(leavingstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-		entering_states = set(new_states).difference(set(current_states))
-		for enteringstate in entering_states :
-			try :
-				effects.update(vital_data[str(enteringstate)]['entereffects'])
-			except KeyError : pass #leave effects are optional
-		char['Vitals'][vital][0][1] = new_states
-	return effects		
+	return effects				
 def CheckAttributes() :
 	global adv
 	global char
+	global attributes
 	global auto_attribute_states
 	effects = {}
-	for attribute in char['Attributes'].keys() :
+	for attribute in attributes :
 		current_states = char['Attributes'][attribute][0][1]
 		attribute_data = adv.f['attributes'][attribute]
 		evaluators = [argsolve.Solve(each) for each in attribute_data['evaluators']]

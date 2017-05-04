@@ -92,8 +92,8 @@ def PrintActions(arguments) :
 def PrintAttributes(arguments) :
 	global char
 	global adv
-	for attribute in char['Attributes'].keys() :
-		firststate = (sorted(char['Attributes'][attribute][0][0] + char['Attributes'][attribute][0][1]))[0] #Merges the two state lists into 1, sorts them and takes the first numerically
+	for attribute in char['Attributes']['active'] :
+		firststate = (sorted(char['Attributes'][str(attribute)][0][0] + char['Attributes'][str(attribute)][0][1]))[0] #Merges the two state lists into 1, sorts them and takes the first numerically
 		nonemptyprint(adv.f['attributes'][str(attribute)][str(firststate)])
 def DamageVital(arguments) :
 	global char

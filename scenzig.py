@@ -81,31 +81,26 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	firstrun = True
 statecheck.PrepareItems()
 statecheck.PrepareAbilities()
-statecheck.PrepareVitals()
 statecheck.PrepareAttributes()
 listcollate.GiveChar(c)
-listcollate.SetBaseVitals()
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
 while True : #Primary loop. Below is run after an effect happens
 	effecthappened = False
 	
-	listcollate.reBaseVitals()
 	listcollate.reBaseAttributes()
 	scenelist = listcollate.CollateScene()
 	encounterlist = listcollate.CollateEncounter()
 	abilitylist = listcollate.CollateAbilities()
 	itemlist = listcollate.CollateItems()
-	vitallist = listcollate.CollateVitals()
 	attributelist = listcollate.CollateAttributes()
-	listcollate.CapModifiers() #Ensures Vitals and Attributes do not exceed thier maximum values
+	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	
 	effects = []
 	effects.append(statecheck.CheckScene())
 	effects.append(statecheck.CheckEncounter())
 	effects.append(statecheck.CheckAttributes())
-	effects.append(statecheck.CheckVitals())
 	effects.append(statecheck.CheckItems())
 	effects.append(statecheck.CheckAbilities())
 	for set in effects :
@@ -117,8 +112,8 @@ while True : #Primary loop. Below is run after an effect happens
 		firstrun = False
 		continue #Restarts the primary loop early if an effect happens
 	c.write()
-	wlist = scenelist['white'] + encounterlist['white'] + abilitylist['white'] + itemlist['white'] + vitallist['white'] + attributelist['white']
-	blist = scenelist['black'] + encounterlist['black'] + abilitylist['black'] + itemlist['black'] + vitallist['black'] + attributelist['black']
+	wlist = scenelist['white'] + encounterlist['white'] + abilitylist['white'] + itemlist['white'] + attributelist['white']
+	blist = scenelist['black'] + encounterlist['black'] + abilitylist['black'] + itemlist['black'] + attributelist['black']
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
@@ -128,9 +123,9 @@ while True : #Primary loop. Below is run after an effect happens
 		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(statecheck.scene)][0])]) #Encounter description will be printed if there is one
 		for state in sorted(c['Encounters'][str(statecheck.scene)][1][0] + c['Encounters'][str(statecheck.scene)][1][1]) :
 			nonemptyprint(a.f['encounters'][str(c['Encounters'][str(statecheck.scene)][0])][str(state)])
-		for vital in c['Vitals'].keys() :
-			for state in sorted(c['Vitals'][vital][0][0] + c['Vitals'][vital][0][1]) :
-				nonemptyprint(a.f['vitals'][vital][str(state)])
+		for vital in c['Attributes']['vital'] :
+			for state in sorted(c['Attributes'][str(vital)][0][0] + c['Attributes'][str(vital)][0][1]) :
+				nonemptyprint(a.f['attributes'][str(vital)][str(state)])
 		prompt = raw_input(">").strip() #The main prompt
 		action = 0
 		try : #Effectively 'if input is a whole number'
