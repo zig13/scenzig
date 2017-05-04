@@ -72,7 +72,7 @@ evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'You take a small sip from the bottle. It tastes pretty nasty.'
-	effects = {'DamageVital':[1,'39+d81']}
+	effects = {'DamageAttribute':[1,'39+d81']}
 [13]
 slug = 'Drink strength potion'
 evaluators = []

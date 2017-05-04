@@ -1,7 +1,86 @@
 [0]
 [1]
-name = 'Strength'
+name = 'Health'
 evaluators = ['a1']
+	[[1]]
+	evaluations = {0:[976,1000]}
+	wlist = []
+	entereffects = {}
+	leaveeffects = {}
+	[[2]]
+	evaluations = {0:[901,975]}
+	text = 'You are a bit worse for wear'
+	entereffects = {}
+	leaveeffects = {}
+	[[3]]
+	evaluations = {0:[801,900]}
+	text = 'You are hurt'
+	entereffects = {}
+	leaveeffects = {}
+	[[4]]
+	evaluations = {0:[501,800]}
+	text = 'You are injured'
+	entereffects = {}
+	leaveeffects = {}
+	[[5]]
+	evaluations = {0:[181,500]}
+	text = 'You are severely injured'
+	entereffects = {}
+	leaveeffects = {}
+	[[6]]
+	evaluations = {0:[1,180]}
+	text = 'You are near death'
+	entereffects = {}
+	leaveeffects = {}
+	[[7]]
+	evaluations = {0:[0,0]}
+	text = None
+	entereffects = {'SetScene': [4]}
+	leaveeffects = {}
+[2]
+name = 'Energy'
+evaluators = ['a2']
+	[[1]]
+	evaluations = {0:[976,1000]}
+	entereffects = {}
+	leaveeffects = {}
+	[[2]]
+	evaluations = {0:[901,975]}
+	text = 'You are mildly fatigued'
+	entereffects = {}
+	leaveeffects = {}
+	[[3]]
+	evaluations = {0:[801,900]}
+	text = 'You are weary'
+	entereffects = {}
+	leaveeffects = {}
+	[[4]]
+	evaluations = {0:[501,800]}
+	text = 'You are tired'
+	entereffects = {}
+	leaveeffects = {}
+	[[5]]
+	evaluations = {0:[251,500]}
+	text = 'You are worn out'
+	entereffects = {}
+	leaveeffects = {}
+	[[6]]
+	evaluations = {0:[181,250]}
+	text = 'You are exhausted'
+	entereffects = {}
+	leaveeffects = {}
+	[[7]]
+	evaluations = {0:[1,180]}
+	text = 'You are totally cream crackered'
+	entereffects = {}
+	leaveeffects = {}
+	[[8]]
+	evaluations = {0:[0,0]}
+	entereffects = {'SetScene': [4]}
+	leaveeffects = {}
+[3]
+name = 'Strength'
+evaluators = ['a3']
 	[[1]]
 	evaluations = {0:[0,10]}
 	text = 'You are Incapacitated'
@@ -42,9 +121,9 @@ evaluators = ['a1']
 	evaluations = {0:[91,100]}
 	text = 'You are Herculean'
 	wlist = [11]
-[2]
+[4]
 name = 'Knowledge'
-evaluators = ['a2']
+evaluators = ['a4']
 	[[1]]
 	evaluations = {0:[0,10]}
 	text = 'You are Vegetative'
