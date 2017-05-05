@@ -11,8 +11,8 @@ Previous = None
 
 [Abilities]
 
-[Vitals]
-
 [Attributes]
+vital = []
+active = []
 
 [Currencies]
