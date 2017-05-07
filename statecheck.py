@@ -5,13 +5,11 @@ scene_data = None
 encounter_data = None
 inventory = None
 abilities = None
-vitals = None
 attributes = None
 auto_scene_states = {}
 auto_encounter_states = {}
 auto_item_states = {}
 auto_ability_states = {}
-auto_vital_states = {}
 auto_attribute_states = {}
 import argsolve
 from functions import nonemptyprint

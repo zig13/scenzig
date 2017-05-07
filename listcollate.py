@@ -1,8 +1,6 @@
 adv = None
 actiongroups = None
 char = None
-vitalsbase = None
-vitals = None
 attributesbase = None
 attributes = None
 def GiveAdv(a) :
@@ -14,14 +12,6 @@ def GiveChar(c) :
 	global char
 	char = c
 
-def SetBaseVitals() :
-	global char
-	global vitalsbase
-	vitalsbase = dict((vital, char['Vitals'][vital][1]) for vital in char['Vitals'].keys())
-def reBaseVitals() :
-	global vitalsbase
-	global vitals
-	vitals = dict(vitalsbase)
 def SetBaseAttributes() :
 	global char
 	global attributesbase
@@ -141,7 +131,6 @@ def CollateModifiers(aspectdata,state=False) :
 			try : attributes[attribute] -= aspectdata['attributepenalties'][attribute]
 			except KeyError : pass
 def CapModifiers() :
-	global vitals
 	for attribute in attributes.keys() :
 		if attributes[attribute] > char['Attributes'][attribute][2]:
 			attributes[attribute] = char['Attributes'][attribute][2]
