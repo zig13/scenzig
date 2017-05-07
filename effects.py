@@ -1,6 +1,6 @@
 import statecheck
 from functions import nonemptyprint
-from listcollate import SetBaseVitals, SetBaseAttributes
+from listcollate import SetBaseAttributes
 adv = None
 char = None
 listg = None
@@ -95,21 +95,6 @@ def PrintAttributes(arguments) :
 	for attribute in char['Attributes']['active'] :
 		firststate = (sorted(char['Attributes'][str(attribute)][0][0] + char['Attributes'][str(attribute)][0][1]))[0] #Merges the two state lists into 1, sorts them and takes the first numerically
 		nonemptyprint(adv.f['attributes'][str(attribute)][str(firststate)])
-def DamageVital(arguments) :
-	global char
-	if str(arguments[0]) in char['Vitals'].keys() :
-		char['Vitals'][str(arguments[0])][1] -= arguments[1]
-		if char['Vitals'][str(arguments[0])][1] < 0 : char['Vitals'][str(arguments[0])][1] = 0
-		SetBaseVitals()
-def BolsterVital(arguments) :
-	global char
-	if str(arguments[0]) in char['Vitals'].keys() :
-		char['Vitals'][str(arguments[0])][1] += arguments[1]
-		try : #For each vital, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
-			if char['Vitals'][str(arguments[0])][1] > char['Vitals'][str(arguments[0])][2] : char['Vitals'][str(arguments[0])][1] = char['Vitals'][str(arguments[0])][2]
-		except IndexError:
-			pass #Max value is optional
-		SetBaseVitals()
 def DamageAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
