@@ -1,13 +1,10 @@
 adv = None
-actiongroups = None
 char = None
 attributesbase = None
 attributes = None
 def GiveAdv(a) :
 	global adv
 	adv = a
-	global actiongroups
-	actiongroups = a.f['actiongrps']
 def GiveChar(c) :
 	global char
 	char = c
@@ -80,19 +77,7 @@ def Collate(aspectdata,states) :
 		result['white'] += aspectdata['wlist']
 	except KeyError : pass
 	try :
-		for grp in aspectdata['wlistagrp'] :
-			try :
-				result['white'] += actiongroups[str(agrp)]['list']
-			except KeyError : pass
-	except KeyError : pass
-	try :
 		result['black'] += aspectdata['blist']
-	except KeyError : pass
-	try :
-		for grp in aspectdata['blistagrp'] :
-			try :
-				result['black'] += actiongroups[str(agrp)]['list']
-			except KeyError : pass
 	except KeyError : pass
 
 	for state in states :
@@ -101,19 +86,7 @@ def Collate(aspectdata,states) :
 			result['white'] += aspectdata[str(state)]['wlist']
 		except KeyError : pass
 		try :
-			for grp in aspectdata[str(state)]['wlistagrp'] :
-				try :
-					result['white'] += actiongroups[str(agrp)]['list']
-				except KeyError : pass
-		except KeyError : pass	
-		try :
 			result['black'] += aspectdata[str(state)]['blist']
-		except KeyError : pass
-		try :
-			for grp in aspectdata[str(state)]['blistagrp'] :
-				try :
-					result['black'] += actiongroups[str(agrp)]['list']
-				except KeyError : pass
 		except KeyError : pass
 	return result
 
