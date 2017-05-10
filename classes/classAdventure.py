@@ -9,10 +9,10 @@ class Adventure :
 			if not access(self.directory+datafile+".scnz", R_OK) : return False
 		return True
 	def load(self) :
-		self.f = dict((datafile, ConfigObj(self.directory+datafile+".scnz", unrepr=True)) for datafile in self.datafiles) #Opens each data file up for reading referenced as an entry in the dictionary 'f'
+		self.f = dict((datafile.title(), ConfigObj(self.directory+datafile+".scnz", unrepr=True)) for datafile in self.datafiles) #Opens each data file up for reading referenced as an entry in the dictionary 'f'
 		for datafile in self.datafiles :
 			try:
-				self.f[datafile]['0'] #Checks that a section exists in each data file entitled 0
+				self.f[datafile.title()]['0'] #Checks that a section exists in each data file entitled 0
 			except:
 				return False
 		return True
