@@ -79,7 +79,7 @@ evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'You take a swig from the bottle. You feel noticeably stronger.'
-	effects = {'BolsterAttribute':[1,5]}
+	effects = {'BolsterAttribute':[3,5]}
 [14]
 slug = 'Random'
 description = 'Teleport to a random scene'
