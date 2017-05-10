@@ -21,15 +21,15 @@ def reBaseAttributes() :
 def CollateScene() :
 	global adv
 	global char
-	scenedata = adv.f['scenes'][str(char['Scene']['Current'])]	
-	states = str(char['SceneStates'][str(char['Scene']['Current'])])
+	scenedata = adv.f['Scenes'][str(char['Scenes']['Current'])]	
+	states = str(char['Scenes'][str(char['Scenes']['Current'])])
 	return Collate(scenedata, states)	
 	
 def CollateEncounter() :
 	global adv
 	global char
-	encounterinfo = char['Encounters'][str(char['Scene']['Current'])]
-	encounterdata = adv.f['encounters'][str(encounterinfo[0])]
+	encounterinfo = char['Encounters'][str(char['Scenes']['Current'])]
+	encounterdata = adv.f['Encounters'][str(encounterinfo[0])]
 	states = str(encounterinfo[1])
 	return Collate(encounterdata, states)
 	
@@ -38,7 +38,7 @@ def CollateAbilities() :
 	global char
 	result = {'white':[],'black':[]}
 	for ability in char['Abilities'].keys() :
-		abilitydata = adv.f['abilities'][str(ability)]
+		abilitydata = adv.f['Abilities'][str(ability)]
 		states = str(char['Abilities'][str(ability)])
 		lists = Collate(abilitydata, states)
 		result['white'] += lists['white']
@@ -50,7 +50,7 @@ def CollateItems() :
 	global char
 	result = {'white':[],'black':[]}
 	for item in char['Items'].keys() :
-		itemdata = adv.f['items'][str(item)]
+		itemdata = adv.f['Items'][str(item)]
 		states = str(char['Items'][str(item)])
 		lists = Collate(itemdata, states)
 		result['white'] += lists['white']
@@ -62,13 +62,16 @@ def CollateAttributes() :
 	global char
 	result = {'white':[],'black':[]}
 	for attribute in char['Attributes'].keys()[2:] :
-		itemdata = adv.f['attributes'][str(attribute)]
+		itemdata = adv.f['Attributes'][str(attribute)]
 		states = str(char['Attributes'][str(attribute)][0])
 		lists = Collate(itemdata, str(states))
 		result['white'] += lists['white']
 		result['black'] += lists['black']
 	return result
 
+	{scenes}
+	
+	
 def Collate(aspectdata,states) :
 	global actiongroups
 	result = {'white':[],'black':[]}

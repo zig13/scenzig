@@ -77,7 +77,7 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 	efunc.GiveChar(c)
 	statecheck.GiveChar(c)
-	efunc.SetScene([c['Scene']['Current']])
+	efunc.SetScene([c['Scenes']['Current']])
 	firstrun = True
 statecheck.PrepareItems()
 statecheck.PrepareAbilities()
@@ -117,15 +117,15 @@ while True : #Primary loop. Below is run after an effect happens
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['scenes'][str(statecheck.scene)]) #Scene description will be printed if there is one
-		for state in sorted(c['SceneStates'][str(statecheck.scene)][0] + c['SceneStates'][str(statecheck.scene)][1]) :
-			nonemptyprint(a.f['scenes'][str(statecheck.scene)][str(state)])
-		nonemptyprint(a.f['encounters'][str(c['Encounters'][str(statecheck.scene)][0])]) #Encounter description will be printed if there is one
+		nonemptyprint(a.f['Scenes'][str(statecheck.scene)]) #Scene description will be printed if there is one
+		for state in sorted(c['Scenes'][str(statecheck.scene)]) :
+			nonemptyprint(a.f['Scenes'][str(statecheck.scene)][str(state)])
+		nonemptyprint(a.f['Encounters'][str(c['Encounters'][str(statecheck.scene)][0])]) #Encounter description will be printed if there is one
 		for state in sorted(c['Encounters'][str(statecheck.scene)][1][0] + c['Encounters'][str(statecheck.scene)][1][1]) :
-			nonemptyprint(a.f['encounters'][str(c['Encounters'][str(statecheck.scene)][0])][str(state)])
+			nonemptyprint(a.f['Encounters'][str(c['Encounters'][str(statecheck.scene)][0])][str(state)])
 		for vital in c['Attributes']['vital'] :
 			for state in sorted(c['Attributes'][str(vital)][0][0] + c['Attributes'][str(vital)][0][1]) :
-				nonemptyprint(a.f['attributes'][str(vital)][str(state)])
+				nonemptyprint(a.f['Attributes'][str(vital)][str(state)])
 		prompt = raw_input(">").strip() #The main prompt
 		action = 0
 		try : #Effectively 'if input is a whole number'
@@ -136,7 +136,7 @@ while True : #Primary loop. Below is run after an effect happens
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
 			actdict = {}
 			for actn in glist : #Builds a dictionary that pairs the slug of each valid action with it's UID
-				actdict[a.f['actions'][str(actn)]['slug'].lower()] = actn
+				actdict[a.f['Actions'][str(actn)]['slug'].lower()] = actn
 			if prompt in actdict.keys() : 
 				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
 		Clr()

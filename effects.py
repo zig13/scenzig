@@ -16,33 +16,30 @@ def GiveList(glist) :
 
 def SetScene(arguments) :
 	global char
-	char['Scene']['Previous'] = char['Scene']['Current']
-	char['Scene']['Current'] = arguments[0]
-	if str(arguments[0]) not in char['SceneStates'].keys() : char['SceneStates'][str(arguments[0])] = [[],[]]
+	char['Scenes']['Previous'] = char['Scenes']['Current']
+	char['Scenes']['Current'] = arguments[0]
+	if str(arguments[0]) not in char['Scenes'].keys()[2:] : char['Scenes'][str(arguments[0])] = []
 	statecheck.PrepareScene() #PrepareScene needs there to be a record for the new scene so the above generates an empty one
 	statecheck.CheckScene() #If CheckScene dosn't come up with anything then the below line sets the state to 1
-	if (not char['SceneStates'][str(arguments[0])][0]) and (not char['SceneStates'][str(arguments[0])][1]) : char['SceneStates'][str(arguments[0])] = [[1],[]]
+	if not char['Scenes'][str(arguments[0])] : char['Scenes'][str(arguments[0])] = [1]
 	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0, [[],[]]]
 	statecheck.PrepareEncounter()
 	statecheck.CheckEncounter()
 	if (not char['Encounters'][str(arguments[0])][1][0]) and (not char['Encounters'][str(arguments[0])][1][1]) : char['Encounters'][str(arguments[0])] = [0, [[1],[]]]
 def RevertScene(arguments) :
 	global char
-	temp = char['Scene']['Current']
-	char['Scene']['Current'] = char['Scene']['Previous']
-	char['Scene']['Previous'] = temp
+	temp = char['Scenes']['Current']
+	char['Scenes']['Current'] = char['Scenes']['Previous']
+	char['Scenes']['Previous'] = temp
 	statecheck.PrepareScene()
 	statecheck.CheckScene()
-def SetSceneState(arguments) :
+def AddSceneState(arguments) :
 	global char
 	try :
 		scene = arguments[1]
 	except IndexError : #If scene is not given then set scene state of current scene
-		scene = char['Scene']['Current']
-	try :
-		char['SceneStates'][str(scene)][0] = [arguments[0]]
-	except KeyError :
-		char['SceneStates'][str(scene)] = [[arguments[0]],[]]
+		scene = char['Scenes']['Current']
+	char['Scenes'][str(scene)] += arguments[0]
 def PrintItems(arguments) :
 	global char
 	global adv
@@ -51,10 +48,10 @@ def PrintItems(arguments) :
 	for itm in char['Items'].keys() :
 		states = sorted(char['Items'][itm][0] + char['Items'][itm][1])
 		try :
-			print adv.f['items'][itm][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
+			print adv.f['Items'][itm][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
 		except KeyError :
 			try :
-				print adv.f['items'][str(itm)]['description']
+				print adv.f['Items'][str(itm)]['description']
 			except KeyError : pass
 	print ""
 def RemoveItem(arguments) :
@@ -83,10 +80,10 @@ def PrintActions(arguments) :
 	if len(listg) == 0 : return
 	for action in listg :
 		try :
-			print adv.f['actions'][str(action)]['slug']+" - "+adv.f['actions'][str(action)]['description']
+			print adv.f['Actions'][str(action)]['slug']+" - "+adv.f['Actions'][str(action)]['description']
 		except KeyError :
 			try :
-				print adv.f['actions'][str(action)]['slug']
+				print adv.f['Actions'][str(action)]['slug']
 			except KeyError : continue
 	print ""
 def PrintAttributes(arguments) :
@@ -94,7 +91,7 @@ def PrintAttributes(arguments) :
 	global adv
 	for attribute in char['Attributes']['active'] :
 		firststate = (sorted(char['Attributes'][str(attribute)][0][0] + char['Attributes'][str(attribute)][0][1]))[0] #Merges the two state lists into 1, sorts them and takes the first numerically
-		nonemptyprint(adv.f['attributes'][str(attribute)][str(firststate)])
+		nonemptyprint(adv.f['Attributes'][str(attribute)][str(firststate)])
 def DamageAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
@@ -112,7 +109,7 @@ def BolsterAttribute(arguments) :
 		SetBaseAttributes()
 def TakeAction(arguments) :
 	action = arguments[0]
-	nonemptyprint(adv.f['actions'][action]['outcomes'][outcome]) #Action text will be printed if it exists
-	for effect in adv.f['actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-		arguments = argparser.PrsArg(adv.f['actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
-		eval(adv.f['actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
+	nonemptyprint(adv.f['Actions'][action]['outcomes'][outcome]) #Action text will be printed if it exists
+	for effect in adv.f['Actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
+		arguments = argparser.PrsArg(adv.f['Actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
+		eval(adv.f['Actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
