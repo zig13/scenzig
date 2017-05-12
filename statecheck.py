@@ -1,5 +1,7 @@
 adv = None
 char = None
+aspect_lists = {}
+auto_states = {'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}}
 scene = None
 scene_data = None
 encounter_data = None
@@ -25,15 +27,11 @@ def GiveChar(c) :
 
 #The 'Prepare' functions are only run when the scene, inventory etc are changed and cache useful, relatively static information for thier respective 'Check' function.
 def PrepareScene() :
-	global adv
-	global char
 	global scene
 	scene = char['Scenes']['Current']
-	global scene_data
-	scene_data = adv.f['Scenes'][str(scene)]
-	global auto_scene_states
-	if str(scene) not in auto_scene_states.keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
-		auto_scene_states[str(scene)] = [x for x in StripNonStates(scene_data.keys()) if HasEvaluations(scene_data[x])]	
+	aspect_lists['Scenes'] = [char['Scenes']['Current']]
+	if str(char['Scenes']['Current']) not in auto_states['Scenes'].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
+		auto_states['Scenes'][str(char['Scenes']['Current'])] = [x for x in StripNonStates(adv.f['Scenes'][str(char['Scenes']['Current'])].keys()) if HasEvaluations(adv.f['Scenes'][str(char['Scenes']['Current'])][x])]	
 def PrepareEncounter() :
 	global adv
 	global char
@@ -87,25 +85,25 @@ def HasEvaluations(state) :
 def CheckScene() :
 	global char
 	global scene
-	global scene_data
-	global auto_scene_states
-	current_states = char['Scenes'][str(scene)]
-	new_states = [x for x in current_states if x not in auto_scene_states] #if x not in Z
-	evaluators = [argsolve.Solve(each) for each in scene_data['evaluators']]
-	new_states += [x for x in auto_scene_states[str(scene)] if TestState(scene_data[str(x)],evaluators)]
+	aspect = 'Scenes'
 	effects = {}
-	leaving_states = set(current_states).difference(set(new_states))
-	for leavingstate in leaving_states :
-		try :
-			effects.update(scene_data[str(leavingstate)]['leaveeffects'])
-		except KeyError : pass #leave effects are optional
-	entering_states = set(new_states).difference(set(current_states))
-	for enteringstate in entering_states :
-		try :
-			effects.update(scene_data[str(enteringstate)]['entereffects'])
-		except KeyError : pass #leave effects are optional
-	char['Scenes'][str(scene)] = new_states
-	return effects	
+	for thing in aspect_lists[aspect] :
+		current_states = char[aspect][str(thing)]
+		new_states = [x for x in current_states if x not in auto_states[aspect][str(thing)]] #if x not in Z
+		evaluators = [argsolve.Solve(each) for each in adv.f[aspect][str(thing)]['evaluators']]
+		new_states += [x for x in auto_states[aspect][str(thing)] if TestState(adv.f[aspect][str(thing)][str(x)],evaluators)]
+		leaving_states = set(current_states).difference(set(new_states))
+		for leavingstate in leaving_states :
+			try :
+				effects.update(adv.f[aspect][str(thing)][str(leavingstate)]['leaveeffects'])
+			except KeyError : pass #leave effects are optional
+		entering_states = set(new_states).difference(set(current_states))
+		for enteringstate in entering_states :
+			try :
+				effects.update(adv.f[aspect][str(thing)][str(enteringstate)]['entereffects'])
+			except KeyError : pass #leave effects are optional
+		char['Scenes'][str(scene)] = new_states
+		return effects	
 def CheckEncounter() :
 	global char
 	global scene
