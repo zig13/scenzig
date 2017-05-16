@@ -19,8 +19,8 @@ def SetScene(arguments) :
 	char['Scenes']['Previous'] = char['Scenes']['Current']
 	char['Scenes']['Current'] = arguments[0]
 	if str(arguments[0]) not in char['Scenes'].keys()[2:] : char['Scenes'][str(arguments[0])] = []
-	statecheck.PrepareScene() #PrepareScene needs there to be a record for the new scene so the above generates an empty one
-	statecheck.CheckScene() #If CheckScene dosn't come up with anything then the below line sets the state to 1
+	statecheck.Prepare('Scenes', [arguments[0]]) #PrepareScene needs there to be a record for the new scene so the above generates an empty one
+	statecheck.Check('Scenes') #If CheckScene dosn't come up with anything then the below line sets the state to 1
 	if not char['Scenes'][str(arguments[0])] : char['Scenes'][str(arguments[0])] = [1]
 	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0, [[],[]]]
 	statecheck.PrepareEncounter()
@@ -31,15 +31,13 @@ def RevertScene(arguments) :
 	temp = char['Scenes']['Current']
 	char['Scenes']['Current'] = char['Scenes']['Previous']
 	char['Scenes']['Previous'] = temp
-	statecheck.PrepareScene()
-	statecheck.CheckScene()
+	statecheck.Prepare('Scenes', [char['Scenes']['Current']])
+	statecheck.Check('Scenes')
 def AddSceneState(arguments) :
 	global char
-	try :
-		scene = arguments[1]
-	except IndexError : #If scene is not given then set scene state of current scene
-		scene = char['Scenes']['Current']
-	char['Scenes'][str(scene)] += arguments[0]
+	if len(arguments) <2 : arguments.append(char['Scenes']['Current'])
+	if arguments[0] not in char['Scenes'][arguments[1]] :
+		char['Scenes'][str(scene)].append(arguments[0])
 def PrintItems(arguments) :
 	global char
 	global adv

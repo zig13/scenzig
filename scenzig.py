@@ -60,7 +60,7 @@ if len(characters) != 0 :
 		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
 		efunc.GiveChar(c)
 		statecheck.GiveChar(c)
-		statecheck.PrepareScene()
+		statecheck.Prepare('Scenes', [c['Scenes']['Current']])
 		statecheck.PrepareEncounter()
 		firstrun = False
 if c == None : from shutil import copy as fileclone
@@ -98,7 +98,7 @@ while True : #Primary loop. Below is run after an effect happens
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	
 	effects = []
-	effects.append(statecheck.CheckScene())
+	effects.append(statecheck.Check('Scenes'))
 	effects.append(statecheck.CheckEncounter())
 	effects.append(statecheck.CheckAttributes())
 	effects.append(statecheck.CheckItems())

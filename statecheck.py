@@ -26,17 +26,17 @@ def GiveChar(c) :
 	argsolve.GiveChar(char)
 
 #The 'Prepare' functions are only run when the scene, inventory etc are changed and cache useful, relatively static information for thier respective 'Check' function.
-def PrepareScene() :
-	global scene
-	scene = char['Scenes']['Current']
-	aspect_lists['Scenes'] = [char['Scenes']['Current']]
-	if str(char['Scenes']['Current']) not in auto_states['Scenes'].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
-		auto_states['Scenes'][str(char['Scenes']['Current'])] = [x for x in StripNonStates(adv.f['Scenes'][str(char['Scenes']['Current'])].keys()) if HasEvaluations(adv.f['Scenes'][str(char['Scenes']['Current'])][x])]	
+def Prepare(aspect, list) :
+	aspect_lists[aspect] = list
+	for thing in list :
+		if str(thing) not in auto_states[aspect].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
+			auto_states[aspect][str(thing)] = [x for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]	
 def PrepareEncounter() :
 	global adv
 	global char
 	global scene
 	global encounter
+	scene = char['Scenes']['Current']
 	encounter = char['Encounters'][str(scene)][0]
 	global encounter_data
 	encounter_data = adv.f['Encounters'][str(encounter)]
@@ -82,10 +82,9 @@ def HasEvaluations(state) :
 		return False	
 
 #The 'Check' functions are the meat of the statecheck script. Every iteration of the primary loop each potential state with evaluations is evaluated and a new list of states is generated. Any changes are noted and may trigger effects.
-def CheckScene() :
+def Check(aspect) :
 	global char
 	global scene
-	aspect = 'Scenes'
 	effects = {}
 	for thing in aspect_lists[aspect] :
 		current_states = char[aspect][str(thing)]
