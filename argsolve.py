@@ -44,7 +44,7 @@ def i(id) : #i will return 1 if the character has an item of the given id in thi
 	if char is None:
 		print "Character data not available"
 		return 0
-	if str(id) in char['Items'].keys() :
+	if id in char['Inventories']['c'] :
 		return 1
 	else : return 0
 def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
