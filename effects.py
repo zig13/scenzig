@@ -43,8 +43,8 @@ def PrintItems(arguments) :
 	global adv
 	if len(char['Items']) == 0 : return
 	print "You are carrying:"
-	for itm in char['Items'].keys() :
-		states = sorted(char['Items'][itm][0] + char['Items'][itm][1])
+	for itm in char['Inventories']['c'] :
+		states = sorted(char['Items'][str(itm)][0] + char['Items'][str(itm)][1])
 		try :
 			print adv.f['Items'][itm][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
 		except KeyError :
@@ -52,16 +52,20 @@ def PrintItems(arguments) :
 				print adv.f['Items'][str(itm)]['description']
 			except KeyError : pass
 	print ""
-def RemoveItem(arguments) :
+def RemoveItem(arguments) : #Arguments are Item and Inventory
 	global char
-	if str(arguments[0]) in char['Items'].keys() :
-		del char['Items'][str(arguments[0])]
-	statecheck.PrepareItems()
-def AddItem(arguments) : #Is also able to change the state of an existing item
+	if len(arguments) < 2 : arguments.append('c')
+	if arguments[0] in char['Inventories'][str(arguments[1])] :
+		char['Inventories'][str(arguments[1])].remove(arguments[0])
+		statecheck.PrepareItems()
+def AddItem(arguments) : #Arguments are Item, Inventory and Item State
 	global char
-	if len(arguments) < 2 : arguments.append(1) #If no state is provided use state 1
-	char['Items'][str(arguments[0])] = [[arguments[1]],[]]
-	statecheck.PrepareItems()
+	if len(arguments) < 2 : 
+		arguments.append('c')
+		if len(arguments) < 3 : arguments.append(1) #If no state is provided use state 1
+	if arguments[0] not in char['Inventories'][str(arguments[1])] :
+		char['Inventories'][str(arguments[1])].append(arguments[0])
+		statecheck.PrepareItems()
 def RemoveAbility(arguments) :
 	global char
 	if str(arguments[0]) in char['Abilities'].keys() :
