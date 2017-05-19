@@ -53,7 +53,7 @@ def s(id) : #s has two functions. If passed 0 it will return the current scene e
 		print "Character data not available"
 		return 0
 	if id is 0 :
-		return char['Scenes']['Current']
+		return char['Scenes']['active'][0]
 	else :
 		try :
 			return sorted(c['Scenes'][str(statecheck.scene)])[0]

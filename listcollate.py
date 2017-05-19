@@ -12,7 +12,7 @@ def GiveChar(c) :
 def SetBaseAttributes() :
 	global char
 	global attributesbase
-	attributesbase = dict((attribute, char['Attributes'][attribute][1]) for attribute in char['Attributes'].keys()[2:])
+	attributesbase = dict((str(attribute), char['AttributeVals'][str(attribute)][0]) for attribute in char['Attributes']['active'])
 def reBaseAttributes() :
 	global attributesbase
 	global attributes
@@ -21,14 +21,14 @@ def reBaseAttributes() :
 def CollateScene() :
 	global adv
 	global char
-	scenedata = adv.f['Scenes'][str(char['Scenes']['Current'])]	
-	states = str(char['Scenes'][str(char['Scenes']['Current'])])
+	scenedata = adv.f['Scenes'][str(char['Scenes']['active'][0])]	
+	states = str(char['Scenes'][str(char['Scenes']['active'][0])])
 	return Collate(scenedata, states)	
 	
 def CollateEncounter() :
 	global adv
 	global char
-	encounterinfo = char['Encounters'][str(char['Scenes']['Current'])]
+	encounterinfo = char['Encounters'][str(char['Scenes']['active'][0])]
 	encounterdata = adv.f['Encounters'][str(encounterinfo[0])]
 	states = str(encounterinfo[1])
 	return Collate(encounterdata, states)
@@ -37,7 +37,7 @@ def CollateAbilities() :
 	global adv
 	global char
 	result = {'white':[],'black':[]}
-	for ability in char['Abilities'].keys() :
+	for ability in char['Abilities']['active'] :
 		abilitydata = adv.f['Abilities'][str(ability)]
 		states = str(char['Abilities'][str(ability)])
 		lists = Collate(abilitydata, states)
@@ -49,7 +49,7 @@ def CollateItems() :
 	global adv
 	global char
 	result = {'white':[],'black':[]}
-	for item in char['Items'].keys() :
+	for item in char['Items']['active'] :
 		itemdata = adv.f['Items'][str(item)]
 		states = str(char['Items'][str(item)])
 		lists = Collate(itemdata, states)
@@ -61,7 +61,7 @@ def CollateAttributes() :
 	global adv
 	global char
 	result = {'white':[],'black':[]}
-	for attribute in char['Attributes'].keys()[2:] :
+	for attribute in char['Attributes']['active'] :
 		itemdata = adv.f['Attributes'][str(attribute)]
 		states = str(char['Attributes'][str(attribute)][0])
 		lists = Collate(itemdata, str(states))
@@ -108,7 +108,7 @@ def CollateModifiers(aspectdata,state=False) :
 			except KeyError : pass
 def CapModifiers() :
 	for attribute in attributes.keys() :
-		if attributes[attribute] > char['Attributes'][attribute][2]:
-			attributes[attribute] = char['Attributes'][attribute][2]
+		if attributes[attribute] > char['AttributeVals'][attribute][1]:
+			attributes[attribute] = char['AttributeVals'][attribute][1]
 		elif attributes[attribute] < 0 :
 			attributes[attribute] = 0

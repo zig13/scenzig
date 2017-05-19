@@ -26,50 +26,11 @@ def GiveChar(c) :
 	argsolve.GiveChar(char)
 
 #The 'Prepare' functions are only run when the scene, inventory etc are changed and cache useful, relatively static information for thier respective 'Check' function.
-def Prepare(aspect, list) :
-	aspect_lists[aspect] = list
-	for thing in list :
+def Prepare(aspect) :
+	aspect_lists[aspect] = char[aspect]['active']
+	for thing in aspect_lists[aspect] :
 		if str(thing) not in auto_states[aspect].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
-			auto_states[aspect][str(thing)] = [x for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]	
-def PrepareEncounter() :
-	global adv
-	global char
-	global scene
-	global encounter
-	scene = char['Scenes']['Current']
-	encounter = char['Encounters'][str(scene)][0]
-	global encounter_data
-	encounter_data = adv.f['Encounters'][str(encounter)]
-	global auto_encounter_states
-	if str(encounter) not in auto_encounter_states.keys() : #Creates a dictionary that lists the states that have evaluations for each Encounter encountered
-		auto_encounter_states[str(encounter)] = [x for x in StripNonStates(encounter_data.keys()) if HasEvaluations(encounter_data[x])]
-def PrepareItems() :
-	global adv
-	global char
-	global inventory
-	inventory = char['Items'].keys()
-	global auto_item_states
-	for item in inventory :	
-		if str(item) not in auto_item_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Item encountered
-			auto_item_states[str(item)] = [x for x in StripNonStates(adv.f['Items'][str(item)].keys()) if HasEvaluations(adv.f['Items'][str(item)][x])]
-def PrepareAbilities() :
-	global adv
-	global char
-	global abilities
-	abilities = char['Abilities'].keys()
-	global auto_ability_states
-	for ability in abilities :	
-		if str(ability) not in auto_ability_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Item encountered
-			auto_ability_states[str(ability)] = [x for x in StripNonStates(adv.f['Abilities'][str(ability)].keys()) if HasEvaluations(adv.f['Abilities'][str(ability)][x])]
-def PrepareAttributes() :
-	global adv
-	global char
-	global attributes
-	attributes = char['Attributes'].keys()[2:]
-	global auto_attribute_states
-	for attribute in attributes :	
-		if str(attribute) not in auto_attribute_states.keys() :  #Creates a dictionary that lists the states that have evaluations for each Attribute encountered
-			auto_attribute_states[str(attribute)] = [x for x in StripNonStates(adv.f['Attributes'][str(attribute)].keys()) if HasEvaluations(adv.f['Attributes'][str(attribute)][x])]
+			auto_states[aspect][str(thing)] = [x for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]
 
 def StripNonStates(keys) :
 	return [ x for x in keys if x.isdigit() ]
@@ -85,6 +46,7 @@ def HasEvaluations(state) :
 def Check(aspect) :
 	global char
 	global scene
+	changed = False
 	effects = {}
 	for thing in aspect_lists[aspect] :
 		current_states = char[aspect][str(thing)]
@@ -93,105 +55,20 @@ def Check(aspect) :
 		new_states += [x for x in auto_states[aspect][str(thing)] if TestState(adv.f[aspect][str(thing)][str(x)],evaluators)]
 		leaving_states = set(current_states).difference(set(new_states))
 		for leavingstate in leaving_states :
+			changed = True
 			try :
 				effects.update(adv.f[aspect][str(thing)][str(leavingstate)]['leaveeffects'])
 			except KeyError : pass #leave effects are optional
 		entering_states = set(new_states).difference(set(current_states))
 		for enteringstate in entering_states :
+			changed = True
 			try :
 				effects.update(adv.f[aspect][str(thing)][str(enteringstate)]['entereffects'])
 			except KeyError : pass #leave effects are optional
-		char['Scenes'][str(scene)] = new_states
-		return effects	
-def CheckEncounter() :
-	global char
-	global scene
-	global encounter
-	global encounter_data
-	global auto_encounter_states
-	current_states = char['Encounters'][str(scene)][1][1]
-	evaluators = [argsolve.Solve(each) for each in encounter_data['evaluators']]
-	new_states = [x for x in auto_encounter_states[str(encounter)] if TestState(encounter_data[str(x)],evaluators)]
-	effects = {}
-	leaving_states = set(current_states).difference(set(new_states))
-	for leavingstate in leaving_states :
-		try :
-			effects.update(encounter_data[str(leavingstate)]['leaveeffects'])
-		except KeyError : pass #leave effects are optional
-	entering_states = set(new_states).difference(set(current_states))
-	for enteringstate in entering_states :
-		try :
-			effects.update(encounter_data[str(enteringstate)]['entereffects'])
-		except KeyError : pass #leave effects are optional
-	char['Encounters'][str(scene)][1][1] = new_states
-	return effects	
-def CheckItems() :
-	global adv
-	global char
-	global auto_item_states
-	effects = {}
-	for item in char['Items'].keys() :
-		current_states = char['Items'][item][1]
-		item_data = adv.f['Items'][item]
-		evaluators = [argsolve.Solve(each) for each in item_data['evaluators']]
-		new_states = [x for x in auto_item_states[item] if TestState(item_data[str(x)],evaluators)]
-		leaving_states = set(current_states).difference(set(new_states))
-		for leavingstate in leaving_states :
-			try :
-				effects.update(item_data[str(leavingstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-		entering_states = set(new_states).difference(set(current_states))
-		for enteringstate in entering_states :
-			try :
-				effects.update(item_data[str(enteringstate)]['entereffects'])
-			except KeyError : pass #leave effects are optional
-		char['Items'][item][1] = new_states
-	return effects	
-def CheckAbilities() :
-	global adv
-	global char
-	global auto_ability_states
-	effects = {}
-	for ability in char['Abilities'].keys() :
-		current_states = char['Abilities'][ability][1]
-		ability_data = adv.f['Abilities'][ability]
-		evaluators = [argsolve.Solve(each) for each in ability_data['evaluators']]
-		new_states = [x for x in auto_ability_states[ability] if TestState(ability_data[str(x)],evaluators)]
-		leaving_states = set(current_states).difference(set(new_states))
-		for leavingstate in leaving_states :
-			try :
-				effects.update(ability_data[str(leavingstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-		entering_states = set(new_states).difference(set(current_states))
-		for enteringstate in entering_states :
-			try :
-				effects.update(ability_data[str(enteringstate)]['entereffects'])
-			except KeyError : pass #leave effects are optional
-		char['Abilities'][ability][1] = new_states
-	return effects				
-def CheckAttributes() :
-	global adv
-	global char
-	global attributes
-	global auto_attribute_states
-	effects = {}
-	for attribute in attributes :
-		current_states = char['Attributes'][attribute][0][1]
-		attribute_data = adv.f['Attributes'][attribute]
-		evaluators = [argsolve.Solve(each) for each in attribute_data['evaluators']]
-		new_states = [int(x) for x in auto_attribute_states[attribute] if TestState(attribute_data[str(x)],evaluators)]
-		leaving_states = set(current_states).difference(set(new_states))
-		for leavingstate in leaving_states :
-			try :
-				effects.update(attribute_data[str(leavingstate)]['leaveeffects'])
-			except KeyError : pass #leave effects are optional
-		entering_states = set(new_states).difference(set(current_states))
-		for enteringstate in entering_states :
-			try :
-				effects.update(attribute_data[str(enteringstate)]['entereffects'])
-			except KeyError : pass #leave effects are optional
-		char['Attributes'][attribute][0][1] = new_states
-	return effects
+		if changed :
+			char[aspect][str(thing)] = new_states
+			break
+	return changed, effects
 
 #Outcomes of actions are determined much the same way as states are so code is shared	
 def DetermineOutcomes(action) :

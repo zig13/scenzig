@@ -60,8 +60,8 @@ if len(characters) != 0 :
 		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
 		efunc.GiveChar(c)
 		statecheck.GiveChar(c)
-		statecheck.Prepare('Scenes', [c['Scenes']['Current']])
-		statecheck.PrepareEncounter()
+		statecheck.Prepare('Scenes')
+		statecheck.Prepare('Encounters')
 		firstrun = False
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
@@ -77,11 +77,11 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 	efunc.GiveChar(c)
 	statecheck.GiveChar(c)
-	efunc.SetScene([c['Scenes']['Current']])
+	efunc.SetScene(c['Scenes']['active'])
 	firstrun = True
-statecheck.PrepareItems()
-statecheck.PrepareAbilities()
-statecheck.PrepareAttributes()
+statecheck.Prepare('Items')
+statecheck.Prepare('Abilities')
+statecheck.Prepare('Attributes')
 listcollate.GiveChar(c)
 listcollate.SetBaseAttributes()
 import argsolve
@@ -98,11 +98,11 @@ while True : #Primary loop. Below is run after an effect happens
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	
 	effects = []
-	effects.append(statecheck.Check('Scenes'))
-	effects.append(statecheck.CheckEncounter())
-	effects.append(statecheck.CheckAttributes())
-	effects.append(statecheck.CheckItems())
-	effects.append(statecheck.CheckAbilities())
+	effects.append(statecheck.Check('Scenes')[1])
+	effects.append(statecheck.Check('Encounters')[1])
+	effects.append(statecheck.Check('Attributes')[1])
+	effects.append(statecheck.Check('Items')[1])
+	effects.append(statecheck.Check('Abilities')[1])
 	for set in effects :
 		for effect in set.keys() :
 			effecthappened = True
@@ -117,14 +117,15 @@ while True : #Primary loop. Below is run after an effect happens
 	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['Scenes'][str(statecheck.scene)]) #Scene description will be printed if there is one
-		for state in sorted(c['Scenes'][str(statecheck.scene)]) :
-			nonemptyprint(a.f['Scenes'][str(statecheck.scene)][str(state)])
-		nonemptyprint(a.f['Encounters'][str(c['Encounters'][str(statecheck.scene)][0])]) #Encounter description will be printed if there is one
-		for state in sorted(c['Encounters'][str(statecheck.scene)][1][0] + c['Encounters'][str(statecheck.scene)][1][1]) :
-			nonemptyprint(a.f['Encounters'][str(c['Encounters'][str(statecheck.scene)][0])][str(state)])
+		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])]) #Scene description will be printed if there is one
+		for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
+			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)])
+		for encounter in c['Encounters']['active'] :		
+			nonemptyprint(a.f['Encounters'][str(encounter)]) #Encounter description will be printed if there is one
+			for state in sorted(c['Encounters'][str(encounter)]) :
+				nonemptyprint(a.f['Encounters'][str(encounter)][str(state)])
 		for vital in c['Attributes']['vital'] :
-			for state in sorted(c['Attributes'][str(vital)][0][0] + c['Attributes'][str(vital)][0][1]) :
+			for state in sorted(c['Attributes'][str(vital)]) :
 				nonemptyprint(a.f['Attributes'][str(vital)][str(state)])
 		prompt = raw_input(">").strip() #The main prompt
 		action = 0
