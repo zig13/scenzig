@@ -83,6 +83,7 @@ statecheck.Prepare('Items')
 statecheck.Prepare('Abilities')
 statecheck.Prepare('Attributes')
 listcollate.GiveChar(c)
+listcollate.Setup(statecheck.aspect_lists)
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
