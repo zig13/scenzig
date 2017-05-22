@@ -1,13 +1,19 @@
 adv = None
 char = None
+aspect_lists = {}
 attributesbase = None
 attributes = None
+{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}}
 def GiveAdv(a) :
 	global adv
 	adv = a
 def GiveChar(c) :
 	global char
 	char = c
+
+def Setup(alists) :
+	global aspect_lists
+	aspect_lists = alists	
 
 def SetBaseAttributes() :
 	global char
