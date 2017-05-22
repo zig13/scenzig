@@ -13,10 +13,13 @@ def SetBaseAttributes() :
 	global char
 	global attributesbase
 	attributesbase = dict((str(attribute), char['AttributeVals'][str(attribute)][0]) for attribute in char['Attributes']['active'])
-def reBaseAttributes() :
+def reBaseAttributes(id="all") :
 	global attributesbase
 	global attributes
-	attributes = dict(attributesbase)
+	if id is "all" :
+		attributes = dict(attributesbase)
+	else :
+		attributes[str(id)] = attributesbase[str(id)]
 	
 def CollateScene() :
 	global adv
