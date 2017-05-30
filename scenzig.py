@@ -90,12 +90,6 @@ argsolve.GiveChar(c)
 while True : #Primary loop. Below is run after an effect happens
 	effecthappened = False
 	
-	listcollate.reBaseAttributes()
-	scenelist = listcollate.CollateScene()
-	encounterlist = listcollate.CollateEncounter()
-	abilitylist = listcollate.CollateAbilities()
-	itemlist = listcollate.CollateItems()
-	attributelist = listcollate.CollateAttributes()
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	
 	effects = []
@@ -113,9 +107,7 @@ while True : #Primary loop. Below is run after an effect happens
 		firstrun = False
 		continue #Restarts the primary loop early if an effect happens
 	c.write()
-	wlist = scenelist['white'] + encounterlist['white'] + abilitylist['white'] + itemlist['white'] + attributelist['white']
-	blist = scenelist['black'] + encounterlist['black'] + abilitylist['black'] + itemlist['black'] + attributelist['black']
-	glist = [act for act in dupremove(wlist) if act not in blist] #Creates a list which contains Whitelisted Actions (wlist) that are not Blacklisted (present in blist). These are the actions available to the player.
+	glist = listcollate.GreyList("wActions", "bActions") # These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])]) #Scene description will be printed if there is one
