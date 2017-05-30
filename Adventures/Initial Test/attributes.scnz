@@ -4,7 +4,7 @@ name = 'Health'
 evaluators = ['a1']
 	[[1]]
 	evaluations = {0:[976,1000]}
-	wlist = []
+	wActions = []
 	entereffects = {}
 	leaveeffects = {}
 	[[2]]
@@ -84,43 +84,43 @@ evaluators = ['a3']
 	[[1]]
 	evaluations = {0:[0,10]}
 	text = 'You are Incapacitated'
-	blist = [11]
+	bActions = [11]
 	[[2]]
 	evaluations = {0:[11,20]}
 	text = 'You are Incapacitated'
-	blist = [11]
+	bActions = [11]
 	[[11]]
 	evaluations = {0:[21,30]}
 	text = 'You are Frail'
-	blist = [11]
+	bActions = [11]
 	[[4]]
 	evaluations = {0:[31,40]}
 	text = 'You are Feeble'
-	blist = [11]
+	bActions = [11]
 	[[5]]
 	evaluations = {0:[41,50]}
 	text = 'You are Weak'
-	blist = [11]
+	bActions = [11]
 	[[6]]
 	evaluations = {0:[51,60]}
 	text = 'You are Very Strong'
-	wlist = [11]
+	wActions = [11]
 	[[7]]
 	evaluations = {0:[61,70]}
 	text = 'You are Mighty'
-	wlist = [11]
+	wActions = [11]
 	[[8]]
 	evaluations = {0:[71,80]}
 	text = 'You are Immensely Strong'
-	wlist = [11]
+	wActions = [11]
 	[[9]]
 	evaluations = {0:[81,90]}
 	text = 'You are Incredibly Strong'
-	wlist = [11]
+	wActions = [11]
 	[[10]]
 	evaluations = {0:[91,100]}
 	text = 'You are Herculean'
-	wlist = [11]
+	wActions = [11]
 [4]
 name = 'Knowledge'
 evaluators = ['a4']
