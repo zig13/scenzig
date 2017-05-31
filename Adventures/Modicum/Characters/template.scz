@@ -1,18 +1,19 @@
 Chapter = 0
 Beats = 0
-[Scene]
-Current = 1
-Previous = None
-[SceneStates]
-1 = [[1],[]]
+[Scenes]
+active = [1]
+previous = None
 [Encounters]
-1 = [0, [[1],[]]]
+active = []
+[Inventories]
+active = [1]
+1=[]
 [Items]
-
+active = []
 [Abilities]
-
+active = []
 [Attributes]
 vital = []
 active = []
-
+[AttributeVals]
 [Currencies]
