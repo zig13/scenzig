@@ -39,14 +39,15 @@ def c(id) :
 		return char['Currencies'][str(id)]
 	else : #If the character does not have a currency of the given ID, it is taken to be 0.
 		return 0
-def i(id) : #i will return 1 if the character has an item of the given id in thier inventory else 0
+def i(id) : #i will return the active inventory the item is present in else 0
 	global char
 	if char is None:
 		print "Character data not available"
 		return 0
-	if id in char['Inventories']['c'] :
-		return 1
-	else : return 0
+	for inventory in char['Inventories']['active'] :
+		if id in char['Inventories'][str(inventory)] :
+			return 1
+	return 0
 def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
 	global char
 	if char is None:
