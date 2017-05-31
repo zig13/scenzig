@@ -1,7 +1,7 @@
 [0]
 [1]
 text = "You stand on a dance floor"
-wlist = [1]
+wActions = [1]
 evaluators = []
 	[[1]]
-	wlist = [2]
+	wActions = [2]
