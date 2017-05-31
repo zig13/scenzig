@@ -41,9 +41,11 @@ def AddSceneState(arguments) :
 def PrintItems(arguments) :
 	global char
 	global adv
-	if len(char['Items']) == 0 : return
+	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
+	if arguments[0] not in char['Inventories']['active'] : return #Non-active inventories won't be printed
+	if len(char['Inventories'][str(arguments[0])]) < 1 : return
 	print "You are carrying:"
-	for itm in char['Inventories']['c'] :
+	for itm in char['Inventories'][str(arguments[0])] :
 		states = sorted(char['Items'][str(itm)])
 		try :
 			print adv.f['Items'][itm][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
@@ -54,7 +56,7 @@ def PrintItems(arguments) :
 	print ""
 def RemoveItem(arguments) : #Arguments are Item and Inventory
 	global char
-	if len(arguments) < 2 : arguments.append('c')
+	if len(arguments) < 2 : arguments.append(1)
 	if arguments[0] in char['Inventories'][str(arguments[1])] :
 		char['Inventories'][str(arguments[1])].remove(arguments[0])
 		statecheck.Prepare('Items')
