@@ -5,7 +5,7 @@ wActions = [6]
 bActions = [7]
 evaluators = []
 	[[1]]
-	penalties = {'1':15}
+	penalties = {'3':15}
 [5]
 description = 'A big bag of dick'
 evaluators = []
