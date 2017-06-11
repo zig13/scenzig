@@ -1,6 +1,8 @@
 adv = None
 char = None
-collated = {'wActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wEncounters':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bEncounters':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'Bonuses':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'Penalties':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}}}
+statecheck = None
+collated = {'wActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wEncounters':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bEncounters':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bonuses':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'penalties':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}}}
+actions = None
 attributesbase = {}
 attributes = {}
 from functions import dupremove
@@ -11,9 +13,12 @@ def GiveChar(c) :
 	global char
 	char = c
 
-def Setup(aspect_lists) :
-	for aspect in aspect_lists.keys() :
-		ActivateThings(aspect)	
+def Setup(statecheck_passed) :
+	global statecheck
+	statecheck = statecheck_passed
+	for aspect in collated['wActions'].keys() :
+		ActivateThings(aspect)
+	CollateInventories()
 
 def SetBaseAttributes(attribute="all") :
 	global char
@@ -32,40 +37,127 @@ def reBaseAttributes(attribute="all") :
 	
 def ActivateThings(aspect) :
 	global collated
-	alteredcollections = []
 	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file	
+	statecheck.Prepare(aspect)
 	for thing in set(char[aspect]['active']).difference(collatedthings) : #Finds things that haven't been collated yet		
-		for collection in collated :			
-			if collection is not "bonuses" and collection is not "penalties" :
-				collated[collection][aspect][str(thing)] = {'0':[]}
-			else :
-				collated[collection][aspect][str(thing)] = {'0':{}}
-			try :
-				collated[collection][aspect][str(thing)]['0'] = adv.f[aspect][str(thing)][collection]
-				alteredcollections.append(collection)
-			except KeyError : pass
+		for collection in collated.keys() :
+			collated[collection][aspect][str(thing)] = {}
 		if aspect is "Attributes" :
 			SetBaseAttributes(thing)
 			reBaseAttributes(thing)
 			ApplyModifiers(thing)
-		alteredcollections.extend(AddStates(aspect, str(thing)))
-	return dupremove(alteredcollections)
+		AddStates(aspect, thing)
+
+def DeactivateThings(aspect) :
+	global collated
+	global actions
+	alteredcollections = []
+	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file	
+	statecheck.Prepare(aspect)
+	for thing in set(collatedthings).difference(char[aspect]['active']) : #Finds things that haven't been collated yet		
+		for collection in collated.keys() :
+			for state in collated[collection][aspect][str(thing)].keys() :
+				if collated[collection][aspect][str(thing)][str(state)] :
+					alteredcollections.append(collection)
+			del collated[collection][aspect][str(thing)]
+	if ("wActions" in alteredcollections) or ("bActions" in alteredcollections) :
+		actions = None
+	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
+		CollateEncounters()
+	if "wInventories" in alteredcollections or "bInventories" in alteredcollections :
+		CollateInventories()
+	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
+		reBaseAttributes()
+		ApplyModifiers()
 
 def AddStates(aspect, thing) :
 	global collated
+	global actions
 	alteredcollections = []
-	collatedstates = [int(x) for x in collated['wActions'][aspect][thing].keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
-	for state in set(char[aspect][thing]).difference(collatedstates) : #Finds states that haven't been collated yet
-		for collection in collated :
+	if str(thing) in char[aspect].keys() : #If the character has encountered the thing before
+		collatedstates = [int(x) for x in collated['wActions'][aspect][str(thing)].keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
+		states = list(char[aspect][str(thing)])
+		states.append(0)
+		states = set(states).difference(collatedstates) #Finds states that haven't been collated yet. Will also collate base values of the thing (as state 0) if they haven't been already
+	else : #If the character has not encountered the thing before. Therefore it can be assumed that nothing is collated	
+		char[aspect][str(thing)] = []
+		states = []
+		states.append(0)
+	for state in states : 		
+		for collection in collated.keys() :
 			if collection is not "bonuses" and collection is not "penalties" :
-				collated[collection][aspect][thing][str(state)] = []
+				collated[collection][aspect][str(thing)][str(state)] = []
 			else :
-				collated[collection][aspect][thing][str(state)] = {}
-			try :
-				collated[collection][aspect][thing][str(state)] = adv.f[aspect][thing][str(state)][collection]
+				collated[collection][aspect][str(thing)][str(state)] = {}
+			if state : #If state is non-zero i.e. a state and not base thing values
+				try :
+					collated[collection][aspect][str(thing)][str(state)] = adv.f[aspect][str(thing)][str(state)][collection]
+					alteredcollections.append(collection)
+				except KeyError : pass
+			else :
+				try :
+					collated[collection][aspect][str(thing)][str(state)] = adv.f[aspect][str(thing)][collection]
+					alteredcollections.append(collection)
+				except KeyError : pass
+	if ("wActions" in alteredcollections) or ("bActions" in alteredcollections) :
+		actions = None
+	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
+		CollateEncounters()
+	if "wInventories" in alteredcollections or "bInventories" in alteredcollections :
+		CollateInventories()
+	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
+		ApplyModifiers()
+
+def RemoveStates(aspect, thing) :
+	global collated
+	global actions
+	alteredcollections = []
+	collatedstates = [int(x) for x in collated['wActions'][aspect][str(thing)].keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
+	for state in set(collatedstates).difference(char[aspect][str(thing)]) : #Finds states that are no longer valid but have been collated
+		for collection in collated.keys() :
+			if collated[collection][aspect][str(thing)][str(state)] :
 				alteredcollections.append(collection)
-			except KeyError : pass
-	return dupremove(alteredcollections)
+			del collated[collection][aspect][str(thing)][str(state)]
+	if "wActions" in alteredcollections or "bActions" in alteredcollections :
+		actions = None
+	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
+		CollateEncounters()
+	if "wInventories" in alteredcollections or "bInventories" in alteredcollections :
+		CollateInventories()
+	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
+		reBaseAttributes()
+		ApplyModifiers()
+		
+
+def CollateInventories() :
+	activeInventories = GreyList('wInventories', 'bInventories')
+	if set(activeInventories) != set(char['Inventories']['active']) :
+		unlistedInventories = [x for x in activeInventories if str(x) not in char['Inventories'].keys()]
+		for inventory in unlistedInventories :
+			char['Inventories'][str(inventory)] = []
+		char['Inventories']['active'] = activeInventories
+		CollateItems()
+
+def CollateItems() :
+	activeItems = []
+	for inventory in char['Inventories']['active'] :
+		activeItems.extend(char['Inventories'][str(inventory)])
+	if set(activeItems) != set(char['Items']['active']) :
+		char['Items']['active'] = activeItems
+		ActivateThings('Items')
+		DeactivateThings('Items')
+
+def CollateEncounters() :
+	activeEncounters = GreyList('wEncounters', 'bEncounters')
+	if set(activeEncounters) != set(char['Encounters']['active']) :
+		char['Encounters']['active'] = activeEncounters
+		ActivateThings('Encounters')
+
+def CollateActions() :
+	global actions
+	if actions is None:
+		actions = GreyList("wActions", "bActions")
+	return actions
 
 def GreyList(white, black) :
 	whitelist = []
@@ -75,22 +167,32 @@ def GreyList(white, black) :
 			for state in collated[white][aspect][thing].keys() :
 				whitelist.extend(collated[white][aspect][thing][state])
 				blacklist.extend(collated[black][aspect][thing][state])
-	if white is "Bonuses" : return [whitelist, blacklist]
-	else : return [x for x in dupremove(whitelist) if x not in blacklist]
+	return [x for x in dupremove(whitelist) if x not in blacklist]
+
+def CollateModifiers() :
+	bonuslist = []
+	penaltylist = []
+	for aspect in collated["bonuses"].keys() :
+		for thing in collated["bonuses"][aspect].keys() :
+			for state in collated["bonuses"][aspect][thing].keys() :
+				bonuslist.append(collated["bonuses"][aspect][thing][state])
+				penaltylist.append(collated["penalties"][aspect][thing][state])
+	return [bonuslist, penaltylist]
 
 def ApplyModifiers(attribute="all") :
-	grey = GreyList("Bonuses", "Penalties")
+	grey = CollateModifiers()
 	bonuses = grey[0]
 	penalties = grey[1]
 	if attribute is "all" : todo = char['Attributes']['active']
 	else : todo = [attribute]
 	for attribute in todo :
 		for bonus in bonuses :
-			try : attributes[attribute] += bonus[attribute]
+			try : attributes[str(attribute)] += bonus[attribute]
 			except KeyError : pass
 		for penalty in penalties :
-			try : attributes[attribute] += penalty[attribute]
-			except KeyError : pass
+			try : attributes[str(attribute)] -= penalty[str(attribute)]
+			except KeyError : 
+				pass
 
 def CapModifiers() :
 	for attribute in attributes.keys() :

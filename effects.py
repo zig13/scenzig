@@ -1,8 +1,8 @@
-import statecheck
 from functions import nonemptyprint
-from listcollate import SetBaseAttributes
 adv = None
 char = None
+listcollate = None
+statecheck = None
 listg = None
 def GiveAdv(a) :
 	global adv
@@ -10,29 +10,29 @@ def GiveAdv(a) :
 def GiveChar(c) :
 	global char
 	char = c
+def GiveListCollate(lcollate) :
+	global listcollate
+	listcollate = lcollate
+def GiveStateCheck(scheck) :
+	global statecheck
+	statecheck = scheck
 def GiveList(glist) :
 	global listg
 	listg = glist
 
 def SetScene(arguments) :
 	global char
-	char['Scenes']['Previous'] = char['Scenes']['active'][0]
+	char['Scenes']['previous'] = char['Scenes']['active'][0]
 	char['Scenes']['active'][0] = arguments[0]
-	if str(arguments[0]) not in char['Scenes'].keys()[2:] : char['Scenes'][str(arguments[0])] = []
-	statecheck.Prepare('Scenes') #PrepareScene needs there to be a record for the new scene so the above generates an empty one
-	statecheck.Check('Scenes') #If CheckScene dosn't come up with anything then the below line sets the state to 1
-	if not char['Scenes'][str(arguments[0])] : char['Scenes'][str(arguments[0])] = [1]
-	if str(arguments[0]) not in char['Encounters'].keys() : char['Encounters'][str(arguments[0])] = [0, [[],[]]]
-	statecheck.Prepare('Encounters')
-	statecheck.Check('Encounters')
-	if (not char['Encounters'][str(arguments[0])][1][0]) and (not char['Encounters'][str(arguments[0])][1][1]) : char['Encounters'][str(arguments[0])] = [0, [[1],[]]]
+	listcollate.ActivateThings('Scenes')
+	statecheck.Check()
 def RevertScene(arguments) :
 	global char
 	temp = char['Scenes']['active'][0]
 	char['Scenes']['active'][0] = char['Scenes']['previous']
 	char['Scenes']['previous'] = temp
-	statecheck.Prepare('Scenes')
-	statecheck.Check('Scenes')
+	listcollate.ActivateThings('Scenes')
+	statecheck.Check()
 def AddSceneState(arguments) :
 	global char
 	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0])
@@ -59,15 +59,24 @@ def RemoveItem(arguments) : #Arguments are Item and Inventory
 	if len(arguments) < 2 : arguments.append(1)
 	if arguments[0] in char['Inventories'][str(arguments[1])] :
 		char['Inventories'][str(arguments[1])].remove(arguments[0])
-		statecheck.Prepare('Items')
+	if arguments[1] in char['Inventories']['active'] :
+		listcollate.CollateItems()
+		statecheck.Check()
 def AddItem(arguments) : #Arguments are Item, Inventory and Item State
 	global char
 	if len(arguments) < 2 : 
-		arguments.append('c')
+		arguments.append(1)
 		if len(arguments) < 3 : arguments.append(1) #If no state is provided use state 1
-	if arguments[0] not in char['Inventories'][str(arguments[1])] :
-		char['Inventories'][str(arguments[1])].append(arguments[0])
-		statecheck.Prepare('Items')
+	try :
+		if arguments[0] not in char['Inventories'][str(arguments[1])] :
+			char['Inventories'][str(arguments[1])].append(arguments[0])
+			if arguments[1] in char['Inventories']['active'] :
+				listcollate.ActivateThings('Items')
+	except KeyError : #If the given inventory does not exist yet this creates it
+		char['Inventories'][str(arguments[1])] = [arguments[0]]
+	if arguments[1] in char['Inventories']['active'] :
+		listcollate.CollateItems()
+		statecheck.Check()
 def RemoveAbility(arguments) :
 	global char
 	if str(arguments[0]) in char['Abilities'].keys() :
@@ -100,9 +109,14 @@ def PrintAttributes(arguments) :
 def DamageAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
-		char['Attributes'][str(arguments[0])][1] -= arguments[1]
-		if char['Attributes'][str(arguments[0])][1] < 0 : char['Attributes'][str(arguments[0])][1] = 0
-		SetBaseAttributes()
+		char['AttributeVals'][str(arguments[0])][0] -= arguments[1]
+		if char['AttributeVals'][str(arguments[0])][1] < 0 :
+			char['AttributeVals'][str(arguments[0])][1] = 0
+		if arguments[0] in char['Attributes']['active'] :
+			listcollate.SetBaseAttributes(arguments[0])
+			listcollate.reBaseAttributes(arguments[0])
+			listcollate.ApplyModifiers(arguments[0])
+			statecheck.Check()
 def BolsterAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
@@ -111,7 +125,11 @@ def BolsterAttribute(arguments) :
 			if char['AttributeVals'][str(arguments[0])][0] > char['AttributeVals'][str(arguments[0])][1] : char['AttributeVals'][str(arguments[0])][0] = char['AttributeVals'][str(arguments[0])][1]
 		except IndexError:
 			pass #Max value is optional
-		SetBaseAttributes()
+		if arguments[0] in char['Attributes']['active'] :
+			listcollate.SetBaseAttributes(arguments[0])
+			listcollate.reBaseAttributes(arguments[0])
+			listcollate.ApplyModifiers(arguments[0])
+			statecheck.Check()
 def TakeAction(arguments) :
 	action = arguments[0]
 	nonemptyprint(adv.f['Actions'][action]['outcomes'][outcome]) #Action text will be printed if it exists

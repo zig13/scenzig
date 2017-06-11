@@ -44,6 +44,8 @@ import statecheck
 statecheck.GiveAdv(a)
 import listcollate
 listcollate.GiveAdv(a)
+efunc.GiveListCollate(listcollate)
+efunc.GiveStateCheck(statecheck)
 try :
 	characters = listdir(a.directory+"Characters")
 except OSError :
@@ -59,9 +61,10 @@ if len(characters) != 0 :
 	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
 		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
 		efunc.GiveChar(c)
+		listcollate.GiveChar(c)
 		statecheck.GiveChar(c)
-		statecheck.Prepare('Scenes')
-		statecheck.Prepare('Encounters')
+		statecheck.GiveEffects(efunc)
+		statecheck.GiveListCollate(listcollate)
 		firstrun = False
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
@@ -76,38 +79,21 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
 	efunc.GiveChar(c)
+	listcollate.GiveChar(c)
 	statecheck.GiveChar(c)
-	efunc.SetScene(c['Scenes']['active'])
+	statecheck.GiveEffects(efunc)
+	statecheck.GiveListCollate(listcollate)
 	firstrun = True
-statecheck.Prepare('Items')
-statecheck.Prepare('Abilities')
-statecheck.Prepare('Attributes')
-listcollate.GiveChar(c)
-listcollate.Setup(statecheck.aspect_lists)
+listcollate.Setup(statecheck)
+statecheck.Check()
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
 while True : #Primary loop. Below is run after an effect happens
-	effecthappened = False
-	
+	effecthappened = False	
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
-	
-	effects = []
-	effects.append(statecheck.Check('Scenes')[1])
-	effects.append(statecheck.Check('Encounters')[1])
-	effects.append(statecheck.Check('Attributes')[1])
-	effects.append(statecheck.Check('Items')[1])
-	effects.append(statecheck.Check('Abilities')[1])
-	for set in effects :
-		for effect in set.keys() :
-			effecthappened = True
-			arguments = argsolve.Solve(set[effect])
-			eval("efunc."+effect+"(arguments)")
-	if effecthappened or firstrun :
-		firstrun = False
-		continue #Restarts the primary loop early if an effect happens
 	c.write()
-	glist = listcollate.GreyList("wActions", "bActions") # These are the actions available to the player.
+	glist = listcollate.CollateActions() # These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])]) #Scene description will be printed if there is one
@@ -134,11 +120,11 @@ while True : #Primary loop. Below is run after an effect happens
 			if prompt in actdict.keys() : 
 				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
 		Clr()
-		effects.append(statecheck.DetermineOutcomes(action))
-		for set in effects :
-			for effect in set.keys() :
+		effects = statecheck.DetermineOutcomes(action)
+		for outcome in effects :
+			for effect in outcome.keys() :
 				effecthappened = True
-				arguments = argsolve.Solve(set[effect])
+				arguments = argsolve.Solve(outcome[effect])
 				eval("efunc."+effect+"(arguments)")
 		if effecthappened :
 			break #Leave the secondary loop and re-enter the primary loop
