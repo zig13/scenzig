@@ -20,16 +20,6 @@ def a(id) :
 		return attributes[str(id)]
 	else : #If the character does not have an attribute of the given ID, it is taken to be 0.
 		return 0
-def v(id) :
-	global char
-	vitals = listcollate.vitals
-	if char is None:
-		print "Character data not available"
-		return 0
-	if str(id) in vitals.keys() :
-		return vitals[str(id)]
-	else : #If the character does not have a vital of the given ID, it is taken to be 0.
-		return 0
 def c(id) :
 	global char
 	if char is None:
