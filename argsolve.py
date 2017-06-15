@@ -36,7 +36,7 @@ def i(id) : #i will return the active inventory the item is present in else 0
 		return 0
 	for inventory in char['Inventories']['active'] :
 		if id in char['Inventories'][str(inventory)] :
-			return 1
+			return inventory
 	return 0
 def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
 	global char
@@ -50,6 +50,14 @@ def s(id) : #s has two functions. If passed 0 it will return the current scene e
 			return sorted(c['Scenes'][str(statecheck.scene)])[0]
 		except KeyError :
 			return 0
+def n(id) : #Returns length of given Inventory
+	if char is None:
+		print "Character data not available"
+		return 0
+	try :
+		return len(char['Inventories'][str(id)])
+	except KeyError :
+		return 0
 
 def Solve(arg) :
 	if isinstance(arg, list) :
