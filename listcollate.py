@@ -39,7 +39,7 @@ def ActivateThings(aspect) :
 	global collated
 	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file	
 	statecheck.Prepare(aspect)
-	for thing in set(char[aspect]['active']).difference(collatedthings) : #Finds things that haven't been collated yet		
+	for thing in set(char[aspect]['active']).difference(collatedthings) : #Finds things that haven't been collated yet
 		for collection in collated.keys() :
 			collated[collection][aspect][str(thing)] = {}
 		if aspect is "Attributes" :
@@ -75,7 +75,7 @@ def AddStates(aspect, thing) :
 	global actions
 	alteredcollections = []
 	if str(thing) in char[aspect].keys() : #If the character has encountered the thing before
-		collatedstates = [int(x) for x in collated['wActions'][aspect][str(thing)].keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
+		collatedstates = [int(x) for x in collated['wActions'][aspect].get(str(thing),{}).keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
 		states = list(char[aspect][str(thing)])
 		states.append(0)
 		states = set(states).difference(collatedstates) #Finds states that haven't been collated yet. Will also collate base values of the thing (as state 0) if they haven't been already
@@ -112,7 +112,7 @@ def RemoveStates(aspect, thing) :
 	global collated
 	global actions
 	alteredcollections = []
-	collatedstates = [int(x) for x in collated['wActions'][aspect][str(thing)].keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
+	collatedstates = [int(x) for x in collated['wActions'][aspect].get(str(thing),{}).keys()] #Converts the list keys to integers so they can be compared to the state list in the character file
 	for state in set(collatedstates).difference(char[aspect][str(thing)]) : #Finds states that are no longer valid but have been collated
 		for collection in collated.keys() :
 			if collated[collection][aspect][str(thing)][str(state)] :
@@ -144,8 +144,8 @@ def CollateItems() :
 		activeItems.extend(char['Inventories'][str(inventory)])
 	if set(activeItems) != set(char['Items']['active']) :
 		char['Items']['active'] = activeItems
-		ActivateThings('Items')
 		DeactivateThings('Items')
+		ActivateThings('Items')
 
 def CollateEncounters() :
 	activeEncounters = GreyList('wEncounters', 'bEncounters')

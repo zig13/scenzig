@@ -41,8 +41,11 @@ def Prepare(aspect) :
 		char[aspect]['active'] = []  #Ideally Adventure creators should still fill in the active lists in the Character template but in case they don't empty ones are generated.
 		aspect_lists[aspect] = []
 	for thing in aspect_lists[aspect] :
-		if str(thing) not in auto_states[aspect].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
-			auto_states[aspect][str(thing)] = [int(x) for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]
+		UpdateAutoList(aspect, thing)
+
+def UpdateAutoList(aspect, thing) :	
+	if str(thing) not in auto_states[aspect].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
+		auto_states[aspect][str(thing)] = [int(x) for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]
 
 def StripNonStates(keys) :
 	return [ x for x in keys if x.isdigit() ]
@@ -62,6 +65,8 @@ def Check(remit="All") :
 		aspects = aspect_lists.keys()
 	else :
 		aspects = [remit]
+		if remit not in aspect_lists.keys() : #If the aspect has not yet been prepared. This should only happen during setup
+			Prepare(remit)
 	for aspect in aspects :
 		for thing in aspect_lists[aspect] :
 			effects = {}
@@ -69,7 +74,8 @@ def Check(remit="All") :
 			states_added = False
 			current_states = char[aspect][str(thing)]
 			new_states = [x for x in current_states if x not in auto_states[aspect][str(thing)]] #if x not in Z
-			evaluators = [argsolve.Solve(each) for each in adv.f[aspect][str(thing)]['evaluators']]
+			evaluators = [argsolve.Solve(each) for each in adv.f[aspect][str(thing)].get('evaluators', default=[])]
+			if not evaluators : continue			
 			new_states += [x for x in auto_states[aspect][str(thing)] if TestState(adv.f[aspect][str(thing)][str(x)],evaluators)]
 			if new_states == current_states : continue
 			leaving_states = set(current_states).difference(set(new_states))
@@ -99,32 +105,36 @@ def DetermineOutcomes(action) :
 	global adv
 	global char
 	effects = []
+	text = False
 	if action == 0 : return effects
 	action_data = adv.f['Actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
 	try :
 		effects.append(adv.f['Actions'][str(action)]['effects'])
 	except KeyError : pass #effects are optional
-	if len(all_outcomes) == 1 :
-		outcomes = all_outcomes
-	else :
-		evaluators = [argsolve.Solve(each) for each in action_data['evaluators']]
+	evaluators = [argsolve.Solve(each) for each in action_data.get('evaluators',default=[])]
+	if evaluators :
 		outcomes = [x for x in all_outcomes if TestState(action_data[str(x)],evaluators)]
+	else :
+		outcomes = all_outcomes
 	if not outcomes :
 		print "Nothing Happens\n" #This occurs if no outcomes match
 	else :
 		for outcome in outcomes :
 			try : effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
 			except KeyError : pass #effects are optional
-			try : nonemptyprint(adv.f['Actions'][action][outcome])
+			try : 
+				text = nonemptyprint(adv.f['Actions'][action][outcome])
 			except KeyError : pass #text is optional
 			try : char['Beats'] += adv.f['Actions'][action][outcome]['duration']
 			except KeyError : pass #duration is optional
-	return effects
+	return [effects,text]
 
 def TestState(statedata,evaluators) :
-	for test in statedata['evaluations'].keys() :
+	verdict = False
+	for test in statedata.get('evaluations',default={}).keys() :
 		verdict = CompareEval(statedata['evaluations'][test],evaluators[test])
+		if not verdict : break
 	return verdict
 	
 def CompareEval(valrange,value) :
