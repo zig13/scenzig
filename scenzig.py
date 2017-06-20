@@ -85,7 +85,7 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	statecheck.GiveListCollate(listcollate)
 	firstrun = True
 listcollate.Setup(statecheck)
-statecheck.Check()
+statecheck.Check('All')
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
