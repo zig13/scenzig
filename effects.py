@@ -45,6 +45,22 @@ def AddSceneState(arguments) :
 		statecheck.auto_states['Scenes'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Scenes'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Scenes'][str(arguments[1])][x])]
 	if arguments[0] not in current_states :
 		current_states.append(arguments[0])
+def RemoveSceneState(arguments) : #Arguments are state and scene
+	global char
+	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0]) #If no scene is given, the given state is removed from the current scene
+	try :
+		current_states = char['Scenes'][str(arguments[1])]
+	except KeyError :
+		char['Scenes'][str(arguments[1])] = []
+		statecheck.UpdateAutoList('Scenes', arguments[1])
+		return	
+	if arguments[0] is 0 : #All manually set states are removed if 0 is given as an argument
+		if str(arguments[1]) not in statecheck.auto_states['Scenes'] :
+			statecheck.UpdateAutoList('Scenes', arguments[1])
+		char['Scenes'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Scenes'][str(arguments[1])]]
+	else :
+		char['Scenes'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
+
 def PrintItems(arguments) :
 	global char
 	global adv
