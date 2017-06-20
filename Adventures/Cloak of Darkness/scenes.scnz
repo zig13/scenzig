@@ -1,39 +1,32 @@
 [0]
 [1]
 text = "Hurrying through the rainswept November night, you're glad to see the bright lights of the Opera House. It's surprising that there aren't more people about but, hey, what do you expect in a cheap demo game...?"
-wlist = [1]
-evaluators = []
+wActions = [1]
 	[[1]]
 [2]
 text = "You are standing in a spacious hall, splendidly decorated in red and gold, with glittering chandeliers overhead. The entrance from the street is to the north, and there are doorways south and west."
-wlist = [2,3,4]
+wActions = [2,3,4]
 evaluators = []
 	[[1]]
 [3]
 text = "The walls of this small room were clearly once lined with hooks, though now only one remains. The exit is a door to the east."
-wlist = [8]
+wActions = [8]
+wInventories = [3,4]
+printInventories = [3,4]
 evaluators = []
 	[[1]]
-	wlist = [10,14]
-	[[2]]
-	text = "There is a cloak piled messily in the centre of the floor"
-	wlist = [13]
-	[[3]]
-	text = "Hanging from the hook is a dark cloak."
-	wlist = [15]
 [4]
 text = "The bar, much rougher than you'd have guessed after the opulence of the foyer to the north, is completely empty."
-wlist = [7]
+wActions = [7]
 evaluators = ['i1']
 	[[1]]
 	text = "The only light is from the open door behind you. The far reaches of the room are filled with impenetrable darkness."
-	evaluations = {0:[1,1]}
+	evaluations = {0:[1,2]}
 	[[2]]
 	text = "There seems to be some sort of message scrawled in the sawdust on the floor."
-	wlist = [11]
-	evaluations = {0:[0,0]}
+	wActions = [11]
+	evaluations = {0:[3,4]}
 [5]
-evaluators =[]
 	[[1]]
 	text = 'The message, neatly marked in the sawdust, reads "You have won"'
 	[[2]]

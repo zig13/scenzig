@@ -29,16 +29,21 @@ evaluators = []
 [5]
 slug = 'Inventory'
 description = 'Look at what items you are carrying'
-evaluators = []
+evaluators = ['n2']
 	[[1]]
-	evaluations = {}
-	effects = {'PrintItems':[]}
+	evaluations = {0:[1,99999]}
+	text = "You are carrying:"
+	effects = {'PrintItems':[2]}
+	[[2]]
+	evaluations = {0:[0,0]}
+	text = "You're not carrying anything."
 [6]
 slug = 'Help'
 description = 'Display available actions'
 evaluators = []
 	[[1]]
 	evaluations = {}
+	text = "Available actions:"
 	effects = {'PrintActions':[]}
 [7]
 slug = 'Go North'
@@ -63,12 +68,12 @@ evaluators = ['s0']
 	[[2]]
 	evaluations = {0:[2,3]}
 	text = "You fold the cloak over your arm. It feels distinctly damp."
-	effects = {'AddItem':[1,2]}
+	effects = {'RemoveItem':[1,1],'AddItem':[1,2]}
 	duration = 4
 	[[3]]
 	evaluations = {0:[4,4]}
 	text = "You fumble with the clasp in the dark but fail to achieve anything."
-	effects = {'SetSceneState':[2,5]}
+	effects = {'RemoveSceneState':[1,5],'AddSceneState':[2,5]}
 	duration = 6
 [10]
 slug = 'Drop Cloak'
@@ -79,7 +84,7 @@ evaluators = ['s0']
 	[[2]]
 	evaluations = {0:[3,3]}
 	text = "You dump the cloak on the floor despite the availability of a perfectly good hook."
-	effects = {'RemoveItem':[1],'SetSceneState':[2,3]}
+	effects = {'RemoveItem':[1,2],'AddItem':[1,3]}
 	duration = 2
 [11]
 slug = 'Read Message'
@@ -100,32 +105,45 @@ evaluators = ['s0']
 	[[3]]
 	evaluations = {0:[4,4]}
 	text = "The room is far too dark to discern anything about the cloak."
-	effects = {'SetSceneState':[2,5]}
+	effects = {'RemoveSceneState':[0,5],'AddSceneState':[2,5]}
 [13]
 slug = 'Pickup cloak'
 evaluators = []
 	[[1]]
 	text = "You pick the cloak up off the floor."
-	effects = {'AddItem':[1,2],'SetSceneState':[1,3]}
+	effects = {'RemoveItem':[1,3],'AddItem':[1,2]}
 	duration = 3
 [14]
 slug = 'Hang Cloak'
-evaluators = []
 	[[1]]
-	text = "You hang the cloak up on the hook."
-	effects = {'RemoveItem':[1],'SetSceneState':[3,3]}
+	effects = {'RemoveItem':[1,2]}
 	duration = 5
+	[[2]]
+	text = "You hang the cloak up on the hook."
+	effects = {'RemoveItem':[2,4],'AddItem':[1,4]}
 [15]
 slug = 'Unhook Cloak'
-evaluators = []
 	[[1]]
+	effects = {'RemoveItem':[1,4],'AddItem':[2,4]}
+	[[2]]
 	text = "You take the cloak off of the hook."
-	effects = {'AddItem':[1,2],'SetSceneState':[1,3]}
+	effects = {'AddItem':[1,2]}
 	duration = 5
 [16]
 slug = 'Wear Cloak'
 evaluators = []
 	[[1]]
 	text = "You throw the cloak over your shoulders."
-	effects = {'AddItem':[1,1]}
+	effects = {'RemoveItem':[1,2],'AddItem':[1,1]}
 	duration = 4
+[17]
+slug = 'Equipment'
+description = 'Look at what you are wearing'
+evaluators = ['n1']
+	[[1]]
+	evaluations = {0:[1,99999]}
+	text = "You are wearing:"
+	effects = {'PrintItems':[1]}
+	[[2]]
+	evaluations = {0:[0,0]}
+	text = "You're not wearing anything of note."
