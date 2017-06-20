@@ -34,9 +34,10 @@ def i(id) : #i will return the active inventory the item is present in else 0
 	if char is None:
 		print "Character data not available"
 		return 0
-	for inventory in char['Inventories']['active'] :
-		if id in char['Inventories'][str(inventory)] :
-			return inventory
+	inventories = [x for x in char['Inventories'].keys() if x.isdigit()]
+	for inventory in inventories :
+		if id in char['Inventories'][inventory] :
+			return int(inventory)
 	return 0
 def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
 	global char
