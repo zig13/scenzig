@@ -67,7 +67,6 @@ def PrintItems(arguments) :
 	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
 	if arguments[0] not in char['Inventories']['active'] : return #Non-active inventories won't be printed
 	if len(char['Inventories'][str(arguments[0])]) < 1 : return
-	print "You are carrying:"
 	for itm in char['Inventories'][str(arguments[0])] :
 		states = sorted(char['Items'][str(itm)])
 		try :
@@ -76,7 +75,6 @@ def PrintItems(arguments) :
 			try :
 				print adv.f['Items'][str(itm)]['description']
 			except KeyError : pass
-	print ""
 def RemoveItem(arguments) : #Arguments are Item and Inventory
 	global char
 	if len(arguments) < 2 : arguments.append(1)
@@ -121,7 +119,6 @@ def PrintActions(arguments) :
 			try :
 				print adv.f['Actions'][str(action)]['slug']
 			except KeyError : continue
-	print ""
 def PrintAttributes(arguments) :
 	global char
 	global adv

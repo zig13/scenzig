@@ -91,6 +91,7 @@ import argsolve
 argsolve.GiveChar(c)
 while True : #Primary loop. Below is run after an effect happens
 	effecthappened = False	
+	text = False	
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	c.write()
 	glist = listcollate.CollateActions() # These are the actions available to the player.
@@ -120,11 +121,16 @@ while True : #Primary loop. Below is run after an effect happens
 			if prompt in actdict.keys() : 
 				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
 		Clr()
-		effects = statecheck.DetermineOutcomes(action)
-		for outcome in effects :
-			for effect in outcome.keys() :
-				effecthappened = True
-				arguments = argsolve.Solve(outcome[effect])
-				eval("efunc."+effect+"(arguments)")
+		results = statecheck.DetermineOutcomes(action)
+		if results :
+			effects = results[0]
+			text = results[1]
+			for outcome in effects :
+				for effect in outcome.keys() :
+					effecthappened = True
+					arguments = argsolve.Solve(outcome[effect])
+					eval("efunc."+effect+"(arguments)")
+		if text :
+			print ""
 		if effecthappened :
 			break #Leave the secondary loop and re-enter the primary loop
