@@ -90,16 +90,22 @@ listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
 while True : #Primary loop. Below is run after an effect happens
-	effecthappened = False	
-	text = False	
+	effecthappened = False
+	text = False
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	c.write()
 	glist = listcollate.CollateActions() # These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])]) #Scene description will be printed if there is one
+		stateprintInventories = []
 		for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
 			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)])
+			stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
+		for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
+			efunc.PrintItems([inventory])
+		for inventory in stateprintInventories :
+			efunc.PrintItems([inventory])
 		for encounter in c['Encounters']['active'] :		
 			nonemptyprint(a.f['Encounters'][str(encounter)]) #Encounter description will be printed if there is one
 			for state in sorted(c['Encounters'][str(encounter)]) :
