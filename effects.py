@@ -36,9 +36,15 @@ def RevertScene(arguments) :
 	statecheck.Check()
 def AddSceneState(arguments) :
 	global char
-	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0])
-	if arguments[0] not in char['Scenes'][arguments[1]] :
-		char['Scenes'][str(scene)].append(arguments[0])
+	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0]) #If no scene is given, the given state is added to the current scene
+	try :
+		current_states = char['Scenes'][str(arguments[1])]
+	except KeyError :
+		char['Scenes'][str(arguments[1])] = []
+		current_states = char['Scenes'][str(arguments[1])]
+		statecheck.auto_states['Scenes'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Scenes'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Scenes'][str(arguments[1])][x])]
+	if arguments[0] not in current_states :
+		current_states.append(arguments[0])
 def PrintItems(arguments) :
 	global char
 	global adv
