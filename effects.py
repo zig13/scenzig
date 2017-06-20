@@ -24,6 +24,7 @@ def SetScene(arguments) :
 	global char
 	char['Scenes']['previous'] = char['Scenes']['active'][0]
 	char['Scenes']['active'][0] = arguments[0]
+	listcollate.DeactivateThings('Scenes')	
 	listcollate.ActivateThings('Scenes')
 	statecheck.Check()
 def RevertScene(arguments) :
