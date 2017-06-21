@@ -60,7 +60,7 @@ def RemoveSceneState(arguments) : #Arguments are state and scene
 		char['Scenes'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Scenes'][str(arguments[1])]]
 	else :
 		char['Scenes'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
-
+		
 def PrintItems(arguments) :
 	global char
 	global adv
@@ -70,8 +70,8 @@ def PrintItems(arguments) :
 	for itm in char['Inventories'][str(arguments[0])] :
 		states = sorted(char['Items'][str(itm)])
 		try :
-			print adv.f['Items'][itm][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
-		except KeyError :
+			print adv.f['Items'][str(itm)][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
+		except (KeyError, IndexError) :
 			try :
 				print adv.f['Items'][str(itm)]['description']
 			except KeyError : pass
