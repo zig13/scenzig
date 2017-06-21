@@ -2,6 +2,5 @@
 [1]
 text = "You stand on a dance floor"
 wActions = [1]
-evaluators = []
 	[[1]]
 	wActions = [2]
