@@ -16,10 +16,14 @@ evaluators = []
 [3]
 slug = 'Inventory'
 description = 'Look at what items you are carrying'
-evaluators = []
+evaluators = ['n1']
 	[[1]]
-	evaluations = {}
-	effects = {'PrintItems':[]}
+	evaluations = {0:[1,99999]}
+	text = "You are carrying:"
+	effects = {'PrintItems':[1]}
+	[[2]]
+	evaluations = {0:[0,0]}
+	text = "You're not carrying anything."
 [6]
 slug = 'Drop stone'
 description = 'Drop the stone onto the ground'
@@ -39,10 +43,8 @@ evaluators = []
 [8]
 slug = 'Help'
 description = 'Display available actions'
-evaluators = []
 	[[1]]
-	evaluations = {}
-	text = None
+	text = "Available actions:"
 	effects = {'PrintActions':[]}
 [9]
 slug = 'Teleport'
@@ -54,10 +56,7 @@ evaluators = []
 [10]
 slug = 'Stats'
 description = 'Display current state of attributes'
-evaluators = []
 	[[1]]
-	evaluations = {}
-	text = None
 	effects = {'PrintAttributes':[]}
 [11]
 slug = 'Raise the roof'
