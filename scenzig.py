@@ -89,6 +89,7 @@ statecheck.Check('All')
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
+Clr()
 while True : #Primary loop. Below is run after an effect happens
 	effecthappened = False
 	text = False
