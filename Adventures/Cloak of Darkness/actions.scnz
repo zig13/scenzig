@@ -40,9 +40,7 @@ evaluators = ['n2']
 [6]
 slug = 'Help'
 description = 'Display available actions'
-evaluators = []
 	[[1]]
-	evaluations = {}
 	text = "Available actions:"
 	effects = {'PrintActions':[]}
 [7]
