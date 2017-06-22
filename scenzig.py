@@ -115,6 +115,7 @@ while True : #Primary loop. Below is run after an effect happens
 				nonemptyprint(a.f['Attributes'][str(vital)][str(state)])
 		prompt = raw_input(">").strip() #The main prompt
 		action = 0
+		missing_actions = []
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
 			if prompt in glist : 
@@ -123,10 +124,15 @@ while True : #Primary loop. Below is run after an effect happens
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
 			actdict = {}
 			for actn in glist : #Builds a dictionary that pairs the slug of each valid action with it's UID
-				actdict[a.f['Actions'][str(actn)]['slug'].lower()] = actn
+				try :
+					actdict[a.f['Actions'][str(actn)]['slug'].lower()] = actn
+				except KeyError :
+					missing_actions.append(actn)
 			if prompt in actdict.keys() : 
 				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
 		Clr()
+		for missing in missing_actions :
+			print "Action ID %s is whitelisted but does not exist in actions.scnz"%(str(missing))
 		results = statecheck.DetermineOutcomes(action)
 		if results :
 			effects = results[0]
