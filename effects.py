@@ -156,3 +156,24 @@ def TakeAction(arguments) :
 	for effect in adv.f['Actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
 		arguments = argparser.PrsArg(adv.f['Actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
 		eval(adv.f['Actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
+
+def ActivateSlot(arguments) :
+	global char
+	if arguments[0] not in char['Slots']['empty'] and arguments[0] not in char['Slots']['full'] :
+		char['Slots']['full'].append(arguments[0])
+def DeactivateSlot(arguments) :
+	global char
+	if arguments[0] in char['Slots']['empty'] :
+		char['Slots']['empty'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
+	if arguments[0] in char['Slots']['full'] :
+		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
+def FillSlot(arguments) :
+	global char
+	if arguments[0] in char['Slots']['empty'] and arguments[0] not in char['Slots']['full'] :
+		char['Slots']['full'].append(arguments[0])
+		char['Slots']['empty'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
+def EmptySlot(arguments) :
+	global char
+	if arguments[0] not in char['Slots']['empty'] and arguments[0] in char['Slots']['full'] :
+		char['Slots']['empty'].append(arguments[0])
+		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]

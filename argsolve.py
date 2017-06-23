@@ -59,6 +59,14 @@ def n(id) : #Returns length of given Inventory
 		return len(char['Inventories'][str(id)])
 	except KeyError :
 		return 0
+def l(id) : #Returns 1 if slot is empty otherwise 0
+	if char is None:
+		print "Character data not available"
+		return 0
+	if id in char['Slots']['empty'] :
+		return 1
+	else :
+		return 0
 
 def Solve(arg) :
 	if isinstance(arg, list) :
