@@ -33,3 +33,6 @@ active = [1,2,3,4]
 [Currencies]
 1 = 0
 2 = 0
+[Slots]
+full = [1]
+empty = []

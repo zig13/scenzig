@@ -31,15 +31,18 @@ evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'The stone falls to the floor'
-	effects = {'RemoveItem':[4]}
+	effects = {'RemoveItem':[4],'EmptySlot':[1]}
 [7]
 slug = 'Pickup stone'
 description = 'Pick the stone up off the ground'
-evaluators = []
+evaluators = ['l1']
 	[[1]]
-	evaluations = {}
+	evaluations = {0:[1,1]}
 	text = 'You pick the stone up'
-	effects = {'AddItem':[4]}
+	effects = {'AddItem':[4],'FillSlot':[1]}
+	[[2]]
+	evaluations = {0:[0,0]}
+	text = 'You are already holding something in your hand'
 [8]
 slug = 'Help'
 description = 'Display available actions'
