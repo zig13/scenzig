@@ -151,11 +151,18 @@ def BolsterAttribute(arguments) :
 			listcollate.ApplyModifiers(arguments[0])
 			statecheck.Check()
 def TakeAction(arguments) :
+	results = None
 	action = arguments[0]
-	nonemptyprint(adv.f['Actions'][action]['outcomes'][outcome]) #Action text will be printed if it exists
-	for effect in adv.f['Actions'][action]['outcomes'][outcome]['effects'].keys() : #The line below runs the function requested by each effect of the chosen action and passes it any arguments from the Action.
-		arguments = argparser.PrsArg(adv.f['Actions'][action]['outcomes'][outcome]['effects'][effect]['variables'])
-		eval(adv.f['Actions'][action]['outcomes'][outcome]['effects'][effect]['function']+"(arguments)")
+	results = statecheck.DetermineOutcomes(str(action))
+	if results :
+		effects = results[0]
+		text = results[1]
+		for outcome in effects :
+			for effect in outcome.keys() :
+				arguments = argsolve.Solve(outcome[effect])
+				eval("efunc."+effect+"(arguments)")
+	if text :
+		print ""
 
 def ActivateSlot(arguments) :
 	global char
