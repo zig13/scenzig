@@ -35,7 +35,7 @@ evaluators = []
 [7]
 slug = 'Pickup stone'
 description = 'Pick the stone up off the ground'
-evaluators = ['l1']
+evaluators = ['o1']
 	[[1]]
 	evaluations = {0:[1,1]}
 	text = 'You pick the stone up'
