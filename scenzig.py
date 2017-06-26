@@ -78,6 +78,11 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 		raw_input("Character template missing or incorrectly named.")
 		exit(0)
 	c = ConfigObj(a.directory+"Characters"+sep+filename, unrepr=True)
+	try :
+		c['Labels']['0'] = [0,filename[:-4]]
+	except KeyError :
+		c['Labels'] = {}
+		c['Labels']['0'] = [0,filename[:-4]]
 	efunc.GiveChar(c)
 	listcollate.GiveChar(c)
 	statecheck.GiveChar(c)
