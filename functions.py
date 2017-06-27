@@ -72,9 +72,21 @@ def get_valid_filename(filename):
 	cleanedFilename = normalize('NFKD', unicode(filename, errors='ignore')).encode('ASCII', 'ignore')
 	return ''.join(c for c in cleanedFilename if c in validFilenameChars).strip().replace(' ', '_')
 	
-def nonemptyprint(thing):
+def nonemptyprint(thing,char):
 	try :
-		print thing['text']
-		return True
+		text = thing['text']
 	except (TypeError, KeyError):
 		return False
+	if text[:6] == ".labs." :
+		labeltotal = text[6:7]
+		try :
+			labeltotal = int(labeltotal)
+		except ValueError:
+			print text
+			return True
+		labels = eval(text[7:8+2*labeltotal])
+		text = text[8+(2*labeltotal):]
+		for label in labels :
+			text = text.replace("lab"+str(label),char['Labels'][str(label)][1])
+	print text
+	return True
