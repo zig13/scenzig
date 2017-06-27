@@ -103,22 +103,22 @@ while True : #Primary loop. Below is run after an effect happens
 	glist = listcollate.CollateActions() # These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])]) #Scene description will be printed if there is one
+		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
 		stateprintInventories = []
 		for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
-			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)])
+			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
 			stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
 		for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
 			efunc.PrintItems([inventory])
 		for inventory in stateprintInventories :
 			efunc.PrintItems([inventory])
 		for encounter in c['Encounters']['active'] :		
-			nonemptyprint(a.f['Encounters'][str(encounter)]) #Encounter description will be printed if there is one
+			nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
 			for state in sorted(c['Encounters'][str(encounter)]) :
-				nonemptyprint(a.f['Encounters'][str(encounter)][str(state)])
+				nonemptyprint(a.f['Encounters'][str(encounter)][str(state)],c)
 		for vital in c['Attributes']['vital'] :
 			for state in sorted(c['Attributes'][str(vital)]) :
-				nonemptyprint(a.f['Attributes'][str(vital)][str(state)])
+				nonemptyprint(a.f['Attributes'][str(vital)][str(state)],c)
 		prompt = raw_input(">").strip() #The main prompt
 		action = 0
 		missing_actions = []
