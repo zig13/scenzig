@@ -124,7 +124,7 @@ def DetermineOutcomes(action) :
 			try : effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
 			except KeyError : pass #effects are optional
 			try : 
-				text = nonemptyprint(adv.f['Actions'][action][outcome])
+				text = nonemptyprint(adv.f['Actions'][action][outcome],char)
 			except KeyError : pass #text is optional
 			try : char['Beats'] += adv.f['Actions'][action][outcome]['duration']
 			except KeyError : pass #duration is optional
