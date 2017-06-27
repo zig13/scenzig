@@ -1,0 +1,15 @@
+[0]
+[1]
+	[[1]]
+	description = 'Fighter'
+	[[2]]
+	description = 'Wizard'
+	[[3]]
+	description = 'Rogue'
+[2]
+	[[1]]
+	description = 'DPS'
+	[[2]]
+	description = 'Tank'
+	[[3]]
+	description = 'Healer'

@@ -1,6 +1,6 @@
 [0]
 [1]
-text = "This is the first scene"
+text = ".labs.1[0]This is the first scene lab0"
 wActions = [1,2,3]
 bActions = []
 wlistagrp = []
