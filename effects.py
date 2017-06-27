@@ -125,7 +125,7 @@ def PrintAttributes(arguments) :
 	for attribute in char['Attributes']['active'] :
 		if attribute not in char['Attributes']['vital'] :
 			firststate = sorted(char['Attributes'][str(attribute)])[0] #Sorts the states and takes the first numerically
-			nonemptyprint(adv.f['Attributes'][str(attribute)][str(firststate)])
+			nonemptyprint(adv.f['Attributes'][str(attribute)][str(firststate)],char)
 def DamageAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
@@ -184,3 +184,16 @@ def EmptySlot(arguments) :
 	if arguments[0] not in char['Slots']['empty'] and arguments[0] in char['Slots']['full'] :
 		char['Slots']['empty'].append(arguments[0])
 		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
+
+def SetLabel(arguments) : #Arguments are the class id and the id of the label to be assigned to it
+	global char
+	try :
+		description = adv.f['Labels'][str(arguments[0])][str(arguments[1])]['description']
+	except KeyError :
+		print "Label to be assigned to the character does not exist"
+		raise
+	char['Labels'][str(arguments[0])] = [arguments[1],description]
+def RemoveLabel(arguments) :
+	global char
+	if str(arguments[0]) in char['Labels'].keys() :
+		char['Labels'][str(arguments[0])] = []
