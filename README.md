@@ -4,25 +4,10 @@ An engine for text-based adventure games and interactive prose using a scene-bas
 As with Agenzig, the goal is to make a framework that reads all of it's content from external files in the human-readable .ini format. This is achieved with the ConfigObj module.
 
 ## Why?
-
-For fun mostly. Also because as far as I can tell nothing quite like it exists. My inspiration was the Fighting Fantasy series of books. They would present you with options and a numbered section to turn to so see the result of your choice. They were good reads but I didn't enjoy the combat system (based on dice rolls) and found it got in the way. 
+For fun mostly. Also because as far as I can tell nothing quite like it exists. My inspiration was the Fighting Fantasy series of books. They would present you with options and a numbered section to turn to so see the result of your choice. They were good reads but I didn't enjoy the combat system (based on die rolls) and found it got in the way. 
 The plan is to have the computer handle all the math so the player can focus on making choices.
 
-## Differences from Agenzig
-
-- Object-orientated from the start
-- More commenting as I go
-- Choices, Actions and Combat Actions will be combined. The actions that can be performed are determined by Whitelists and Blacklists
-- Items and Equipment will not be difrentiated. Instead equipping 'Iron Sword' will remove it from your inventory and replace it with 'Iron Sword (equipped)' which will Whitelist Actions. Equipment slots will be added later along with other Action conditions.
-- Fewer in-script variables. Instead of actions affecting the scene directly, they will change the scene ID stored in the Character file and trigger a refresh. The script will then print scene description direct from the scene file and assemble valid actions from combined whitelists and blacklists.
-- The only thing that will be stored in-script and not written to the Character file is the effects of items and abilities. At the top of the main game loop, the script will genererate a list of valid actions from the white/black-lists of items and abilities the character has. The Attribute modifiers of items and abilities will also be combined for each Attribute. When a varaible is requested, it will be read from the Character and then have the modifier applied to it.
-- The varied Effects an Action could have will each be a seperate function. This will result in a much shorter main script, improve readability and make the project much more managable and I can start with a relatively small stable of simple effects and easily add more later.
-- Character creation to be handled by the main engine i.e. based on Actions. A Character will start out as a direct clone of a template character located in an adventure's character folder. If an adventure creator wants to allow initial character customisation or have characters be rolled, then this can be achieved via scenes.
-- Adventures to be divided into chapters. .scnz (equivilent of .agez) files in the folder of the Current chapter will over-ride the general (Chapter 0) .scnz files. Common usage will be to break scenes.scnz into more managable chunks but it could be used to make equipment and items work differently after progressing so far.
-- I aim to actually get round to implementing encounters. Instead of being an alternative scene they will overlay on a Scene providing thier own Action whitelist and blacklist. 
-
 ## Implemented Features
-
 - Script finds Adventures, checks thier validity and offers to load the valid ones
 - Script loads the Adventure that the player selects
 - Script finds Characters and offers to load them
@@ -33,7 +18,6 @@ The plan is to have the computer handle all the math so the player can focus on 
 - Actions have a number of outcomes. Which one occurs is based on custom criteria and evaluations.
 
 ## Roadmap
-
 - Write more varied demo adventures
 - Implement a bonus system. Plan is to borrow code from White/Black/Grey-listing so encounters, abilities, items etc can control whether bonuses are active.
 - New .py file with some basic effects as functions
@@ -41,6 +25,17 @@ The plan is to have the computer handle all the math so the player can focus on 
 - Equipment slots
 - Implement encounters
 
+## Differences from Agenzig
+- Object-orientated from the start
+- More commenting as I go
+- Choices, Actions and Combat Actions will be combined. The actions that can be performed are determined by Whitelists and Blacklists
+- Items and Equipment will not be difrentiated. Instead equipping 'Iron Sword' will remove it from your inventory and replace it with 'Iron Sword (equipped)' which will Whitelist Actions. Equipment slots will be added later along with other Action conditions.
+- Fewer in-script variables. Instead of actions affecting the scene directly, they will change the scene ID stored in the Character file and trigger a refresh. The script will then print scene description direct from the scene file and assemble valid actions from combined whitelists and blacklists.
+- The only thing that will be stored in-script and not written to the Character file is the effects of items and abilities. At the top of the main game loop, the script will genererate a list of valid actions from the white/black-lists of items and abilities the character has. The Attribute modifiers of items and abilities will also be combined for each Attribute. When a varaible is requested, it will be read from the Character and then have the modifier applied to it.
+- The varied Effects an Action could have will each be a seperate function. This will result in a much shorter main script, improve readability and make the project much more managable and I can start with a relatively small stable of simple effects and easily add more later.
+- Character creation to be handled by the main engine i.e. based on Actions. A Character will start out as a direct clone of a template character located in an adventure's character folder. If an adventure creator wants to allow initial character customisation or have characters be rolled, then this can be achieved via scenes.
+- Adventures to be divided into chapters. .scnz (equivilent of .agez) files in the folder of the Current chapter will over-ride the general (Chapter 0) .scnz files. Common usage will be to break scenes.scnz into more managable chunks but it could be used to make equipment and items work differently after progressing so far.
+- I aim to actually get round to implementing encounters. Instead of being an alternative scene they will overlay on a Scene providing thier own Action whitelist and blacklist. 
 
 ## Licenses
 scenzig Copyright Thomas Sturges-Allard
