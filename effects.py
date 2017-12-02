@@ -150,19 +150,6 @@ def BolsterAttribute(arguments) :
 			listcollate.reBaseAttributes(arguments[0])
 			listcollate.ApplyModifiers(arguments[0])
 			statecheck.Check()
-def TakeAction(arguments) :
-	results = None
-	action = arguments[0]
-	results = statecheck.DetermineOutcomes(str(action))
-	if results :
-		effects = results[0]
-		text = results[1]
-		for outcome in effects :
-			for effect in outcome.keys() :
-				arguments = argsolve.Solve(outcome[effect])
-				eval("efunc."+effect+"(arguments)")
-	if text :
-		print ""
 
 def ActivateSlot(arguments) :
 	global char

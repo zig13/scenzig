@@ -94,6 +94,7 @@ statecheck.Check('All')
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
+actionstack = []
 Clr()
 while True : #Primary loop. Below is run after an effect happens
 	effecthappened = False
@@ -103,23 +104,26 @@ while True : #Primary loop. Below is run after an effect happens
 	glist = listcollate.CollateActions() # These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
-		nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
-		stateprintInventories = []
-		for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
-			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
-			stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
-		for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
-			efunc.PrintItems([inventory])
-		for inventory in stateprintInventories :
-			efunc.PrintItems([inventory])
-		for encounter in c['Encounters']['active'] :		
-			nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
-			for state in sorted(c['Encounters'][str(encounter)]) :
-				nonemptyprint(a.f['Encounters'][str(encounter)][str(state)],c)
-		for vital in c['Attributes']['vital'] :
-			for state in sorted(c['Attributes'][str(vital)]) :
-				nonemptyprint(a.f['Attributes'][str(vital)][str(state)],c)
-		prompt = raw_input(">").strip() #The main prompt
+		if actionstack :
+			prompt = actionstack.pop()
+		else :
+			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
+			stateprintInventories = []
+			for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
+				nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
+				stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
+			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
+				efunc.PrintItems([inventory])
+			for inventory in stateprintInventories :
+				efunc.PrintItems([inventory])
+			for encounter in c['Encounters']['active'] :		
+				nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
+				for state in sorted(c['Encounters'][str(encounter)]) :
+					nonemptyprint(a.f['Encounters'][str(encounter)][str(state)],c)
+			for vital in c['Attributes']['vital'] :
+				for state in sorted(c['Attributes'][str(vital)]) :
+					nonemptyprint(a.f['Attributes'][str(vital)][str(state)],c)
+			prompt = raw_input(">").strip() #The main prompt
 		action = 0
 		missing_actions = []
 		try : #Effectively 'if input is a whole number'
@@ -145,9 +149,12 @@ while True : #Primary loop. Below is run after an effect happens
 			text = results[1]
 			for outcome in effects :
 				for effect in outcome.keys() :
-					effecthappened = True
-					arguments = argsolve.Solve(outcome[effect])
-					eval("efunc."+effect+"(arguments)")
+					if effect == 'TakeAction' :
+						actionstack.append(str(outcome[effect][0]))
+					else :
+						effecthappened = True
+						arguments = argsolve.Solve(outcome[effect])
+						eval("efunc."+effect+"(arguments)")
 		if text :
 			print ""
 		if effecthappened :
