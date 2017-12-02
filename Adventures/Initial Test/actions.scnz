@@ -126,3 +126,8 @@ evaluators = ['l2']
 	[[2]]
 	evaluations = {0:[1,3]}
 	text = '.labs.1[2]You are a lab2'
+[20]
+slug = 'Recursive'
+evaluators = []
+	[[1]]
+	effects = {'TakeAction':[20]}

@@ -1,7 +1,7 @@
 [0]
 [4]
 description = 'A Stone'
-wActions = [6]
+wActions = [6,20]
 bActions = [7]
 evaluators = []
 	[[1]]
