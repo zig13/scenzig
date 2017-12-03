@@ -10,6 +10,7 @@ abilities = None
 attributes = None
 efunc = None
 listcollate = None
+actionstack = []
 auto_scene_states = {}
 auto_encounter_states = {}
 auto_item_states = {}
@@ -93,8 +94,11 @@ def Check(remit="All") :
 			if states_removed or states_added :
 				char[aspect][str(thing)] = new_states
 			for effect in effects.keys() :
-				arguments = argsolve.Solve(effects[effect])
-				eval("efunc."+effect+"(arguments)")
+				if effect == 'TakeAction' :
+					actionstack.append(str(effects[effect][0]))
+				else :
+					arguments = argsolve.Solve(effects[effect])
+					eval("efunc."+effect+"(arguments)")
 			if states_removed :
 				listcollate.RemoveStates(aspect, thing)
 			if states_added :

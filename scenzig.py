@@ -94,7 +94,6 @@ statecheck.Check('All')
 listcollate.SetBaseAttributes()
 import argsolve
 argsolve.GiveChar(c)
-actionstack = []
 Clr()
 while True : #Primary loop. Below is run after an effect happens
 	effecthappened = False
@@ -104,8 +103,8 @@ while True : #Primary loop. Below is run after an effect happens
 	glist = listcollate.CollateActions() # These are the actions available to the player.
 	efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
-		if actionstack :
-			prompt = actionstack.pop()
+		if statecheck.actionstack :
+			prompt = statecheck.actionstack.pop()
 		else :
 			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
 			stateprintInventories = []
@@ -150,7 +149,7 @@ while True : #Primary loop. Below is run after an effect happens
 			for outcome in effects :
 				for effect in outcome.keys() :
 					if effect == 'TakeAction' :
-						actionstack.append(str(outcome[effect][0]))
+						statecheck.actionstack.append(str(outcome[effect][0]))
 					else :
 						effecthappened = True
 						arguments = argsolve.Solve(outcome[effect])
