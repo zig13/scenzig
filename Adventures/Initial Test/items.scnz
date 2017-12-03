@@ -12,7 +12,7 @@ evaluators = []
 	[[1]]
 [6]
 description = 'A small bottle with a skull motif on the label'
-wActions = [12]
+wActions = [12,21]
 evaluators = ['c1']
 	[[1]]
 [7]

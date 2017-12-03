@@ -70,11 +70,9 @@ evaluators = []
 	text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
 [12]
 slug = 'Drink poison'
-evaluators = []
 	[[1]]
-	evaluations = {}
 	text = 'You take a small sip from the bottle. It tastes pretty nasty.'
-	effects = {'DamageAttribute':[1,'39+d81']}
+	effects = {'DamageAttribute':[1,'100+d24']}
 [13]
 slug = 'Drink strength potion'
 evaluators = []
@@ -128,6 +126,10 @@ evaluators = ['l2']
 	text = '.labs.1[2]You are a lab2'
 [20]
 slug = 'Recursive'
-evaluators = []
 	[[1]]
 	effects = {'TakeAction':[20]}
+[21]
+slug = 'Gulp poison'
+	[[1]]
+	text = 'You drain the bottle. It tastes pretty nasty.'
+	effects = {'DamageAttribute':[1,1000],'RemoveItem':[6]}
