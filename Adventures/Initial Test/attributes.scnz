@@ -34,9 +34,8 @@ evaluators = ['a1']
 	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[0,0]}
-	text = None
 	entereffects = {'SetScene': [4]}
-	leaveeffects = {}
+	entertext = 'The world fades to black...'
 [2]
 name = 'Energy'
 evaluators = ['a2']
