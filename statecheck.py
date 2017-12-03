@@ -85,12 +85,18 @@ def Check(remit="All") :
 				try :
 					effects.update(adv.f[aspect][str(thing)][str(leavingstate)]['leaveeffects'])
 				except KeyError : pass #leave effects are optional
+				try :
+					nonemptyprint(adv.f[aspect][str(thing)][str(leavingstate)],char,'leavetext')
+				except KeyError : pass #leave text is optional
 			entering_states = set(new_states).difference(set(current_states))
 			for enteringstate in entering_states :
 				states_added = True
 				try :
 					effects.update(adv.f[aspect][str(thing)][str(enteringstate)]['entereffects'])
-				except KeyError : pass #leave effects are optional
+				except KeyError : pass #enter effects are optional
+				try :
+					nonemptyprint(adv.f[aspect][str(thing)][str(enteringstate)],char,'entertext')
+				except KeyError : pass #enter text is optional
 			if states_removed or states_added :
 				char[aspect][str(thing)] = new_states
 			for effect in effects.keys() :
