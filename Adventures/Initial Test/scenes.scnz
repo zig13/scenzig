@@ -54,15 +54,6 @@ evaluators = []
 	wlistagrp = []
 	blistagrp = []
 [4]
-text = "You are dead"
-wActions = []
+text = ".labs.1[0]lab0 is dead"
 bActions = [3,6,8,10]
-wlistagrp = []
-blistagrp = []
-evaluators = []
 	[[1]]
-	text = None
-	wActions = []
-	bActions =[]
-	wlistagrp = []
-	blistagrp = []
