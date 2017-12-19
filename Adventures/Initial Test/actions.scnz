@@ -72,7 +72,7 @@ evaluators = []
 slug = 'Drink poison'
 	[[1]]
 	text = 'You take a small sip from the bottle. It tastes pretty nasty.'
-	effects = {'DamageAttribute':[1,'100+d24']}
+	effects = {'StartEcho':[22,3]}
 [13]
 slug = 'Drink strength potion'
 evaluators = []
@@ -133,3 +133,17 @@ slug = 'Gulp poison'
 	[[1]]
 	text = 'You drain the bottle. It tastes pretty nasty.'
 	effects = {'DamageAttribute':[1,1000],'RemoveItem':[6]}
+[22]
+	[[1]]
+	text = 'You feel the poison damaging your insides.'
+	effects = {'DamageAttribute':[1,'100+d24']}
+[23]
+slug = 'Wait'
+	[[1]]
+	text = 'You wait 1 beat'
+	duratiion = 1
+[24]
+slug = 'Wait a while'
+	[[1]]
+	text = 'You wait 10 beats'
+	duration = 10
