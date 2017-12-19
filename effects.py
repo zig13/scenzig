@@ -1,9 +1,11 @@
+import echo
 from functions import nonemptyprint
 adv = None
 char = None
 listcollate = None
 statecheck = None
 listg = None
+actionstack = []
 def GiveAdv(a) :
 	global adv
 	adv = a
@@ -184,3 +186,22 @@ def RemoveLabel(arguments) :
 	global char
 	if str(arguments[0]) in char['Labels'].keys() :
 		char['Labels'][str(arguments[0])] = []
+
+def TakeAction(arguments) :
+	actionstack.append(str(arguments[0]))
+def StartEcho(arguments) :
+	action = arguments[0]
+	interval = arguments[1]
+	try :
+		categories = arguments[2]
+	except IndexError :
+		echo.Start(action, interval)
+		return
+	try :
+		repetitions = arguments[3]
+	except IndexError :
+		echo.Start(action, interval, category)
+		return
+	echo.Start(action, interval, category, repetitions)
+def StopEcho(arguments) :
+	echo.Stop(str(arguments[0]))

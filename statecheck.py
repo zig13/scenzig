@@ -8,31 +8,30 @@ encounter_data = None
 inventory = None
 abilities = None
 attributes = None
-efunc = None
 listcollate = None
-actionstack = []
 auto_scene_states = {}
 auto_encounter_states = {}
 auto_item_states = {}
 auto_ability_states = {}
 auto_attribute_states = {}
 import argsolve
+import effects as efunc
 from functions import nonemptyprint
 
 #The 'Give' functions are ran only once to give the statecheck script access to Adventure files and the Character file
 def GiveAdv(a) :
 	global adv
 	adv = a
+	efunc.GiveAdv(a)
 def GiveChar(c) :
 	global char
 	char = c
 	argsolve.GiveChar(char)
-def GiveEffects(effects) :
-	global efunc
-	efunc = effects
+	efunc.GiveChar(c)
 def GiveListCollate(lcollate) :
 	global listcollate
 	listcollate = lcollate
+	efunc.GiveListCollate(lcollate)
 
 #The 'Prepare' functions are only run when the scene, inventory etc are changed and cache useful, relatively static information for thier respective 'Check' function.
 def Prepare(aspect) :
@@ -44,7 +43,7 @@ def Prepare(aspect) :
 	for thing in aspect_lists[aspect] :
 		UpdateAutoList(aspect, thing)
 
-def UpdateAutoList(aspect, thing) :	
+def UpdateAutoList(aspect, thing) :
 	if str(thing) not in auto_states[aspect].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
 		auto_states[aspect][str(thing)] = [int(x) for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]
 
@@ -56,7 +55,7 @@ def HasEvaluations(state) :
 		state['evaluations']
 		return True
 	except KeyError :
-		return False	
+		return False
 
 #The 'Check' functions are the meat of the statecheck script. Every iteration of the primary loop each potential state with evaluations is evaluated and a new list of states is generated. Any changes are noted and may trigger effects.
 def Check(remit="All") :
@@ -76,7 +75,7 @@ def Check(remit="All") :
 			current_states = char[aspect][str(thing)]
 			new_states = [x for x in current_states if x not in auto_states[aspect][str(thing)]] #if x not in Z
 			evaluators = [argsolve.Solve(each) for each in adv.f[aspect][str(thing)].get('evaluators', default=[])]
-			if not evaluators : continue			
+			if not evaluators : continue
 			new_states += [x for x in auto_states[aspect][str(thing)] if TestState(adv.f[aspect][str(thing)][str(x)],evaluators)]
 			if new_states == current_states : continue
 			leaving_states = set(current_states).difference(set(new_states))
@@ -100,17 +99,14 @@ def Check(remit="All") :
 			if states_removed or states_added :
 				char[aspect][str(thing)] = new_states
 			for effect in effects.keys() :
-				if effect == 'TakeAction' :
-					actionstack.append(str(effects[effect][0]))
-				else :
-					arguments = argsolve.Solve(effects[effect])
-					eval("efunc."+effect+"(arguments)")
+				arguments = argsolve.Solve(effects[effect])
+				eval("efunc."+effect+"(arguments)")
 			if states_removed :
 				listcollate.RemoveStates(aspect, thing)
 			if states_added :
 				listcollate.AddStates(aspect, thing)
 
-#Outcomes of actions are determined much the same way as states are so code is shared	
+#Outcomes of actions are determined much the same way as states are so code is shared
 def DetermineOutcomes(action) :
 	global adv
 	global char
@@ -133,10 +129,12 @@ def DetermineOutcomes(action) :
 		for outcome in outcomes :
 			try : effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
 			except KeyError : pass #effects are optional
-			try : 
+			try :
 				text = nonemptyprint(adv.f['Actions'][action][outcome],char)
 			except KeyError : pass #text is optional
-			try : char['Beats'] += adv.f['Actions'][action][outcome]['duration']
+			try :
+				char['Beats'] += adv.f['Actions'][action][outcome]['duration']
+				efunc.actionstack.extend(efunc.echo.Age(adv.f['Actions'][action][outcome]['duration']))
 			except KeyError : pass #duration is optional
 	return [effects,text]
 
@@ -146,7 +144,7 @@ def TestState(statedata,evaluators) :
 		verdict = CompareEval(statedata['evaluations'][test],evaluators[test])
 		if not verdict : break
 	return verdict
-	
+
 def CompareEval(valrange,value) :
 	verdict = True
 	try :

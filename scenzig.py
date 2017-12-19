@@ -27,7 +27,7 @@ elif len(adventures) == 1 :
 	a = adv[adventures[0]] #If only one ~valid Adventure exists, automatically loads it without asking
 	if a.load() == False :
 		raw_input("No valid adventures installed.")
-		exit(0)	
+		exit(0)
 else :
 	temptext = "Please enter a number corresponding to the adventure you wish to load:\n"
 	while True :
@@ -38,14 +38,12 @@ else :
 		else :
 			break
 #From here 'a' refers to the classAdventure instance of the active Adventure. All Adventure data will be accessed through it.
-import effects as efunc
-efunc.GiveAdv(a)
 import statecheck
 statecheck.GiveAdv(a)
+statecheck.efunc.GiveStateCheck(statecheck)
 import listcollate
 listcollate.GiveAdv(a)
-efunc.GiveListCollate(listcollate)
-efunc.GiveStateCheck(statecheck)
+statecheck.GiveListCollate(listcollate)
 try :
 	characters = listdir(a.directory+"Characters")
 except OSError :
@@ -60,11 +58,8 @@ if len(characters) != 0 :
 	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
 	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
 		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
-		efunc.GiveChar(c)
 		listcollate.GiveChar(c)
 		statecheck.GiveChar(c)
-		statecheck.GiveEffects(efunc)
-		statecheck.GiveListCollate(listcollate)
 		firstrun = False
 if c == None : from shutil import copy as fileclone
 while c == None : #i.e. If there are no pre-existing characters or New Character was selected
@@ -83,11 +78,8 @@ while c == None : #i.e. If there are no pre-existing characters or New Character
 	except KeyError :
 		c['Labels'] = {}
 		c['Labels']['0'] = [0,filename[:-4]]
-	efunc.GiveChar(c)
 	listcollate.GiveChar(c)
 	statecheck.GiveChar(c)
-	statecheck.GiveEffects(efunc)
-	statecheck.GiveListCollate(listcollate)
 	firstrun = True
 listcollate.Setup(statecheck)
 statecheck.Check('All')
@@ -101,10 +93,10 @@ while True : #Primary loop. Below is run after an effect happens
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	c.write()
 	glist = listcollate.CollateActions() # These are the actions available to the player.
-	efunc.GiveList(glist)
+	statecheck.efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
-		if statecheck.actionstack :
-			prompt = statecheck.actionstack.pop()
+		if statecheck.efunc.actionstack :
+			prompt = statecheck.efunc.actionstack.pop()
 		else :
 			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
 			stateprintInventories = []
@@ -112,10 +104,10 @@ while True : #Primary loop. Below is run after an effect happens
 				nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
 				stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
-				efunc.PrintItems([inventory])
+				statecheck.efunc.PrintItems([inventory])
 			for inventory in stateprintInventories :
-				efunc.PrintItems([inventory])
-			for encounter in c['Encounters']['active'] :		
+				statecheck.efunc.PrintItems([inventory])
+			for encounter in c['Encounters']['active'] :
 				nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
 				for state in sorted(c['Encounters'][str(encounter)]) :
 					nonemptyprint(a.f['Encounters'][str(encounter)][str(state)],c)
@@ -127,7 +119,7 @@ while True : #Primary loop. Below is run after an effect happens
 		missing_actions = []
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
-			if prompt in glist : 
+			if prompt in glist :
 				action = str(prompt) #If the input matches the UID of a valid action then take note of it's UID
 		except ValueError : #Effectively 'if input isn't a whole number'
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
@@ -137,7 +129,7 @@ while True : #Primary loop. Below is run after an effect happens
 					actdict[a.f['Actions'][str(actn)]['slug'].lower()] = actn
 				except KeyError :
 					missing_actions.append(actn)
-			if prompt in actdict.keys() : 
+			if prompt in actdict.keys() :
 				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
 		Clr()
 		for missing in missing_actions :
@@ -148,12 +140,9 @@ while True : #Primary loop. Below is run after an effect happens
 			text = results[1]
 			for outcome in effects :
 				for effect in outcome.keys() :
-					if effect == 'TakeAction' :
-						statecheck.actionstack.append(str(outcome[effect][0]))
-					else :
-						effecthappened = True
-						arguments = argsolve.Solve(outcome[effect])
-						eval("efunc."+effect+"(arguments)")
+					effecthappened = True
+					arguments = argsolve.Solve(outcome[effect])
+					eval("statecheck.efunc."+effect+"(arguments)")
 		if text :
 			print ""
 		if effecthappened :
