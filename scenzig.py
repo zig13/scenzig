@@ -9,7 +9,8 @@
 # Licence:      Licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 #			http://creativecommons.org/licenses/by-nc-sa/3.0/
 #-------------------------------------------------------------------------------
-from os import curdir, sep, listdir #sep and curdir produce the correct characters for the operating system in use
+from os import chdir, path, curdir, sep, listdir #sep and curdir produce the correct characters for the operating system in use
+chdir(path.dirname(path.abspath(__file__)))
 try :
 	adventures = listdir(curdir+sep+"Adventures"+sep)
 except OSError :
