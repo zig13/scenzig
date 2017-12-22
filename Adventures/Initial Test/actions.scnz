@@ -141,7 +141,7 @@ slug = 'Gulp poison'
 slug = 'Wait'
 	[[1]]
 	text = 'You wait 1 beat'
-	duratiion = 1
+	duration = 1
 [24]
 slug = 'Wait a while'
 	[[1]]
