@@ -205,3 +205,6 @@ def StartEcho(arguments) :
 	echo.Start(action, interval, category, repetitions)
 def StopEcho(arguments) :
 	echo.Stop(str(arguments[0]))
+def ClearStack(arguments) :
+	global actionstack
+	actionstack = []
