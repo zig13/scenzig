@@ -97,7 +97,8 @@ while True : #Primary loop. Below is run after an effect happens
 	statecheck.efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		if statecheck.efunc.actionstack :
-			prompt = statecheck.efunc.actionstack.pop()
+			action = statecheck.efunc.actionstack.pop()
+			prompt = action
 		else :
 			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
 			stateprintInventories = []
@@ -116,12 +117,13 @@ while True : #Primary loop. Below is run after an effect happens
 				for state in sorted(c['Attributes'][str(vital)]) :
 					nonemptyprint(a.f['Attributes'][str(vital)][str(state)],c)
 			prompt = raw_input(">").strip() #The main prompt
-		action = 0
+			action = 0
 		missing_actions = []
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
 			if prompt in glist :
 				action = str(prompt) #If the input matches the UID of a valid action then take note of it's UID
+			elif action : pass #If action is not 0 (and therefore has been set already)
 		except ValueError : #Effectively 'if input isn't a whole number'
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
 			actdict = {}
@@ -132,7 +134,7 @@ while True : #Primary loop. Below is run after an effect happens
 					missing_actions.append(actn)
 			if prompt in actdict.keys() :
 				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
-		Clr()
+			Clr()
 		for missing in missing_actions :
 			print "Action ID %s is whitelisted but does not exist in actions.scnz"%(str(missing))
 		results = statecheck.DetermineOutcomes(action)
