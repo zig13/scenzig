@@ -132,8 +132,8 @@ def DamageAttribute(arguments) :
 	global char
 	if str(arguments[0]) in char['Attributes'].keys() :
 		char['AttributeVals'][str(arguments[0])][0] -= arguments[1]
-		if char['AttributeVals'][str(arguments[0])][1] < 0 :
-			char['AttributeVals'][str(arguments[0])][1] = 0
+		if char['AttributeVals'][str(arguments[0])][0] < 0 :
+			char['AttributeVals'][str(arguments[0])][0] = 0
 		if arguments[0] in char['Attributes']['active'] :
 			listcollate.SetBaseAttributes(arguments[0])
 			listcollate.reBaseAttributes(arguments[0])
