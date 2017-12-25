@@ -78,7 +78,7 @@ def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 
 
 def Solve(arg) :
 	if isinstance(arg, list) :
-		return [Solve(each) for each in arg]	
+		return [Solve(each) for each in arg]
 	try :
 		opcounts = {'+':arg.count('+'), '-':arg.count('-'), 'x':arg.count('x'), '^':arg.count('^'), '_':arg.count('_'), '~':arg.count('~'), '%':arg.count('%')}
 		try :
@@ -129,7 +129,7 @@ def Solve(arg) :
 		elif oprtr is '%': return (operandA*operandB)/100 #Returns operandA % of operandB
 	except AttributeError : #If argument is already an integer
 		return arg
-		
+
 if __name__ == "__main__":
 	print "I can roll dice for you!"
 	while True:

@@ -34,11 +34,11 @@ def choicelist(inlist, custom=False) :
 	for element in range(len(inlist)) :
 		outlist.append("%s) %s" %(element+1,inlist[element]))
 	printout = '\n'.join(outlist)
-	while True :	
+	while True :
 		if custom == False:
 			print "Please enter a number corresponding to an option below:\n", printout
 		else : print custom+"\n", printout
-		try :		
+		try :
 			input = raw_input(">")
 			Clr()
 			input = int(input)
@@ -48,7 +48,7 @@ def choicelist(inlist, custom=False) :
 			print "Input must be a whole number.\n"
 		except IndexError :
 			print "Input is outside of range of options.\n"
-			
+
 def dupremove(seq) :
    seen = {}
    result = []
@@ -57,11 +57,11 @@ def dupremove(seq) :
        seen[item] = 1
        result.append(item)
    return result
-   
+
 def valremove(seq,val) :
 	if val in seq :
 		return [x for x in seq if x != val]
-		
+
 def replace_all(text, dic):
     for k, l in dic.iteritems():
         text = text.replace(k, l)
@@ -71,7 +71,7 @@ def get_valid_filename(filename):
 	validFilenameChars = "-_.() %s%s" % (ascii_letters, digits)
 	cleanedFilename = normalize('NFKD', unicode(filename, errors='ignore')).encode('ASCII', 'ignore')
 	return ''.join(c for c in cleanedFilename if c in validFilenameChars).strip().replace(' ', '_')
-	
+
 def nonemptyprint(thing,char,field='text'):
 	try :
 		text = thing[field]

@@ -23,7 +23,7 @@ def Setup(statecheck_passed) :
 def SetBaseAttributes(attribute="all") :
 	global char
 	global attributesbase
-	if attribute is "all" : 
+	if attribute is "all" :
 		attributesbase = dict((str(attribute), char['AttributeVals'][str(attribute)][0]) for attribute in char['Attributes']['active'])
 	else :
 		attributesbase[str(attribute)] = char['AttributeVals'][str(attribute)][0]
@@ -34,10 +34,10 @@ def reBaseAttributes(attribute="all") :
 		attributes = dict(attributesbase)
 	else :
 		attributes[str(attribute)] = attributesbase[str(attribute)]
-	
+
 def ActivateThings(aspect) :
 	global collated
-	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file	
+	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file
 	statecheck.Prepare(aspect)
 	for thing in set(char[aspect]['active']).difference(collatedthings) : #Finds things that haven't been collated yet
 		for collection in collated.keys() :
@@ -52,9 +52,9 @@ def DeactivateThings(aspect) :
 	global collated
 	global actions
 	alteredcollections = []
-	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file	
+	collatedthings = [int(x) for x in collated['wActions'][aspect].keys()] #Converts the list keys to integers so they can be compared to the active list in the character file
 	statecheck.Prepare(aspect)
-	for thing in set(collatedthings).difference(char[aspect]['active']) : #Finds things that haven't been collated yet		
+	for thing in set(collatedthings).difference(char[aspect]['active']) : #Finds things that haven't been collated yet
 		for collection in collated.keys() :
 			for state in collated[collection][aspect][str(thing)].keys() :
 				if collated[collection][aspect][str(thing)][str(state)] :
@@ -79,11 +79,11 @@ def AddStates(aspect, thing) :
 		states = list(char[aspect][str(thing)])
 		states.append(0)
 		states = set(states).difference(collatedstates) #Finds states that haven't been collated yet. Will also collate base values of the thing (as state 0) if they haven't been already
-	else : #If the character has not encountered the thing before. Therefore it can be assumed that nothing is collated	
+	else : #If the character has not encountered the thing before. Therefore it can be assumed that nothing is collated
 		char[aspect][str(thing)] = []
 		states = []
 		states.append(0)
-	for state in states : 		
+	for state in states :
 		for collection in collated.keys() :
 			if collection is not "bonuses" and collection is not "penalties" :
 				collated[collection][aspect][str(thing)][str(state)] = []
@@ -127,7 +127,7 @@ def RemoveStates(aspect, thing) :
 	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
 		reBaseAttributes()
 		ApplyModifiers()
-		
+
 
 def CollateInventories() :
 	activeInventories = GreyList('wInventories', 'bInventories')
@@ -191,7 +191,7 @@ def ApplyModifiers(attribute="all") :
 			except KeyError : pass
 		for penalty in penalties :
 			try : attributes[str(attribute)] -= penalty[str(attribute)]
-			except KeyError : 
+			except KeyError :
 				pass
 
 def CapModifiers() :

@@ -27,7 +27,7 @@ def SetScene(arguments) :
 	global char
 	char['Scenes']['previous'] = char['Scenes']['active'][0]
 	char['Scenes']['active'][0] = arguments[0]
-	listcollate.DeactivateThings('Scenes')	
+	listcollate.DeactivateThings('Scenes')
 	listcollate.ActivateThings('Scenes')
 	statecheck.Check()
 def RevertScene(arguments) :
@@ -56,14 +56,14 @@ def RemoveSceneState(arguments) : #Arguments are state and scene
 	except KeyError :
 		char['Scenes'][str(arguments[1])] = []
 		statecheck.UpdateAutoList('Scenes', arguments[1])
-		return	
+		return
 	if arguments[0] is 0 : #All manually set states are removed if 0 is given as an argument
 		if str(arguments[1]) not in statecheck.auto_states['Scenes'] :
 			statecheck.UpdateAutoList('Scenes', arguments[1])
 		char['Scenes'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Scenes'][str(arguments[1])]]
 	else :
 		char['Scenes'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
-		
+
 def PrintItems(arguments) :
 	global char
 	global adv
@@ -88,7 +88,7 @@ def RemoveItem(arguments) : #Arguments are Item and Inventory
 		statecheck.Check()
 def AddItem(arguments) : #Arguments are Item, Inventory and Item State
 	global char
-	if len(arguments) < 2 : 
+	if len(arguments) < 2 :
 		arguments.append(1)
 		if len(arguments) < 3 : arguments.append(1) #If no state is provided use state 1
 	try :
