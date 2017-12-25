@@ -12,6 +12,7 @@ def GiveAdv(a) :
 def GiveChar(c) :
 	global char
 	char = c
+	echo.Initialize(c)
 def GiveListCollate(lcollate) :
 	global listcollate
 	listcollate = lcollate

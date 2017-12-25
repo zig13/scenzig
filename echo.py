@@ -2,6 +2,14 @@ echoes = {}
 categories = {'1':[]}
 index = 1
 
+def Initialize(c) :
+	global char
+	global echoes
+	global categories
+	char = c
+	echoes = char['Echoes']
+	categories = char['EchoCats']	
+
 def Start(action, interval, cat=1, reps="Infinite") :
 	global index
 	echoes[str(index)] = {'action':action,'interval':interval,'elapsed':0,'reps':reps}
@@ -10,6 +18,9 @@ def Start(action, interval, cat=1, reps="Infinite") :
 	except KeyError :
 		categories[str(cat)] = [str(index)]
 	index += 1
+	char['Echoes'] = echoes
+	char['EchoCats'] = categories
+	char.write()
 
 def Stop(category) :
 	try :
@@ -39,4 +50,6 @@ def Age(beats) :
 					break
 			except TypeError : #Will be raised if reps is Infinite
 				pass
+	char['Echoes'] = echoes
+	char.write()
 	return actions
