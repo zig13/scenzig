@@ -1,0 +1,5 @@
+text eol=lf core.eol=lf
+*.py text eol=lf
+*.scz text eol=lf
+*.scnz text eol=lf
+.gitignore text
