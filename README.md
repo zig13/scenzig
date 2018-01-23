@@ -4,7 +4,7 @@ An engine for text-based adventure games and interactive prose using a scene-bas
 As with Agenzig, the goal is to make a framework that reads all of it's content from external files in the human-readable .ini format. This is achieved with the ConfigObj module.
 
 ## Why?
-For fun mostly. Also because as far as I can tell nothing quite like it exists. My inspiration was the Fighting Fantasy series of books. They would present you with options and a numbered section to turn to so see the result of your choice. They were good reads but I didn't enjoy the combat system (based on die rolls) and found it got in the way. 
+For fun mostly. Also because as far as I can tell nothing quite like it exists. My inspiration was the Fighting Fantasy series of books. They would present you with options and a numbered section to turn to so see the result of your choice. They were good reads but I didn't enjoy the combat system (based on die rolls) and found it got in the way.
 The plan is to have the computer handle all the math so the player can focus on making choices.
 
 ## Implemented Features
@@ -35,11 +35,24 @@ The plan is to have the computer handle all the math so the player can focus on 
 - The varied Effects an Action could have will each be a seperate function. This will result in a much shorter main script, improve readability and make the project much more managable and I can start with a relatively small stable of simple effects and easily add more later.
 - Character creation to be handled by the main engine i.e. based on Actions. A Character will start out as a direct clone of a template character located in an adventure's character folder. If an adventure creator wants to allow initial character customisation or have characters be rolled, then this can be achieved via scenes.
 - Adventures to be divided into chapters. .scnz (equivilent of .agez) files in the folder of the Current chapter will over-ride the general (Chapter 0) .scnz files. Common usage will be to break scenes.scnz into more managable chunks but it could be used to make equipment and items work differently after progressing so far.
-- I aim to actually get round to implementing encounters. Instead of being an alternative scene they will overlay on a Scene providing thier own Action whitelist and blacklist. 
+- I aim to actually get round to implementing encounters. Instead of being an alternative scene they will overlay on a Scene providing thier own Action whitelist and blacklist.
 
 ## Licenses
 scenzig Copyright Thomas Sturges-Allard
-Licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. http://creativecommons.org/licenses/by-nc-sa/3.0/
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+scenzig Adventures are licensed independantly of the scenzig program
 
 configobj used under the BSD license.
 Copyright (C) 2005-2014:
@@ -72,3 +85,22 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+six.py Copyright (c) 2010-2017 Benjamin Peterson
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
