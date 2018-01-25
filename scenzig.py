@@ -46,6 +46,7 @@ statecheck.efunc.GiveStateCheck(statecheck)
 import listcollate
 listcollate.GiveAdv(a)
 statecheck.GiveListCollate(listcollate)
+Clr() #Clears splash text
 try :
 	characters = listdir(a.directory+"Characters")
 except OSError :
