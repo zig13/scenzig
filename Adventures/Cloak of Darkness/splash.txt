@@ -1,0 +1,4 @@
+Display Duration (in seconds):5
+Cloak of Darkness specification by Roger Firth
+scenzig implementation by Thomas Sturges-Allard
+See 'Adventure LICENSE.txt' for more details
