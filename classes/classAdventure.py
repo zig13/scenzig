@@ -11,6 +11,7 @@
 #              You should have received a copy of the GNU General Public License along with scenzig. If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 from os import curdir, sep, access, R_OK #sep and curdir produce the correct characters for the operating system in use
+from time import sleep
 from configobj import ConfigObj
 class Adventure :
 	datafiles = ['abilities', 'actions', 'attributes', 'encounters', 'items', 'labels', 'scenes']
@@ -27,4 +28,18 @@ class Adventure :
 				self.f[datafile.title()]['0'] #Checks that a section exists in each data file entitled 0
 			except:
 				return False
+		try :
+			splash = open(self.directory+"splash.txt", "r")
+		except IOError :
+			print self.directory+"splash.txt"
+			return True
+		try :
+			duration = int(splash.readline()[30:])
+		except ValueError :
+			return True
+		line = splash.readline()
+		while line :
+			print line
+			line = splash.readline()
+		sleep(duration)
 		return True
