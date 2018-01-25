@@ -1,0 +1,17 @@
+This scenzig Adventure, "Cloak of Darkness", is an implementation of the Cloak of Darkness specification originally from Roger Firth roger@firthworks.com at http://www.firthworks.com/roger/
+Relicensing was done with permission of Roger Firth.
+
+Cloak of Darkness specification Copyright (C) Roger Firth
+
+Copying and distribution, with or without modification, are permitted
+in any medium without royalty provided the copyright notice and this
+notice are preserved.
+
+This scenzig Adventure, "Cloak of Darkness", is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License by Thomas 'zig13' Sturges-Allard.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/.
+
+A scenzig Adventure consists of the files abilities.scnz, actions.scnz,
+attributes.scnz, encounters.scnz, items.scnz, labels.scnz and scenes.scnz
+contained within the same folder as the license and the file template.scz
+contained in a sub-directory.
+Other files are licensed independently of this Adventure.
