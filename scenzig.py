@@ -129,13 +129,16 @@ while True : #Primary loop. Below is run after an effect happens
 		except ValueError : #Effectively 'if input isn't a whole number'
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
 			actdict = {}
-			for actn in glist : #Builds a dictionary that pairs the slug of each valid action with it's UID
+			for actn in glist : #Builds a dictionary that pairs the command(s) of each valid action with it's UID
 				try :
-					actdict[a.f['Actions'][str(actn)]['slug'].lower()] = actn
-				except KeyError :
-					missing_actions.append(actn)
+					actdict[a.f['Actions'][str(actn)]['commands'].lower()] = actn #This will succeed only if 'commands' is a singular string
+				except AttributeError : #If the action has a list of commands (rather than a singular string command)
+					for command in a.f['Actions'][str(actn)]['commands'] :
+						actdict[command.lower()] = actn #Makes a record in actdict for each command the action has
+				except KeyError : #If a whitelisted action has no commands or does not exist at all
+					missing_actions.append(actn) #Echoing actions and others using the actionstack avoid verification as they are reffered to by UID and ∴ don't need commands
 			if prompt in actdict.keys() :
-				action = str(actdict[prompt]) #If the input matches the slug of a valid action then take note of it's UID
+				action = str(actdict[prompt]) #If the input matches the command of a valid action then take note of it's UID
 			Clr()
 		for missing in missing_actions :
 			print "Action ID %s is whitelisted but does not exist in actions.scnz"%(str(missing))
