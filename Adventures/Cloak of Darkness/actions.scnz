@@ -1,33 +1,33 @@
 [0]
 [1]
-slug = 'Enter the Opera House'
+commands = ['Enter the Opera House','Enter']
 evaluators = []
 	[[1]]
 	evaluations = {}
 	effects = {'SetScene':[2]}
 	duration = 20
 [2]
-slug = 'Go North'
+commands = ['Go North','North']
 evaluators = []
 	[[1]]
 	evaluations = {}
 	text = "You've only just arrived, and besides, the weather outside seems to be getting worse."
 [3]
-slug = 'Go South'
+commands = ['Go South','South']
 evaluators = []
 	[[1]]
 	evaluations = {}
 	effects = {'SetScene':[4]}
 	duration = 10
 [4]
-slug = 'Go West'
+commands = ['Go West','West']
 evaluators = []
 	[[1]]
 	evaluations = {}
 	effects = {'SetScene':[3]}
 	duration = 10
 [5]
-slug = 'Inventory'
+commands = 'Inventory'
 description = 'Look at what items you are carrying'
 evaluators = ['n2']
 	[[1]]
@@ -38,27 +38,27 @@ evaluators = ['n2']
 	evaluations = {0:[0,0]}
 	text = "You're not carrying anything."
 [6]
-slug = 'Help'
+commands = 'Help'
 description = 'Display available actions'
 	[[1]]
 	text = "Available actions:"
 	effects = {'PrintActions':[]}
 [7]
-slug = 'Go North'
+commands = ['Go North','North']
 evaluators = []
 	[[1]]
 	evaluations = {}
 	effects = {'SetScene':[2]}
 	duration = 10
 [8]
-slug = 'Go East'
+commands = ['Go North','East']
 evaluators = []
 	[[1]]
 	evaluations = {}
 	effects = {'SetScene':[2]}
 	duration = 10
 [9]
-slug = 'Take Off Cloak'
+commands = 'Take Off Cloak'
 evaluators = ['s0']
 	[[1]]
 	evaluations = {0:[1,1]}
@@ -74,7 +74,7 @@ evaluators = ['s0']
 	effects = {'RemoveSceneState':[1,5],'AddSceneState':[2,5]}
 	duration = 6
 [10]
-slug = 'Drop Cloak'
+commands = 'Drop Cloak'
 evaluators = ['s0']
 	[[1]]
 	evaluations = {0:[2,2]}
@@ -85,13 +85,13 @@ evaluators = ['s0']
 	effects = {'RemoveItem':[1,2],'AddItem':[1,3]}
 	duration = 2
 [11]
-slug = 'Read Message'
+commands = 'Read Message'
 evaluators = []
 effects = {'RemoveAbility':[1],'SetScene':[5]}
 	[[1]]
 	duration = 3
 [12]
-slug = 'Examine Cloak'
+commands = 'Examine Cloak'
 evaluators = ['s0']
 	[[1]]
 	evaluations = {0:[1,1]}
@@ -105,14 +105,14 @@ evaluators = ['s0']
 	text = "The room is far too dark to discern anything about the cloak."
 	effects = {'RemoveSceneState':[0,5],'AddSceneState':[2,5]}
 [13]
-slug = 'Pickup cloak'
+commands = 'Pickup cloak'
 evaluators = []
 	[[1]]
 	text = "You pick the cloak up off the floor."
 	effects = {'RemoveItem':[1,3],'AddItem':[1,2]}
 	duration = 3
 [14]
-slug = 'Hang Cloak'
+commands = 'Hang Cloak'
 	[[1]]
 	effects = {'RemoveItem':[1,2]}
 	duration = 5
@@ -120,7 +120,7 @@ slug = 'Hang Cloak'
 	text = "You hang the cloak up on the hook."
 	effects = {'RemoveItem':[2,4],'AddItem':[1,4]}
 [15]
-slug = 'Unhook Cloak'
+commands = 'Unhook Cloak'
 	[[1]]
 	effects = {'RemoveItem':[1,4],'AddItem':[2,4]}
 	[[2]]
@@ -128,14 +128,14 @@ slug = 'Unhook Cloak'
 	effects = {'AddItem':[1,2]}
 	duration = 5
 [16]
-slug = 'Wear Cloak'
+commands = 'Wear Cloak'
 evaluators = []
 	[[1]]
 	text = "You throw the cloak over your shoulders."
 	effects = {'RemoveItem':[1,2],'AddItem':[1,1]}
 	duration = 4
 [17]
-slug = 'Equipment'
+commands = 'Equipment'
 description = 'Look at what you are wearing'
 evaluators = ['n1']
 	[[1]]
