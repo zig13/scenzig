@@ -16,7 +16,7 @@ adv = None
 char = None
 listcollate = None
 statecheck = None
-listg = None
+listg = []
 actionstack = []
 def GiveAdv(a) :
 	global adv
@@ -126,14 +126,18 @@ def AddAbility(arguments) : #Is also able to change the state of an existing abi
 def PrintActions(arguments) :
 	global listg
 	global adv
-	if len(listg) == 0 : return
 	for action in listg :
+		try : #By trying to stick a space character on the end of 'commands', I can test if it is a string or a list
+			command = adv.f['Actions'][str(action)]['commands']+" " #This will succeed only if 'commands' is a singular string
+		except KeyError : #If the action has no commands
+			continue #On the off-chance an action is whitelisted but has no commands, it will be ignored
+		except TypeError: #If the action has a list of commands (rather than a singular string command)
+			command = adv.f['Actions'][str(action)]['commands'][0]+" " #Takes the first command from the list
 		try :
-			print adv.f['Actions'][str(action)]['slug']+" - "+adv.f['Actions'][str(action)]['description']
-		except KeyError :
-			try :
-				print adv.f['Actions'][str(action)]['slug']
-			except KeyError : continue
+			description = "- "+adv.f['Actions'][str(action)]['description']
+		except (KeyError, TypeError) : #Having a description is entirely optional so we don't care if we fail to find or it is not a string
+			description = ""
+		print command+description #If the action has a description, this will print e.g. "North - Travel North" else just "North "
 def PrintAttributes(arguments) :
 	global char
 	global adv
