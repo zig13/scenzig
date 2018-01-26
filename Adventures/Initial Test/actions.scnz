@@ -1,20 +1,20 @@
 [0]
 [1]
-slug = 'Forward'
+commands = 'Forward'
 evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'You go forward'
 	effects = {'SetScene':[2]}
 [2]
-slug = 'Back'
+commands = 'Back'
 evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'You go back from whence you came'
 	effects = {'RevertScene':[]}
 [3]
-slug = 'Inventory'
+commands = ['Inventory','I']
 description = 'Look at what items you are carrying'
 evaluators = ['n1']
 	[[1]]
@@ -25,7 +25,7 @@ evaluators = ['n1']
 	evaluations = {0:[0,0]}
 	text = "You're not carrying anything."
 [6]
-slug = 'Drop stone'
+commands = 'Drop stone'
 description = 'Drop the stone onto the ground'
 evaluators = []
 	[[1]]
@@ -33,7 +33,7 @@ evaluators = []
 	text = 'The stone falls to the floor'
 	effects = {'RemoveItem':[4],'EmptySlot':[1]}
 [7]
-slug = 'Pickup stone'
+commands = 'Pickup stone'
 description = 'Pick the stone up off the ground'
 evaluators = ['o1']
 	[[1]]
@@ -44,44 +44,44 @@ evaluators = ['o1']
 	evaluations = {0:[0,0]}
 	text = 'You are already holding something in your hand'
 [8]
-slug = 'Help'
+commands = 'Help'
 description = 'Display available actions'
 	[[1]]
 	text = "Available actions:"
 	effects = {'PrintActions':[]}
 [9]
-slug = 'Teleport'
+commands = 'Teleport'
 evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'BAAM'
 	effects = {'SetScene':[3]}
 [10]
-slug = 'Stats'
+commands = 'Stats'
 description = 'Display current state of attributes'
 	[[1]]
 	effects = {'PrintAttributes':[]}
 [11]
-slug = 'Raise the roof'
+commands = 'Raise the roof'
 description = 'Use your considerable strength to increase the clearance of the room'
 evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
 [12]
-slug = 'Drink poison'
+commands = 'Drink poison'
 	[[1]]
 	text = 'You take a small sip from the bottle. It tastes pretty nasty.'
 	effects = {'StartEcho':[22,3]}
 [13]
-slug = 'Drink strength potion'
+commands = 'Drink strength potion'
 evaluators = []
 	[[1]]
 	evaluations = {}
 	text = 'You take a swig from the bottle. You feel noticeably stronger.'
 	effects = {'BolsterAttribute':[3,5]}
 [14]
-slug = 'Random'
+commands = 'Random'
 description = 'Teleport to a random scene'
 evaluators = []
 	[[1]]
@@ -89,7 +89,7 @@ evaluators = []
 	text = 'Whhoosh'
 	effects = {'SetScene':['d3']}
 [15]
-slug = 'Flip'
+commands = 'Flip'
 description = 'Flip a coin'
 evaluators = ['d6']
 	[[1]]
@@ -99,15 +99,15 @@ evaluators = ['d6']
 	evaluations = {0:[4,6]}
 	text = 'The coin lands with Tails facing upwards'
 [16]
-slug = 'Random Class'
+commands = 'Random Class'
 	[[1]]
 	effects = {'SetLabel':[1,'d3'],'TakeAction':[18]}
 [17]
-slug = 'Random Role'
+commands = 'Random Role'
 	[[1]]
 	effects = {'SetLabel':[2,'d3'],'TakeAction':[19]}
 [18]
-slug = 'Class'
+commands = 'Class'
 evaluators = ['l1']
 	[[1]]
 	evaluations = {0:[0,0]}
@@ -116,7 +116,7 @@ evaluators = ['l1']
 	evaluations = {0:[1,3]}
 	text = '.labs.1[1]You are a lab1'
 [19]
-slug = 'Role'
+commands = 'Role'
 evaluators = ['l2']
 	[[1]]
 	evaluations = {0:[0,0]}
@@ -125,11 +125,11 @@ evaluators = ['l2']
 	evaluations = {0:[1,3]}
 	text = '.labs.1[2]You are a lab2'
 [20]
-slug = 'Recursive'
+commands = 'Recursive'
 	[[1]]
 	effects = {'TakeAction':[20]}
 [21]
-slug = 'Gulp poison'
+commands = 'Gulp poison'
 	[[1]]
 	text = 'You drain the bottle. It tastes pretty nasty.'
 	effects = {'DamageAttribute':[1,1000],'RemoveItem':[6]}
@@ -138,12 +138,12 @@ slug = 'Gulp poison'
 	text = 'You feel the poison damaging your insides.'
 	effects = {'DamageAttribute':[1,'100+d24']}
 [23]
-slug = 'Wait'
+commands = 'Wait'
 	[[1]]
 	text = 'You wait 1 beat'
 	duration = 1
 [24]
-slug = 'Wait a while'
+commands = 'Wait a while'
 	[[1]]
 	text = 'You wait 10 beats'
 	duration = 10
