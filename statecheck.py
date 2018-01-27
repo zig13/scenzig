@@ -122,33 +122,37 @@ def Check(remit="All") :
 def DetermineOutcomes(action) :
 	global adv
 	global char
-	effects = []
 	text = False
-	if action == 0 : return effects
+	effects = []
 	action_data = adv.f['Actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
 	try :
+		text = nonemptyprint(adv.f['Actions'][action],char)
+	except KeyError : pass #text is optional
+	try :
 		effects.append(adv.f['Actions'][str(action)]['effects'])
 	except KeyError : pass #effects are optional
-	evaluators = [argsolve.Solve(each) for each in action_data.get('evaluators',default=[])]
-	if evaluators :
+	try :
+		char['Beats'] += adv.f['Actions'][action]['duration']
+		efunc.actionstack.extend(efunc.echo.Age(adv.f['Actions'][action]['duration']))
+	except KeyError : pass #duration is optional
+	evaluators = [argsolve.Solve(each) for each in action_data.get('evaluators',default=[])] #Returns an empty list if there are no evaluators
+	if evaluators : #A non-empty list is 'True' and an empty list is 'False'
 		outcomes = [x for x in all_outcomes if TestState(action_data[str(x)],evaluators)]
 	else :
 		outcomes = all_outcomes
-	if not outcomes :
-		print "Nothing Happens\n" #This occurs if no outcomes match
-	else :
-		for outcome in outcomes :
-			try : effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
-			except KeyError : pass #effects are optional
-			try :
-				text = nonemptyprint(adv.f['Actions'][action][outcome],char)
-			except KeyError : pass #text is optional
-			try :
-				char['Beats'] += adv.f['Actions'][action][outcome]['duration']
-				efunc.actionstack.extend(efunc.echo.Age(adv.f['Actions'][action][outcome]['duration']))
-			except KeyError : pass #duration is optional
-	return [effects,text]
+	for outcome in outcomes :
+		try :
+			text = nonemptyprint(adv.f['Actions'][action][outcome],char)
+		except KeyError : pass #text is optional
+		try :
+			effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
+		except KeyError : pass #effects are optional
+		try :
+			char['Beats'] += adv.f['Actions'][action][outcome]['duration']
+			efunc.actionstack.extend(efunc.echo.Age(adv.f['Actions'][action][outcome]['duration']))
+		except KeyError : pass #duration is optional
+	return [text,effects]
 
 def TestState(statedata,evaluators) :
 	verdict = False
