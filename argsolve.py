@@ -60,7 +60,7 @@ def s(id) : #s has two functions. If passed 0 it will return the current scene e
 		return char['Scenes']['active'][0]
 	else :
 		try :
-			return sorted(c['Scenes'][str(statecheck.scene)])[0]
+			return sorted(char['Scenes'][str(id)])[0]
 		except KeyError :
 			return 0
 def n(id) : #Returns length of given Inventory
