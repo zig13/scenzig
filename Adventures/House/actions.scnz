@@ -1,0 +1,99 @@
+[0]
+[1]
+commands = 'Help'
+description = 'Display available actions'
+text = "Available actions:"
+effects = {'PrintActions':[]}
+[2]
+commands = ('Inventory','I')
+description = 'Look at what items you are carrying'
+evaluators = ['n1']
+  [[1]]
+	evaluations = {0:[1,99999]}
+	text = "You are carrying:"
+	effects = {'PrintItems':[1]}
+	[[2]]
+	evaluations = {0:[0,0]}
+	text = "You're not carrying anything."
+[3]
+commands = ('Go North','North','N')
+evaluators = ['s0','s7']
+  [[1]]
+  evaluations = {0:1}
+  effects = {'SetScene':[2]}
+  [[2]]
+  evaluations = {0:2}
+  effects = {'SetScene':[4]}
+	[[3]]
+	evaluations = {0:7}
+	effects = {'SetScene':[8]}
+  [[4]]
+  evaluations = {0:7,1:1}
+	text = "When you walk further up the stairs one of the steps makes\na hollow sound. You try to pinpoint it but get no further\nthan that it is somewhere in the upper half of the stairs."
+	[[5]]
+	evaluations = {0:7,1:2}
+	text = "You carefully step over step 11, so you don't fall down\into the closet."
+
+[4]
+commands = ('Go South','South','S')
+evaluators = ['s0']
+  [[1]]
+  evaluations = {0:2}
+  effects = {'SetScene':[1]}
+  [[2]]
+  evaluations = {0:4}
+  effects = {'SetScene':[2]}
+  [[3]]
+  evaluations = {0:7}
+  effects = {'SetScene':[1]}
+[5]
+commands = ('Go East','East','E')
+evaluators = ['s0']
+  [[1]]
+  evaluations = {0:1}
+  effects = {'SetScene':[7]}
+  [[2]]
+  evaluations = {0:3}
+  effects = {'RevertScene':[]}
+	[[3]]
+	evaluations = {0:9}
+	effects = {'SetScene':[8]}
+[6]
+commands = ('Go West','West','W')
+evaluators = ['s0']
+  [[1]]
+  evaluations = {0:[1,2]}
+  effects = {'SetScene':[3]}
+  [[2]]
+  evaluations = {0:8}
+  effects = {'SetScene':[9]}
+[7]
+commands = ('Go Up','Up','U')
+evaluators = ['s0','s7']
+	[[1]]
+	evaluations = {0:7}
+	effects = {'SetScene':[8]}
+  [[2]]
+  evaluations = {0:7,1:1}
+	text = "When you walk further up the stairs one of the steps makes\na hollow sound. You try to pinpoint it but get no further\nthan that it is somewhere in the upper half of the stairs."
+	[[3]]
+	evaluations = {0:7,1:2}
+	text = "You carefully step over step 11, so you don't fall down\into the closet."
+[8]
+commands = ('Go Down','Down','D')
+evaluators = ['s0','s7']
+  [[1]]
+  evaluations = {0:7,1:1}
+  effects = {'SetScene':[1]}
+  [[2]]
+  evaluations = {0:7,1:2}
+  effects = {'SetScene':[5]}
+  [[3]]
+  evaluations = {0:8}
+  effects = {'SetScene':[7]}
+	[[4]]
+	evaluations = {0:8,1:1}
+	text = "When you walk down, one of the steps makes a hollow sound.\nYou try to pinpoint it but get no further than that it is\nat the top half of the stairs."
+	[[5]]
+	evaluations = {0:8,1:2}
+	text = "You carefully step over step 11, so you don't fall down\ninto the closet."

@@ -1,0 +1,5 @@
+Display Duration (in seconds):4
+Based on "a sample story" from the XVAN 2-3-2 Tutorial by Marnix van den Bos
+Check out XVAN - a text adventure authoring system
+scenzig implementation by Thomas Sturges-Allard
+This is a work-in-progress - currently you can just move around the house

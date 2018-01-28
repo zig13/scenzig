@@ -1,0 +1,39 @@
+[0]
+[1]
+text = "You are in the south hallway. To the west is a passage to the\nliving room. To the east are stairs leading up. The hallway\ncontinues to the north."
+bActions = [4]
+[2]
+text = "You are in the north hallway. To the west is a passage to the\nliving room. The hallway continues north to the kitchen."
+bActions = [5]
+[3]
+text = "This is the living room. It's completely abandoned. There is an\nexit to the hallway to the east."
+bActions = [3,4,6]
+[4]
+text = "This is the kitchen. There is not much here. The\nhallway is to the south."
+bActions = [5,6]
+[5]
+text = "You are in a dark closet below the staircase. To the west is\nthe closet door, which is closed."
+bActions = [3,4,5,6]
+[6]
+	[[1]]
+	text = "You walk down the stairs into the cellar. Down below you see\nthe red glow of a fire. As you walk down further, it gets hotter\nand hotter. You realize you will be fried if you continue and you\nhurry back up the stairs."
+	[[2]]
+	text = "There is still a lot of smoke in the cellar, but through the\nhazes you can make out an old workbench to the east and a door\nto the north."
+[7]
+text = "You are now halfway up the stairs. The stairs continue up\nto the north and down to the south."
+wActions = [7,8]
+bActions = [5,6]
+	[[1]] #Loose step not examined
+	[[2]] #Loose step examined and button pressed
+	text = "Step 11 has disappeared, revealing a passage down."
+[8]
+text = "You are upstairs. Behind you, the stairs lead down. There\nis an exit to the west."
+wActions = [8]
+bActions = [3,4,5]
+[9]
+text = "This location used to be a bedroom a long time ago. But\nnow, there is nothing there. All furniture has been\nremoved."
+bActions = [3,4,6]
+[10]
+text = "You are in the garden at the back of the house. East and west\nthere are hedges. To the north is a garden shed."
+[11]
+text = "You are now in the garden shed. The shed hasn't been cleaned\nfor a long time. Maybe never. On the walls you see the nails\nthat were used to hang the garden utensils to. Almost all of\nthem are gone now."
