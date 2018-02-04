@@ -84,12 +84,12 @@ def PrintItems(arguments) :
 	if len(char['Inventories'][str(arguments[0])]) < 1 : return
 	for itm in char['Inventories'][str(arguments[0])] :
 		states = sorted(char['Items'][str(itm)])
-		try :
-			print adv.f['Items'][str(itm)][str(states[0])]['description'] #Currently I am ~cheating and printing the description of the lowest number state the item currently has
-		except (KeyError, IndexError) :
-			try :
-				print adv.f['Items'][str(itm)]['description']
-			except KeyError : pass
+		printed = False
+		for state in states :
+			printed = nonemptyprint(adv.f['Items'][str(itm)][str(state)],char)
+			if printed is True : break
+		if printed is False :
+			nonemptyprint(adv.f['Items'][str(itm)],char)
 def RemoveItem(arguments) : #Arguments are Item and Inventory
 	global char
 	if len(arguments) < 2 : arguments.append(1)
