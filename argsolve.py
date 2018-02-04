@@ -51,6 +51,15 @@ def i(id) : #i will return the active inventory the item is present in else 0
 		if id in char['Inventories'][inventory] :
 			return int(inventory)
 	return 0
+def t(id) : #t will return the (first) state of the item with the given id
+	global char
+	if char is None:
+		print "Character data not available"
+		return 0
+	try :
+		return sorted(char['Items'][str(id)])[0]
+	except KeyError :
+		return 0
 def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
 	global char
 	if char is None:
@@ -82,7 +91,7 @@ def o(id) : #Returns 1 if slot is empty otherwise 0
 def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 if not label is assigned
 	if char is None:
 		print "Character data not available"
-		return 0
+	return 0
 	try :
 		return char['Labels'][str(id)][0]
 	except KeyError, IndexError :
