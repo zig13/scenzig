@@ -1,22 +1,22 @@
 [0]
 [4]
-description = 'A Stone'
+text = 'A Stone'
 wActions = [6,20]
 bActions = [7]
 evaluators = []
 	[[1]]
 	penalties = {'3':15}
 [5]
-description = 'A big bag of dick'
+text = 'A big bag of dick'
 evaluators = []
 	[[1]]
 [6]
-description = 'A small bottle with a skull motif on the label'
+text = 'A small bottle with a skull motif on the label'
 wActions = [12,21]
 evaluators = ['c1']
 	[[1]]
 [7]
-description = 'A large bottle with a bicep motif on the label'
+text = 'A large bottle with a bicep motif on the label'
 wActions = [13]
 evaluators = ['c2']
 	[[1]]
