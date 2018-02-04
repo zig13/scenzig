@@ -3,21 +3,21 @@
 evaluators = ['i1']
 wActions = [12]
 	[[1]]
-	description = 'a velvet cloak'
+	text = 'a velvet cloak'
 	evaluations = {0:[1,1]}
 	wActions = [9]
 	bActions = [14]
 	[[2]]
-	description = 'a velvet cloak'
+	text = 'a velvet cloak'
 	evaluations = {0:[2,2]}
 	wActions = [10,16]
 	[[3]]
-	description = 'There is a cloak piled messily in the centre of the floor'
+	text = 'There is a cloak piled messily in the centre of the floor'
 	evaluations = {0:[3,3]}
 	wActions = [13]
 	bActions = [14]
 	[[4]]
-	description = 'Hanging from the hook is a dark cloak.'
+	text = 'Hanging from the hook is a dark cloak.'
 	evaluations = {0:[4,4]}
 	wActions = [15]
 	bActions = [14]
