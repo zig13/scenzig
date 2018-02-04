@@ -17,7 +17,7 @@ evaluators = ['n1']
 	text = "You're not carrying anything."
 [3]
 commands = ('Go North','North','N')
-evaluators = ['s0','s7']
+evaluators = ['s0','s7','t4']
   [[1]]
   evaluations = {0:1}
   effects = {'SetScene':[2]}
@@ -33,7 +33,12 @@ evaluators = ['s0','s7']
 	[[5]]
 	evaluations = {0:7,1:2}
 	text = "You carefully step over step 11, so you don't fall down\into the closet."
-
+  [[6]]
+  evaluations = {0:4,2:1}
+  text = "The door seems to be locked."
+  [[7]]
+  evaluations = {0:4,2:2} #If in kitchen and kitchen door is unlocked
+  effects = {'TakeAction':[9],'SetScene':[10]} #Incite the open door action and set scene to the garden
 [4]
 commands = ('Go South','South','S')
 evaluators = ['s0']
@@ -96,4 +101,13 @@ evaluators = ['s0','s7']
 	text = "When you walk down, one of the steps makes a hollow sound.\nYou try to pinpoint it but get no further than that it is\nat the top half of the stairs."
 	[[5]]
 	evaluations = {0:8,1:2}
-	text = "You carefully step over step 11, so you don't fall down\ninto the closet."
+  text = "You carefully step over step 11, so you don't fall down\ninto the closet."
+[9]
+commands = ('Open Door','Open')
+evaluators = ['t4']
+  [[1]]
+  evaluations = {0:1}
+  text = "The door seems to be locked."
+  [[2]]
+  evaluations = {0:2}
+  effects = {'RemoveItemState':[4,3],'AddItemState':[4,4],'RemoveItemState':[10,1],'AddItemState':[10,2]} #Open door on both sides
