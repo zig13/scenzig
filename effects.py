@@ -113,6 +113,32 @@ def AddItem(arguments) : #Arguments are Item, Inventory and Item State
 	if arguments[1] in char['Inventories']['active'] :
 		listcollate.CollateItems()
 		statecheck.Check()
+def AddItemState(arguments) : #Arguments are state and item
+	global char
+	try :
+		current_states = char['Items'][str(arguments[1])]
+	except KeyError :
+		char['Items'][str(arguments[1])] = []
+		current_states = char['Items'][str(arguments[1])]
+		statecheck.auto_states['Items'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Items'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Items'][str(arguments[1])][x])]
+	if arguments[0] not in current_states :
+		current_states.append(arguments[0])
+def RemoveItemState(arguments) : #Arguments are state and item
+	global char
+	if len(arguments) <2 : arguments.append(char['Items']['active'][0]) #If no scene is given, the given state is removed from the current scene
+	try :
+		current_states = char['Items'][str(arguments[1])]
+	except KeyError :
+		char['Items'][str(arguments[1])] = []
+		statecheck.UpdateAutoList('Scenes', arguments[1])
+		return
+	if arguments[0] is 0 : #All manually set states are removed if 0 is given as an argument
+		if str(arguments[1]) not in statecheck.auto_states['Items'] :
+			statecheck.UpdateAutoList('Scenes', arguments[1])
+		char['Items'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Items'][str(arguments[1])]]
+	else :
+		char['Items'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
+
 def RemoveAbility(arguments) :
 	global char
 	if str(arguments[0]) in char['Abilities'].keys() :
