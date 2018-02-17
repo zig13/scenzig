@@ -162,11 +162,18 @@ def TestState(statedata,evaluators) :
 	return verdict
 
 def CompareEval(valrange,value) :
-	verdict = True
 	try :
-		if not valrange[0] <= value <= valrange[1] :
-			verdict = False
-	except TypeError :
-		if value is not valrange :
-			verdict = False
-	return verdict
+		if valrange[0] <= value <= valrange[1] :
+			return True
+		else :
+			return False
+	except TypeError : #If valrange is not a list and therefore is a single value
+		comparator = valrange
+	except IndexError : #If valrange is a list with only a single value
+		comparator = valrange[0]
+	if value == comparator :
+		return True
+	elif bool(value) == comparator :
+		return True
+	else :
+		return False
