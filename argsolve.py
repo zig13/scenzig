@@ -91,7 +91,7 @@ def o(id) : #Returns 1 if slot is empty otherwise 0
 def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 if not label is assigned
 	if char is None:
 		print "Character data not available"
-	return 0
+		return 0
 	try :
 		return char['Labels'][str(id)][0]
 	except KeyError, IndexError :
