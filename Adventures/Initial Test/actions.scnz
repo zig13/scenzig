@@ -1,39 +1,30 @@
 [0]
 [1]
 commands = 'Forward'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'You go forward'
-	effects = {'SetScene':[2]}
+text = 'You go forward'
+effects = {'SetScene':[2]}
 [2]
 commands = 'Back'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'You go back from whence you came'
-	effects = {'RevertScene':[]}
+text = 'You go back from whence you came'
+effects = {'RevertScene':[]}
 [3]
 commands = ['Inventory','I']
 description = 'Look at what items you are carrying'
-evaluators = ['n1']
+evaluators = ['n1'] #n1 equals the number of items in inventory 1
 	[[1]]
-	evaluations = {0:[1,99999]}
+	evaluations = {0:True} #Any non-zero number of items will equate to True and validate this outcome
 	text = "You are carrying:"
 	effects = {'PrintItems':[1]}
 	[[2]]
-	evaluations = {0:[0,0]}
+	evaluations = {0:0} #This outcome will occur only if n1 returns 0
 	text = "You're not carrying anything."
 [6]
 commands = 'Drop stone'
 description = 'Drop the stone onto the ground'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'The stone falls to the floor'
-	effects = {'RemoveItem':[4],'EmptySlot':[1]}
+text = 'The stone falls to the floor'
+effects = {'RemoveItem':[4],'EmptySlot':[1]}
 [7]
-commands = 'Pickup stone'
+commands = ['Pickup stone','Take stone']
 description = 'Pick the stone up off the ground'
 evaluators = ['o1']
 	[[1]]
@@ -44,106 +35,84 @@ evaluators = ['o1']
 	evaluations = {0:[0,0]}
 	text = 'You are already holding something in your hand'
 [8]
-commands = 'Help'
+commands = ['Help','H']
 description = 'Display available actions'
-	[[1]]
-	text = "Available actions:"
-	effects = {'PrintActions':[]}
+text = "Available actions:"
+effects = {'PrintActions':[]}
 [9]
 commands = 'Teleport'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'BAAM'
-	effects = {'SetScene':[3]}
+text = 'BAAM'
+effects = {'SetScene':[3]}
 [10]
 commands = 'Stats'
 description = 'Display current state of attributes'
-	[[1]]
-	effects = {'PrintAttributes':[]}
+effects = {'PrintAttributes':[]}
 [11]
 commands = 'Raise the roof'
 description = 'Use your considerable strength to increase the clearance of the room'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
+text = 'Bracing yourself against the floor, you push with all your might and the ceiling raises a couple of inches'
 [12]
 commands = 'Drink poison'
-	[[1]]
-	text = 'You take a small sip from the bottle. It tastes pretty nasty.'
-	effects = {'StartEcho':[22,3]}
+text = 'You take a small sip from the bottle. It tastes pretty nasty.'
+effects = {'StartEcho':[22,3]}
 [13]
 commands = 'Drink strength potion'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'You take a swig from the bottle. You feel noticeably stronger.'
-	effects = {'BolsterAttribute':[3,5]}
+text = 'You take a swig from the bottle. You feel noticeably stronger.'
+effects = {'BolsterAttribute':[3,5]}
 [14]
 commands = 'Random'
 description = 'Teleport to a random scene'
-evaluators = []
-	[[1]]
-	evaluations = {}
-	text = 'Whhoosh'
-	effects = {'SetScene':['d3']}
+text = 'Whhoosh'
+effects = {'SetScene':['d3']}
 [15]
 commands = 'Flip'
 description = 'Flip a coin'
-evaluators = ['d6']
+evaluators = ['d6'] #Rolls a virtual six-sided dice
 	[[1]]
-	evaluations = {0:[1,3]}
+	evaluations = {0:[1,3]} #If the dice result is between 1 and 3
 	text = 'The coin lands with Heads facing upwards'
 	[[2]]
-	evaluations = {0:[4,6]}
+	evaluations = {0:[4,6]} #If the dice result is between 4 and 6
 	text = 'The coin lands with Tails facing upwards'
 [16]
 commands = 'Random Class'
-	[[1]]
-	effects = {'SetLabel':[1,'d3'],'TakeAction':[18]}
+effects = {'SetLabel':[1,'d3'],'TakeAction':[18]} #Sets the Class label to 1,2 or 3 and then incites the Class action to print the new Class
 [17]
 commands = 'Random Role'
-	[[1]]
-	effects = {'SetLabel':[2,'d3'],'TakeAction':[19]}
+effects = {'SetLabel':[2,'d3'],'TakeAction':[19]} #Sets the Role label to 1,2 or 3 and then incites the Role action to print the new Role
 [18]
 commands = 'Class'
 evaluators = ['l1']
 	[[1]]
-	evaluations = {0:[0,0]}
+	evaluations = {0:False}
 	text = 'You have no class'
 	[[2]]
-	evaluations = {0:[1,3]}
+	evaluations = {0:True}
 	text = '.labs.1[1]You are a lab1'
 [19]
 commands = 'Role'
 evaluators = ['l2']
 	[[1]]
-	evaluations = {0:[0,0]}
+	evaluations = {0:False}
 	text = 'You have no role'
 	[[2]]
-	evaluations = {0:[1,3]}
+	evaluations = {0:True}
 	text = '.labs.1[2]You are a lab2'
-[20]
+[20] #Created to test the stability of the TakeAction effect it just loops infinitely
 commands = 'Recursive'
-	[[1]]
-	effects = {'TakeAction':[20]}
+effects = {'TakeAction':[20]}
 [21]
 commands = 'Gulp poison'
-	[[1]]
-	text = 'You drain the bottle. It tastes pretty nasty.'
-	effects = {'DamageAttribute':[1,1000],'RemoveItem':[6]}
+text = 'You drain the bottle. It tastes pretty nasty.'
+effects = {'DamageAttribute':[1,1000],'RemoveItem':[6]}
 [22]
-	[[1]]
-	text = 'You feel the poison damaging your insides.'
-	effects = {'DamageAttribute':[1,'100+d24']}
+text = 'You feel the poison damaging your insides.'
+effects = {'DamageAttribute':[1,'100+d24']}
 [23]
 commands = 'Wait'
-	[[1]]
-	text = 'You wait 1 beat'
-	duration = 1
+text = 'You wait 1 beat'
+duration = 1
 [24]
 commands = 'Wait a while'
-	[[1]]
-	text = 'You wait 10 beats'
-	duration = 10
+text = 'You wait 10 beats'
+duration = 10
