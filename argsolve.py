@@ -94,7 +94,7 @@ def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 
 		return 0
 	try :
 		return char['Labels'][str(id)][0]
-	except KeyError, IndexError :
+	except (KeyError, IndexError) :
 		return 0
 
 def Solve(arg) :
