@@ -63,3 +63,4 @@ target/
 *.exe
 *.db
 *.html#
+*.stackdump
