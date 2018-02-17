@@ -97,6 +97,53 @@ def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 
 	except (KeyError, IndexError) :
 		return 0
 
+def SceneHasState(arguments) :
+	if char is None:
+		print "Character data not available"
+		return 0 #False
+	if len(arguments) < 2 :
+		print "SceneHasState requires two arguments; State and Scene.\nExample:SceneHasState,1,2"
+		return 0 #False
+	try :
+		if int(arguments[0]) in char['Scenes'][arguments[1]] :
+			return 1 #True
+		else :
+			return 0 #False
+	except KeyError :
+		return 0 #False
+def ItemIsActive(arguments) :
+	if char is None:
+		print "Character data not available"
+		return 0
+	if int(arguments[0]) in char['Items']['active'] :
+		return 1
+	else :
+		return 0
+def ItemInInventory(arguments) : #Does not care if the inventory is active or not
+	if char is None:
+		print "Character data not available"
+		return 0 #False
+	if len(arguments) < 2 :
+		print "ItemInInventory requires two arguments; Item and Inventory.\nExample:ItemInInventory,1,6"
+		return 0 #False
+	try :
+		if int(arguments[0]) in char['Inventories'][arguments[1]] :
+			return 1 #True
+	except KeyError : pass
+	return 0
+def ItemHasState(arguments) :
+	if char is None:
+		print "Character data not available"
+		return 0
+	if len(arguments) < 2 :
+		print "ItemHasState requires two arguments; State and Item.\nExample:ItemHasState,1,4"
+		return 0 #False
+	try :
+		if int(arguments[0]) in char['Items'][arguments[1]] :
+			return 1 #True
+	except KeyError : pass
+	return 0
+
 def Solve(arg) :
 	try :
 		return int(arg)
