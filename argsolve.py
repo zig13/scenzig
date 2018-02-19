@@ -80,14 +80,6 @@ def n(id) : #Returns length of given Inventory
 		return len(char['Inventories'][str(id)])
 	except KeyError :
 		return 0
-def o(id) : #Returns 1 if slot is empty otherwise 0
-	if char is None:
-		print "Character data not available"
-		return 0
-	if id in char['Slots']['empty'] :
-		return 1
-	else :
-		return 0
 def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 if not label is assigned
 	if char is None:
 		print "Character data not available"
@@ -143,6 +135,31 @@ def ItemHasState(arguments) :
 			return 1 #True
 	except KeyError : pass
 	return 0
+def SlotIsActive(arguments) : #Returns 1 if slot is empty or full otherwise 0
+	if char is None:
+		print "Character data not available"
+		return 0
+	active = char['Slots']['full'] + char['Slots']['empty']
+	if int(arguments[0]) in active :
+		return 1
+	else :
+		return 0
+def SlotIsFull(arguments) : #Returns 1 if slot is full otherwise 0
+	if char is None:
+		print "Character data not available"
+		return 0
+	if int(arguments[0]) in char['Slots']['full'] :
+		return 1
+	else :
+		return 0
+def SlotIsEmpty(arguments) : #Returns 1 if slot is empty otherwise 0
+	if char is None:
+		print "Character data not available"
+		return 0
+	if int(arguments[0]) in char['Slots']['empty'] :
+		return 1
+	else :
+		return 0
 
 def Solve(arg) :
 	try :
