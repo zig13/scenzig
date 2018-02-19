@@ -26,7 +26,7 @@ effects = {'RemoveItem':[4],'EmptySlot':[1]}
 [7]
 commands = ['Pickup stone','Take stone']
 description = 'Pick the stone up off the ground'
-evaluators = ['o1']
+evaluators = ['SlotIsEmpty,1']
 	[[1]]
 	evaluations = {0:[1,1]}
 	text = 'You pick the stone up'
