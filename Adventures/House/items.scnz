@@ -1,28 +1,32 @@
 [0]
 [4] #Door from kitchen side
-  [[1]] #Locked
-  [[2]] #Unlocked
-  [[3]]
+evaluators = ['ItemHasState,2,5','ItemHasState,3,5']
+  [[1]]
+  evaluations = {0:True} #Door is Closed
   text = "To the North is a closed door that leads to the garden."
   wActions = [9]
-  [[4]]
+  [[2]]
+  evaluations = {0:False} #Door is Open
   text = "To the North is an open door that leads to the garden."
   wActions = [10]
-[5] #Window in door
-evaluators = ['t5','s0']
-  [[1]] #Not broken
-  text = "In the upper half of the door is a window."
-  [[2]] #Broken
-  [[3]] #Broken from kitchen side
-  evaluations = {0:2,1:4}
+  [[3]] #Window is broken
+  evaluations = {1:False}
   text = "Scattered over the floor is a broken window that\nonce was a part of the door."
-  [[4]] #Broken from garden side
-  evaluations = {0:2,1:10}
-  text = "Scattered over the ground is a broken window that\nonce was a part of the door."
+[5] #Door
+  [[1]] #Locked
+  [[2]] #Closed
+  [[3]] #Intact Window
+  text = "In the upper half of the door is a window."
 [10] #Door from garden side
+evaluators = ['ItemHasState,2,5','ItemHasState,3,5']
   [[1]]
+  evaluations = {0:True} #Door is Closed
   text = "To the South is a closed door that leads to the kitchen."
   wActions = [9]
   [[2]]
+  evaluations = {0:False} #Door is Open
   text = "To the North is an open door that leads to the kitchen."
   wActions = [10]
+  [[3]] #Window is broken
+  evaluations = {1:False}
+  text = "Scattered over the ground is a broken window that\nonce was a part of the door."

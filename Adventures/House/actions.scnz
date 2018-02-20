@@ -111,3 +111,6 @@ evaluators = ['t4']
   [[2]]
   evaluations = {0:2}
   effects = {'RemoveItemState':[4,3],'AddItemState':[4,4],'RemoveItemState':[10,1],'AddItemState':[10,2]} #Open door on both sides
+[10]
+commands = ('Close Door','Close')
+effects = {'AddItemState':[5,2]} #Adds closed state to the door
