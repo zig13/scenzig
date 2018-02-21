@@ -55,6 +55,9 @@ def AddSceneState(arguments) :
 	try :
 		current_states = char['Scenes'][str(arguments[1])]
 	except KeyError :
+		if str(arguments[1]) not in adv.f['Scenes'].keys() : #If scene does not exist
+			print "Scene",str(arguments[1]),"does not exist"
+			return
 		char['Scenes'][str(arguments[1])] = []
 		current_states = char['Scenes'][str(arguments[1])]
 		statecheck.auto_states['Scenes'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Scenes'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Scenes'][str(arguments[1])][x])]
@@ -118,6 +121,9 @@ def AddItemState(arguments) : #Arguments are state and item
 	try :
 		current_states = char['Items'][str(arguments[1])]
 	except KeyError :
+		if str(arguments[1]) not in adv.f['Items'].keys() : #If item does not exist
+			print "Item",str(arguments[1]),"does not exist"
+			return
 		char['Items'][str(arguments[1])] = []
 		current_states = char['Items'][str(arguments[1])]
 		statecheck.auto_states['Items'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Items'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Items'][str(arguments[1])][x])]
