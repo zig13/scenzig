@@ -17,7 +17,7 @@ evaluators = ['n1']
 	text = "You're not carrying anything."
 [3]
 commands = ('Go North','North','N')
-evaluators = ['s0','s7','t4']
+evaluators = ['s0','s7','ItemHasState,1,5']
   [[1]]
   evaluations = {0:1}
   effects = {'SetScene':[2]}
@@ -34,10 +34,10 @@ evaluators = ['s0','s7','t4']
 	evaluations = {0:7,1:2}
 	text = "You carefully step over step 11, so you don't fall down\into the closet."
   [[6]]
-  evaluations = {0:4,2:1}
+  evaluations = {0:4,2:True} #If in kitchen and kitchen door is locked
   text = "The door seems to be locked."
   [[7]]
-  evaluations = {0:4,2:2} #If in kitchen and kitchen door is unlocked
+  evaluations = {0:4,2:False} #If in kitchen and kitchen door is unlocked
   effects = {'TakeAction':[9],'SetScene':[10]} #Incite the open door action and set scene to the garden
 [4]
 commands = ('Go South','South','S')
@@ -104,13 +104,22 @@ evaluators = ['s0','s7']
   text = "You carefully step over step 11, so you don't fall down\ninto the closet."
 [9]
 commands = ('Open Door','Open')
-evaluators = ['t4']
+evaluators = ['ItemHasState,1,5']
   [[1]]
-  evaluations = {0:1}
+  evaluations = {0:True}
   text = "The door seems to be locked."
   [[2]]
-  evaluations = {0:2}
-  effects = {'RemoveItemState':[4,3],'AddItemState':[4,4],'RemoveItemState':[10,1],'AddItemState':[10,2]} #Open door on both sides
+  evaluations = {0:False}
+  effects = {'RemoveItemState':[2,5]} #Removes door (item 5)'s closed state (state 2)
 [10]
 commands = ('Close Door','Close')
 effects = {'AddItemState':[5,2]} #Adds closed state to the door
+[11]
+commands = ('Look through door','look through window')
+evaluators = ['ItemHasState,3,5']
+  [[1]]
+  evaluators = {0:True} #Window in door is intact
+  text = "Through the window you see the garden. At the far\nface to the window and try to look down but can't\nsee right behind the door. If you could only stick\nyour face further through."
+  [[2]]
+  evaluators = {0:False} #Window in door is broken
+  text = "Because the window is no longer there, you can stick\nyour head through the hole. There's a rusty key in\nthe outside of the keyhole!"
