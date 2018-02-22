@@ -63,6 +63,8 @@ def AddSceneState(arguments) :
 		statecheck.auto_states['Scenes'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Scenes'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Scenes'][str(arguments[1])][x])]
 	if arguments[0] not in current_states :
 		current_states.append(arguments[0])
+		listcollate.AddStates('Scenes', arguments[1])
+		statecheck.Check()
 def RemoveSceneState(arguments) : #Arguments are state and scene
 	global char
 	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0]) #If no scene is given, the given state is removed from the current scene
@@ -78,6 +80,8 @@ def RemoveSceneState(arguments) : #Arguments are state and scene
 		char['Scenes'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Scenes'][str(arguments[1])]]
 	else :
 		char['Scenes'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
+	listcollate.RemoveStates('Scenes', arguments[1])
+	statecheck.Check()
 
 def PrintItems(arguments) :
 	global char
@@ -129,6 +133,8 @@ def AddItemState(arguments) : #Arguments are state and item
 		statecheck.auto_states['Items'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Items'][str(arguments[1])].keys()) if statecheck.HasEvaluations(adv.f['Items'][str(arguments[1])][x])]
 	if arguments[0] not in current_states :
 		current_states.append(arguments[0])
+		listcollate.AddStates('Items', arguments[1])
+		statecheck.Check()
 def RemoveItemState(arguments) : #Arguments are state and item
 	global char
 	if len(arguments) <2 : arguments.append(char['Items']['active'][0]) #If no scene is given, the given state is removed from the current scene
@@ -144,6 +150,8 @@ def RemoveItemState(arguments) : #Arguments are state and item
 		char['Items'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Items'][str(arguments[1])]]
 	else :
 		char['Items'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
+	listcollate.RemoveStates('Items', arguments[1])
+	statecheck.Check()
 
 def RemoveAbility(arguments) :
 	global char
