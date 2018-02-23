@@ -4,7 +4,7 @@ evaluators = ['ItemHasState,2,5','ItemHasState,3,5']
   [[1]]
   evaluations = {0:True} #Door is Closed
   text = "To the North is a closed door that leads to the garden."
-  wActions = [9]
+  wActions = [11] #Look through door
   [[2]]
   evaluations = {0:False} #Door is Open
   text = "To the North is an open door that leads to the garden."
@@ -15,6 +15,7 @@ evaluators = ['ItemHasState,2,5','ItemHasState,3,5']
 [5] #Door
   [[1]] #Locked
   [[2]] #Closed
+  wActions = [9]
   [[3]] #Intact Window
   text = "In the upper half of the door is a window."
 [10] #Door from garden side
@@ -22,7 +23,6 @@ evaluators = ['ItemHasState,2,5','ItemHasState,3,5']
   [[1]]
   evaluations = {0:True} #Door is Closed
   text = "To the South is a closed door that leads to the kitchen."
-  wActions = [9]
   [[2]]
   evaluations = {0:False} #Door is Open
   text = "To the North is an open door that leads to the kitchen."
@@ -30,3 +30,12 @@ evaluators = ['ItemHasState,2,5','ItemHasState,3,5']
   [[3]] #Window is broken
   evaluations = {1:False}
   text = "Scattered over the ground is a broken window that\nonce was a part of the door."
+[12] #Toaster
+evaluators = ['ItemInInventory,12,1','ItemInInventory,12,4']
+  [[1]]
+  evaluations = {0:True}  #Toaster is carried by player
+  text = "An old toaster, quite heavy. The power cord\nhas been cut off."
+  [[2]]
+  evaluations = {1:True} #Toaster is in kitchen
+  text = "There's a toaster here."
+  wActions = [12]

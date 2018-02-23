@@ -110,16 +110,21 @@ evaluators = ['ItemHasState,1,5']
   text = "The door seems to be locked."
   [[2]]
   evaluations = {0:False}
+  text = "Ok, the kitchen door is now open"
   effects = {'RemoveItemState':[2,5]} #Removes door (item 5)'s closed state (state 2)
 [10]
 commands = ('Close Door','Close')
-effects = {'AddItemState':[5,2]} #Adds closed state to the door
+text = "Ok, the kitchen door is now closed."
+effects = {'AddItemState':[2,5]} #Adds closed state to the door
 [11]
 commands = ('Look through door','look through window')
 evaluators = ['ItemHasState,3,5']
   [[1]]
-  evaluators = {0:True} #Window in door is intact
-  text = "Through the window you see the garden. At the far\nface to the window and try to look down but can't\nsee right behind the door. If you could only stick\nyour face further through."
+  evaluations = {0:True} #Window in door is intact
+  text = "Through the window you see the garden. At the far\nnorth end, there is a garden shed. You push your\nface to the window and try to look down but can't\nsee right behind the door. If you could only stick\nyour face further through."
   [[2]]
-  evaluators = {0:False} #Window in door is broken
+  evaluations = {0:False} #Window in door is broken
   text = "Because the window is no longer there, you can stick\nyour head through the hole. There's a rusty key in\nthe outside of the keyhole!"
+[12]
+commands = 'Examine Toaster'
+text = "An old toaster, quite heavy. The power cord\nhas been cut off."
