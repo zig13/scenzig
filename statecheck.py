@@ -126,9 +126,7 @@ def DetermineOutcomes(action) :
 	effects = []
 	action_data = adv.f['Actions'][str(action)]
 	all_outcomes = StripNonStates(action_data.keys())
-	try :
-		text = nonemptyprint(adv.f['Actions'][action],char)
-	except KeyError : pass #text is optional
+	text = nonemptyprint(adv.f['Actions'][action],char)
 	try :
 		effects.append(adv.f['Actions'][str(action)]['effects'])
 	except KeyError : pass #effects are optional
@@ -142,9 +140,10 @@ def DetermineOutcomes(action) :
 	else :
 		outcomes = all_outcomes
 	for outcome in outcomes :
-		try :
+		if text is False :
 			text = nonemptyprint(adv.f['Actions'][action][outcome],char)
-		except KeyError : pass #text is optional
+		else : #If the base action or a prior outcome has text
+			nonemptyprint(adv.f['Actions'][action][outcome],char)
 		try :
 			effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
 		except KeyError : pass #effects are optional
