@@ -122,6 +122,25 @@ def AddItem(arguments) : #Arguments are Item and Inventory
 		listcollate.CollateItems()
 		statecheck.Prepare('Items')
 		statecheck.Check()
+def TransferItem(arguments) : #Arguments are Item, Inventory1 and Inventory2
+	global char
+	if len(arguments) < 3 :
+		return
+	if arguments[0] in char['Inventories'].get(str(arguments[1]),default=[]) :
+		char['Inventories'][str(arguments[1])].remove(arguments[0])
+		if arguments[0] not in char['Inventories'][str(arguments[1])] :
+			try :
+				char['Inventories'][str(arguments[2])].append(arguments[0])
+			except KeyError : #If the given inventory does not exist yet this creates it
+				char['Inventories'][str(arguments[1])] = [arguments[0]]
+	if arguments[1] in char['Inventories']['active'] :
+		listcollate.DeactivateThings('Items')
+	if arguments[2] in char['Inventories']['active'] :
+		listcollate.ActivateThings('Items')
+	if (arguments[1] in char['Inventories']['active']) or (arguments[2] in char['Inventories']['active']) :
+		listcollate.CollateItems()
+		statecheck.Prepare('Items')
+		statecheck.Check()
 def AddItemState(arguments) : #Arguments are state and item
 	global char
 	try :
