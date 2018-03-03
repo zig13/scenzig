@@ -41,13 +41,16 @@ def SetScene(arguments) :
 	char['Scenes']['active'][0] = arguments[0]
 	listcollate.DeactivateThings('Scenes')
 	listcollate.ActivateThings('Scenes')
+	statecheck.Prepare('Scenes')
 	statecheck.Check()
 def RevertScene(arguments) :
 	global char
 	temp = char['Scenes']['active'][0]
 	char['Scenes']['active'][0] = char['Scenes']['previous']
 	char['Scenes']['previous'] = temp
+	listcollate.DeactivateThings('Scenes')
 	listcollate.ActivateThings('Scenes')
+	statecheck.Prepare('Scenes')
 	statecheck.Check()
 def AddSceneState(arguments) :
 	global char
@@ -102,6 +105,7 @@ def RemoveItem(arguments) : #Arguments are Item and Inventory
 		char['Inventories'][str(arguments[1])].remove(arguments[0])
 	if arguments[1] in char['Inventories']['active'] :
 		listcollate.CollateItems()
+		statecheck.Prepare('Items')
 		statecheck.Check()
 def AddItem(arguments) : #Arguments are Item and Inventory
 	global char
@@ -116,6 +120,7 @@ def AddItem(arguments) : #Arguments are Item and Inventory
 		char['Inventories'][str(arguments[1])] = [arguments[0]]
 	if arguments[1] in char['Inventories']['active'] :
 		listcollate.CollateItems()
+		statecheck.Prepare('Items')
 		statecheck.Check()
 def AddItemState(arguments) : #Arguments are state and item
 	global char
