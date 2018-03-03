@@ -9,11 +9,11 @@ commands = ('Inventory','I')
 description = 'Look at what items you are carrying'
 evaluators = ['n1']
   [[1]]
-	evaluations = {0:[1,99999]}
+	evaluations = {0:True}
 	text = "You are carrying:"
-	effects = {'PrintItems':[1]}
+	effects = {'ListInventory':[1]}
 	[[2]]
-	evaluations = {0:[0,0]}
+	evaluations = {0:False}
 	text = "You're not carrying anything."
 [3]
 commands = ('Go North','North','N')
@@ -38,10 +38,13 @@ evaluators = ['s0','s7','ItemHasState,1,5']
   text = "The door seems to be locked."
   [[7]]
   evaluations = {0:4,2:False} #If in kitchen and kitchen door is unlocked
-  effects = {'TakeAction':[9],'SetScene':[10]} #Incite the open door action and set scene to the garden
+  effects = {'RemoveItemState':[2,5],'SetScene':[10]} #Removes door (item 5)'s closed state (state 2) and sets scene to garden (scene 10)
+  [[8]]
+  evaluations = {0:10}
+  effects = {'SetScene':[11]}
 [4]
 commands = ('Go South','South','S')
-evaluators = ['s0']
+evaluators = ['s0','ItemHasState,1,5']
   [[1]]
   evaluations = {0:2}
   effects = {'SetScene':[1]}
@@ -51,6 +54,15 @@ evaluators = ['s0']
   [[3]]
   evaluations = {0:7}
   effects = {'SetScene':[1]}
+  [[4]]
+  evaluations = {0:10,1:True} #If in garden and kitchen door is locked
+  text = "The door seems to be locked."
+  [[5]]
+  evaluations = {0:10,1:True} #If in garden and kitchen door is unlocked
+  effects = {'RemoveItemState':[2,5],'SetScene':[4]} #Removes door (item 5)'s closed state (state 2) and sets scene to kitchen (scene 4)
+  [[6]]
+  evaluations = {0:11}
+  effects = {'SetScene':[10]}
 [5]
 commands = ('Go East','East','E')
 evaluators = ['s0']
@@ -118,13 +130,107 @@ text = "Ok, the kitchen door is now closed."
 effects = {'AddItemState':[2,5]} #Adds closed state to the door
 [11]
 commands = ('Look through door','look through window')
-evaluators = ['ItemHasState,3,5']
+evaluators = ['ItemHasState,8,5']
   [[1]]
   evaluations = {0:True} #Window in door is intact
   text = "Through the window you see the garden. At the far\nnorth end, there is a garden shed. You push your\nface to the window and try to look down but can't\nsee right behind the door. If you could only stick\nyour face further through."
   [[2]]
   evaluations = {0:False} #Window in door is broken
   text = "Because the window is no longer there, you can stick\nyour head through the hole. There's a rusty key in\nthe outside of the keyhole!"
+  effects = {'AddAbility':[3]}
 [12]
 commands = 'Examine Toaster'
 text = "An old toaster, quite heavy. The power cord\nhas been cut off."
+[13]
+commands = ('Unlock Door','Unlock')
+text = "Okay, the kitchen door is now unlocked."
+effects = {'RemoveItemState':[1,5]}
+evaluators = ['s0'] #Current scene
+  [[1]]
+  evalAll = {0:4} #If curent scene is kitchen...
+  effects = {'TransferItem':[6,1,6]} #transfer key from player inventory to kitchen side keyhole
+  [[2]]
+  evalAll = {0:10} #If current scene is garden..
+  effects = {'TransferItem':[6,1,7]} #transfer key from player inventory to kitchen side keyhole
+[14]
+commands = ('Lock Door','Lock')
+text = "Okay, the kitchen door is now locked."
+effects = {'AddItemState':[1,5]}
+evaluators = ['s0'] #Current scene
+  [[1]]
+  evalAll = {0:4} #If curent scene is kitchen...
+  effects = {'TransferItem':[6,1,6]} #transfer key from player inventory to kitchen side keyhole
+  [[2]]
+  evalAll = {0:10} #If current scene is garden...
+  effects = {'TransferItem':[6,1,7]} #transfer key from player inventory to kitchen side keyhole
+[15]
+commands = 'Take Key'
+text = "You remove the key from the door and put it in your pocket."
+effects = {'RemoveAbility':[3]}
+# Each action/outcome can only have one instance of each effect in it's list
+# If an action does not have evaluators, all outcomes happen
+# I can therefore have two instances of TransferItem by distributing them across two guaranteed outcomes
+  [[1]]
+  effects = {'TransferItem':[6,6,1]}
+  [[2]]
+  effects = {'TransferItem':[6,7,1]}
+[16]
+commands = "Examine Hacksaw"
+evaluators = ['ItemHasState,1,8']
+  [[1]]
+  evalAll = {0:False} #Hacksaw is not exhausted
+  text = "This is just an ordinary hacksaw. It can be used\nto saw metal objects. The saw looks a bit worn,\nbut it probably will last for one more saw job."
+  [[2]]
+  evalAll = {0:True} #Hacksaw is exhausted
+  text = "The saw is completely worn out. Whatever you are going to\ndo with it, it won't be a saw job."
+[17]
+commands = ('Pick up toaster','Pickup Toaster','Take Toaster')
+effects = {'TransferItem':[7,4,1],'RemoveAbility':[2]}
+[18]
+commands = ('Smash Window','Smash')
+evaluators = ['ItemInInventory,7,1']
+  [[1]]
+  evalAll = {0:False} #Not carrying toaster
+  text = "You smash the window with your fist, but with no\nsuccess. You need something heavy to break the\nwindow."
+  effects = {'AddAbility':[2]}
+  [[2]]
+  evalAll = {0:True} #Carrying toaster
+  text =  "You throw the toaster at the window\nand it goes straight through. The window\nis shattered all over the floor. One of the\nglass fragments is a bit larger than the rest."
+  effects = {'RemoveItemState':[8,5],'RemoveItem':[7,1],'AddItem':[9,4]}
+[19]
+commands = ('Turn Key')
+text = "Okay, the kitchen door is now unlocked."
+effects = {'RemoveItemState':[1,5],'RemoveAbility':[3]}
+[20]
+commands = ('Examine the glass fragment','Examine glass','examine fragment','examine glass fragment')
+text = "The fragment is about 5 inches long and has a sharp edge."
+[21]
+commands = ('Pick up glass fragment','Pickup glass fragment','Take glass fragment','Pick up glass','Pickup glass','Take glass','Pick up fragment','Pickup fragment','Take fragment')
+effects = {'TransferItem':[9,4,1]}
+[22]
+commands = ('Examine the carpet','Examine carpet')
+evaluators = ['ItemHasState,1,10']
+  [[1]]
+  evalAll = {0:False}
+  text = "The carpet doesn't seem very expensive. It just\nabout covers the floor. On a closer examination, it\nturns out that its sides are glued to the floor."
+  [[2]]
+  evalAll = {0:True}
+  text =  "It's just an old carpet with the edges cut off\nby a sharp object."
+[23]
+commands = ('Take up carpet','pull up carpet','pick up carpet','pickup carpet','take carpet','remove carpet','move carpet')
+evaluators = ['ItemHasState,1,10'] #Has carpet been cut?
+  [[1]]
+  evalAll = {0:False}
+  text = "The carpet won't move. On closer examination\nyou find that its edges are glued to the floor."
+  effects = {'AddAbility':[5]}
+  [[2]]
+  evalAll = {0:True}
+  text = "You grab the middle part\nof the carpet that now is no longer attached to\nthe floor and lift it. Removing the carpet\nreveals a trapdoor in the floor!."
+  effects = {'RemoveItem':[10,12],'AddItem':[11,12]} #Remove carpet and add trapdoor
+[24]
+commands = ('Cut carpet edges','cut carpet','cut edges')
+text = "You use the glass fragment to cut along the glued\nsides of the carpet."
+effects = {'AddItemState':[1,10],'RemoveAbility':[5]}
+[25]
+commands = ('Take hacksaw','Pick up hacksaw','Pickup hacksaw')
+effects = {'TransferItem':[8,11,1]}

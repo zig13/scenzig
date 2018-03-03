@@ -9,12 +9,16 @@ previous = None
 active = []
 [Inventories]
 active = [1]
-1=[]
-4=[4,5,12]
-10=[10,5]
+1=[] #Player inventory
+4=[7] #Kitchen inventory
+5=[5] #Door
+6=[] #Kitchen side keyhole
+7=[6] #Garden side keyhole
+11=[8] #Shed inventory
+12=[10] #Closet inventory
 [Items]
 active = []
-5=[1,2,3]
+5=[1,2,8]
 [Abilities]
 active = [1]
 [Attributes]
