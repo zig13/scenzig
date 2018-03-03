@@ -175,5 +175,7 @@ def CompareEval(valrange,value) :
 	elif (comparator is True) or (comparator is False) :
 		if bool(value) == comparator :
 			return True
+		else :
+			return False
 	else :
 		return False
