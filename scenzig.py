@@ -104,13 +104,19 @@ while True : #Primary loop. Below is run after an effect happens
 		else :
 			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
 			stateprintInventories = []
+			statelistInventories = []
 			for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
 				nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
 				stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
+				statelistInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('listInventories',default=[]))
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
-				statecheck.efunc.PrintItems([inventory])
+				statecheck.efunc.PrintInventory([inventory])
 			for inventory in stateprintInventories :
-				statecheck.efunc.PrintItems([inventory])
+				statecheck.efunc.PrintInventory([inventory])
+			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('listInventories',default=[]) :
+				statecheck.efunc.ListInventory([inventory])
+			for inventory in statelistInventories :
+				statecheck.efunc.ListInventory([inventory])
 			for encounter in c['Encounters']['active'] :
 				nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
 				for state in sorted(c['Encounters'][str(encounter)]) :

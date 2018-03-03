@@ -86,18 +86,27 @@ def RemoveSceneState(arguments) : #Arguments are state and scene
 	listcollate.RemoveStates('Scenes', arguments[1])
 	statecheck.Check()
 
-def PrintItems(arguments) :
+def ListInventory(arguments) :
 	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
-	if arguments[0] not in char['Inventories']['active'] : return #Non-active inventories won't be printed
 	if len(char['Inventories'][str(arguments[0])]) < 1 : return
-	for itm in char['Inventories'][str(arguments[0])] :
-		states = sorted(char['Items'][str(itm)])
+	inventory = char['Inventories'][str(arguments[0])] #Items are not sorted (new at bottom)
+	for itm in inventory :
+		states = sorted(char['Items'][str(itm)]) #States are sorted
 		printed = False
 		for state in states :
 			printed = nonemptyprint(adv.f['Items'][str(itm)][str(state)],char)
-			if printed is True : break
-		if printed is False :
+			if printed is True : break #Once
+		if printed is False : #Only if no state has text; print item's base text
 			nonemptyprint(adv.f['Items'][str(itm)],char)
+def PrintInventory(arguments) :
+	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
+	if len(char['Inventories'][str(arguments[0])]) < 1 : return
+	inventory = sorted(char['Inventories'][str(arguments[0])]) #Items are sorted
+	for itm in inventory :
+		nonemptyprint(adv.f['Items'][str(itm)],char) #Print item's base text
+		states = sorted(char['Items'][str(itm)]) #States are sorted
+		for state in states :
+			nonemptyprint(adv.f['Items'][str(itm)][str(state)],char)
 def RemoveItem(arguments) : #Arguments are Item and Inventory
 	global char
 	if len(arguments) < 2 : arguments.append(1)
