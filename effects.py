@@ -155,14 +155,18 @@ def RemoveItemState(arguments) : #Arguments are state and item
 
 def RemoveAbility(arguments) :
 	global char
-	if str(arguments[0]) in char['Abilities'].keys() :
-		del char['Abilities'][str(arguments[0])]
+	if arguments[0] in char['Abilities']['active'] :
+		char['Abilities']['active'].remove(arguments[0])
+	listcollate.DeactivateThings('Abilities')
 	statecheck.Prepare('Abilities')
-def AddAbility(arguments) : #Is also able to change the state of an existing ability
+	statecheck.Check()
+def AddAbility(arguments) :
 	global char
-	if len(arguments) < 2 : arguments.append(1) #If no state is provided use state 1
-	char['Abilities'][str(arguments[0])] = [[arguments[1]],[]]
+	if arguments[0] not in char['Abilities']['active'] :
+		char['Abilities']['active'].append(arguments[0])
+	listcollate.ActivateThings('Abilities')
 	statecheck.Prepare('Abilities')
+	statecheck.Check()
 def PrintActions(arguments) :
 	global listg
 	global adv
