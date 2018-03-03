@@ -105,11 +105,10 @@ def RemoveItem(arguments) : #Arguments are Item and Inventory
 	if arguments[1] in char['Inventories']['active'] :
 		listcollate.CollateItems()
 		statecheck.Check()
-def AddItem(arguments) : #Arguments are Item, Inventory and Item State
+def AddItem(arguments) : #Arguments are Item and Inventory
 	global char
 	if len(arguments) < 2 :
 		arguments.append(1)
-		if len(arguments) < 3 : arguments.append(1) #If no state is provided use state 1
 	try :
 		if arguments[0] not in char['Inventories'][str(arguments[1])] :
 			char['Inventories'][str(arguments[1])].append(arguments[0])
