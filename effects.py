@@ -84,8 +84,6 @@ def RemoveSceneState(arguments) : #Arguments are state and scene
 	statecheck.Check()
 
 def PrintItems(arguments) :
-	global char
-	global adv
 	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
 	if arguments[0] not in char['Inventories']['active'] : return #Non-active inventories won't be printed
 	if len(char['Inventories'][str(arguments[0])]) < 1 : return
