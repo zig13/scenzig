@@ -63,10 +63,13 @@ def StripNonStates(keys) :
 	return [ x for x in keys if x.isdigit() ]
 
 def HasEvaluations(state) :
-	try :
-		state['evaluations']
+	if state.get('evalAll',default=False) :
 		return True
-	except KeyError :
+	elif state.get('evalAny',default=False) :
+		return True
+	elif state.get('evaluations',default=False) :
+		return True
+	else :
 		return False
 
 #The 'Check' functions are the meat of the statecheck script. Every iteration of the primary loop each potential state with evaluations is evaluated and a new list of states is generated. Any changes are noted and may trigger effects.
@@ -154,11 +157,19 @@ def DetermineOutcomes(action) :
 	return [text,effects]
 
 def TestState(statedata,evaluators) :
-	verdict = False
+	verdict = 0
+	for test in statedata.get('evalAny',default={}).keys() :
+		verdict = CompareEval(statedata['evalAny'][test],evaluators[test])
+		if verdict : break #As soon as an eval is True, stop checking
+	if verdict is False : return False
+	for test in statedata.get('evalAll',default={}).keys() :
+		verdict = CompareEval(statedata['evalAll'][test],evaluators[test])
+		if not verdict : break  #As soon as an eval is False, stop checking
+	if verdict is False : return False
 	for test in statedata.get('evaluations',default={}).keys() :
 		verdict = CompareEval(statedata['evaluations'][test],evaluators[test])
-		if not verdict : break
-	return verdict
+		if not verdict : break  #As soon as an eval is False, stop checking
+	return bool(verdict)
 
 def CompareEval(valrange,value) :
 	try :
