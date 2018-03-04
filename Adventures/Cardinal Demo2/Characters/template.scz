@@ -1,0 +1,21 @@
+Chapter = 0
+Beats = 0
+[Scenes]
+active = [5]
+previous = None
+[Encounters]
+active = []
+[Inventories]
+active = []
+[Items]
+active = []
+[Abilities]
+active = [1] #This ability whitelists the N, E, S & W actions
+[Attributes]
+vital = []
+active = []
+[AttributeVals]
+[Currencies]
+[Echoes]
+[EchoCats]
+1 = []
