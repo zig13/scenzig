@@ -16,14 +16,25 @@ from configobj import ConfigObj
 class Adventure :
 	datafiles = ['abilities', 'actions', 'attributes', 'encounters', 'items', 'labels', 'scenes']
 	def __init__(self, foldername) :
+		self.foldername = foldername
 		self.directory = curdir+sep+"Adventures"+sep+foldername+sep
+		self.f = {}
 	def validate(self) :
 		for datafile in self.datafiles :
 			if not access(self.directory+datafile+".scnz", R_OK) : return False
 		return True
 	def load(self) :
-		self.f = dict((datafile.title(), ConfigObj(self.directory+datafile+".scnz", unrepr=True)) for datafile in self.datafiles) #Opens each data file up for reading referenced as an entry in the dictionary 'f'
 		for datafile in self.datafiles :
+			try :
+				data = {datafile.title(): ConfigObj(self.directory+datafile+".scnz", unrepr=True)}
+			except SyntaxError as e :
+				print "Problems found with the",datafile,"file of",self.foldername
+				errorlines = []
+				for error in e.errors :
+					errorlines.append(error.line_number)
+				print "Check the following lines:", errorlines
+				return False
+			self.f.update(data)
 			try:
 				self.f[datafile.title()]['0'] #Checks that a section exists in each data file entitled 0
 			except:
