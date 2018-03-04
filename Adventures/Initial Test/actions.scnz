@@ -14,7 +14,7 @@ evaluators = ['n1'] #n1 equals the number of items in inventory 1
 	[[1]]
 	evaluations = {0:True} #Any non-zero number of items will equate to True and validate this outcome
 	text = "You are carrying:"
-	effects = {'PrintItems':[1]}
+	effects = {'ListInventory':[1]}
 	[[2]]
 	evaluations = {0:0} #This outcome will occur only if n1 returns 0
 	text = "You're not carrying anything."
