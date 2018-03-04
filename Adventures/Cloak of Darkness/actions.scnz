@@ -33,7 +33,7 @@ evaluators = ['n2']
 	[[1]]
 	evaluations = {0:[1,99999]}
 	text = "You are carrying:"
-	effects = {'PrintItems':[2]}
+	effects = {'ListInventory':[2]}
 	[[2]]
 	evaluations = {0:[0,0]}
 	text = "You're not carrying anything."
@@ -141,7 +141,7 @@ evaluators = ['n1']
 	[[1]]
 	evaluations = {0:[1,99999]}
 	text = "You are wearing:"
-	effects = {'PrintItems':[1]}
+	effects = {'ListInventory':[1]}
 	[[2]]
 	evaluations = {0:[0,0]}
 	text = "You're not wearing anything of note."
