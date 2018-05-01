@@ -1,4 +1,4 @@
-The scenzig Adventure "Cardinal Demo1" is released into the public domain.
+The scenzig Adventure "Maze" is released into the public domain.
 
 A scenzig Adventure consists of the files abilities.scnz, actions.scnz,
 attributes.scnz, encounters.scnz, items.scnz, labels.scnz and scenes.scnz

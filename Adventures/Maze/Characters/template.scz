@@ -1,13 +1,16 @@
 Chapter = 0
 Beats = 0
 [Scenes]
-active = [5]
+active = [101]
 previous = None
 [Encounters]
 active = []
 [Inventories]
-active = []
+active = [101]
+#101 = [1,2,3,4]
+101 = []
 [Items]
+#active = [1,2,3,4]
 active = []
 [Abilities]
 active = [1] #This ability whitelists the N, E, S & W actions

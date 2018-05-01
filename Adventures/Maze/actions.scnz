@@ -1,0 +1,41 @@
+#In this version of the Cardinal Directions demo we lookup the current scene, transform it with maths,
+#and use it as the argument for the effect
+[0]
+[101]
+commands = ['Enter the Maze','Enter','Enter Maze','South','S','Go South']
+effects = {'SetScene':[15]}
+[1]
+commands = ['Go North', 'North', 'N']
+effects = {'SetScene':['s0-10']}
+[2]
+commands = ['Go East', 'East', 'E']
+effects = {'SetScene':['s0+1']}
+[3]
+commands = ['Go South', 'South', 'S']
+effects = {'SetScene':['s0+10']}
+[4]
+commands = ['Go West', 'West', 'W']
+effects = {'SetScene':['s0-1']}
+[5]
+commands = ['Inventory','I']
+description = 'Look at what items you are carrying'
+evaluators = ['n101'] #n1 equals the number of items in inventory 1
+	[[1]]
+	evaluations = {0:True} #Any non-zero number of items will equate to True and validate this outcome
+	text = "Inside your bag you have:"
+	effects = {'ListInventory':[101]}
+	[[2]]
+	evaluations = {0:0} #This outcome will occur only if n1 returns 0
+	text = "Your bag is empty."
+[6]
+commands = ['Help','H']
+description = 'Display available actions'
+text = "Available actions:"
+effects = {'PrintActions':[]}
+[7]
+commands = 'Back'
+text = 'You go back from whence you came'
+effects = {'RevertScene':[]}
+[8]
+commands = ['Exit','Leave','Exit Maze','Leave Maze','Escape']
+effects = {'SetScene':[106]}
