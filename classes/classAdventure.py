@@ -33,6 +33,7 @@ class Adventure :
 				for error in e.errors :
 					errorlines.append(error.line_number)
 				print "Check the following lines:", errorlines
+				raw_input("\nPress enter to return to Adventure selection")
 				return False
 			self.f.update(data)
 			try:
