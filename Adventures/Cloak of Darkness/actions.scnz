@@ -51,7 +51,7 @@ evaluators = []
 	effects = {'SetScene':[2]}
 	duration = 10
 [8]
-commands = ['Go North','East']
+commands = ['Go East','East']
 evaluators = []
 	[[1]]
 	evaluations = {}
