@@ -28,7 +28,7 @@ def a(id) :
 	if char is None:
 		print "Character data not available"
 		return 0
-	if str(id) in attributes.keys() :
+	if str(id) in attributes :
 		return attributes[str(id)]
 	else : #If the character does not have an attribute of the given ID, it is taken to be 0.
 		return 0
@@ -37,7 +37,7 @@ def c(id) :
 	if char is None:
 		print "Character data not available"
 		return 0
-	if str(id) in char['Currencies'].keys() :
+	if str(id) in char['Currencies'] :
 		return char['Currencies'][str(id)]
 	else : #If the character does not have a currency of the given ID, it is taken to be 0.
 		return 0
@@ -46,7 +46,7 @@ def i(id) : #i will return the active inventory the item is present in else 0
 	if char is None:
 		print "Character data not available"
 		return 0
-	inventories = [x for x in char['Inventories'].keys() if x.isdigit()]
+	inventories = [x for x in char['Inventories'] if x.isdigit()]
 	for inventory in inventories :
 		if id in char['Inventories'][inventory] :
 			return int(inventory)

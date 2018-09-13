@@ -56,8 +56,8 @@ def Prepare(aspect) :
 		UpdateAutoList(aspect, thing)
 
 def UpdateAutoList(aspect, thing) :
-	if str(thing) not in auto_states[aspect].keys() : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
-		auto_states[aspect][str(thing)] = [int(x) for x in StripNonStates(adv.f[aspect][str(thing)].keys()) if HasEvaluations(adv.f[aspect][str(thing)][x])]
+	if str(thing) not in auto_states[aspect] : #Creates a dictionary that lists the states that have evaluations for each Scene encountered
+		auto_states[aspect][str(thing)] = [int(x) for x in StripNonStates(adv.f[aspect][str(thing)]) if HasEvaluations(adv.f[aspect][str(thing)][x])]
 
 def StripNonStates(keys) :
 	return [ x for x in keys if x.isdigit() ]
@@ -77,10 +77,10 @@ def Check(remit="All") :
 	global char
 	global scene
 	if remit is "All" :
-		aspects = aspect_lists.keys()
+		aspects = list(aspect_lists)
 	else :
 		aspects = [remit]
-		if remit not in aspect_lists.keys() : #If the aspect has not yet been prepared. This should only happen during setup
+		if remit not in aspect_lists : #If the aspect has not yet been prepared. This should only happen during setup
 			Prepare(remit)
 	for aspect in aspects :
 		for thing in aspect_lists[aspect] :
@@ -113,7 +113,7 @@ def Check(remit="All") :
 				except KeyError : pass #enter text is optional
 			if states_removed or states_added :
 				char[aspect][str(thing)] = new_states
-			for effect in effects.keys() :
+			for effect in effects :
 				arguments = argsolve.Solve(effects[effect])
 				eval("efunc."+effect+"(arguments)")
 			if states_removed :
@@ -128,7 +128,7 @@ def DetermineOutcomes(action) :
 	text = False
 	effects = []
 	action_data = adv.f['Actions'][str(action)]
-	all_outcomes = StripNonStates(action_data.keys())
+	all_outcomes = StripNonStates(action_data)
 	text = nonemptyprint(adv.f['Actions'][action],char)
 	try :
 		effects.append(adv.f['Actions'][str(action)]['effects'])
@@ -158,15 +158,15 @@ def DetermineOutcomes(action) :
 
 def TestState(statedata,evaluators) :
 	verdict = 0
-	for test in statedata.get('evalAny',default={}).keys() :
+	for test in statedata.get('evalAny',default={}) :
 		verdict = CompareEval(statedata['evalAny'][test],evaluators[test])
 		if verdict : break #As soon as an eval is True, stop checking
 	if verdict is False : return False
-	for test in statedata.get('evalAll',default={}).keys() :
+	for test in statedata.get('evalAll',default={}) :
 		verdict = CompareEval(statedata['evalAll'][test],evaluators[test])
 		if not verdict : break  #As soon as an eval is False, stop checking
 	if verdict is False : return False
-	for test in statedata.get('evaluations',default={}).keys() :
+	for test in statedata.get('evaluations',default={}) :
 		verdict = CompareEval(statedata['evaluations'][test],evaluators[test])
 		if not verdict : break  #As soon as an eval is False, stop checking
 	return bool(verdict)

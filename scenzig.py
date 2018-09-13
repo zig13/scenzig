@@ -143,7 +143,7 @@ while True : #Primary loop. Below is run after an effect happens
 						actdict[command.lower()] = actn #Makes a record in actdict for each command the action has
 				except KeyError : #If a whitelisted action has no commands or does not exist at all
 					missing_actions.append(actn) #Echoing actions and others using the actionstack avoid verification as they are reffered to by UID and ∴ don't need commands
-			if prompt in actdict.keys() :
+			if prompt in actdict :
 				action = str(actdict[prompt]) #If the input matches the command of a valid action then take note of it's UID
 			Clr()
 		for missing in missing_actions :
@@ -153,7 +153,7 @@ while True : #Primary loop. Below is run after an effect happens
 			text = results[0]
 			effects = results[1]
 			for outcome in effects :
-				for effect in outcome.keys() :
+				for effect in outcome :
 					arguments = argsolve.Solve(outcome[effect])
 					eval("statecheck.efunc."+effect+"(arguments)")
 			if text : #If text is True (i.e. nonemptyprint found text)

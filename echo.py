@@ -48,7 +48,7 @@ def Stop(category) :
 
 def Age(beats) :
 	actions = []
-	for echo in echoes.keys() :
+	for echo in echoes.copy() :
 		echoes[echo]['elapsed'] += beats
 		activations = echoes[echo]['elapsed']/echoes[echo]['interval']
 		while activations >= 1 :
