@@ -28,12 +28,12 @@ class Adventure :
 			try :
 				data = {datafile.title(): ConfigObj(self.directory+datafile+".scnz", unrepr=True)}
 			except SyntaxError as e :
-				print "Problems found with the",datafile,"file of",self.foldername
+				print("Problems found with the",datafile,"file of",self.foldername)
 				errorlines = []
 				for error in e.errors :
 					errorlines.append(error.line_number)
-				print "Check the following lines:", errorlines
-				raw_input("\nPress enter to return to Adventure selection")
+				print("Check the following lines:", errorlines)
+				input("\nPress enter to return to Adventure selection")
 				return False
 			self.f.update(data)
 			try:
@@ -43,7 +43,7 @@ class Adventure :
 		try :
 			splash = open(self.directory+"splash.txt", "r")
 		except IOError :
-			print self.directory+"splash.txt"
+			print(self.directory+"splash.txt")
 			return True
 		try :
 			duration = int(splash.readline()[30:])
@@ -51,7 +51,7 @@ class Adventure :
 			return True
 		line = splash.readline()
 		while line :
-			print line
+			print(line)
 			line = splash.readline()
 		sleep(duration)
 		return True

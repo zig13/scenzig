@@ -26,7 +26,7 @@ def a(id) :
 	global char
 	attributes = listcollate.attributes
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if str(id) in attributes :
 		return attributes[str(id)]
@@ -35,7 +35,7 @@ def a(id) :
 def c(id) :
 	global char
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if str(id) in char['Currencies'] :
 		return char['Currencies'][str(id)]
@@ -44,7 +44,7 @@ def c(id) :
 def i(id) : #i will return the active inventory the item is present in else 0
 	global char
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	inventories = [x for x in char['Inventories'] if x.isdigit()]
 	for inventory in inventories :
@@ -54,7 +54,7 @@ def i(id) : #i will return the active inventory the item is present in else 0
 def t(id) : #t will return the (first) state of the item with the given id
 	global char
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	try :
 		return sorted(char['Items'][str(id)])[0]
@@ -63,7 +63,7 @@ def t(id) : #t will return the (first) state of the item with the given id
 def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
 	global char
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if id is 0 :
 		return char['Scenes']['active'][0]
@@ -74,7 +74,7 @@ def s(id) : #s has two functions. If passed 0 it will return the current scene e
 			return 0
 def n(id) : #Returns length of given Inventory
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	try :
 		return len(char['Inventories'][str(id)])
@@ -82,7 +82,7 @@ def n(id) : #Returns length of given Inventory
 		return 0
 def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 if not label is assigned
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	try :
 		return char['Labels'][str(id)][0]
@@ -91,10 +91,10 @@ def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 
 
 def SceneHasState(arguments) :
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0 #False
 	if len(arguments) < 2 :
-		print "SceneHasState requires two arguments; State and Scene.\nExample:SceneHasState,1,2"
+		print("SceneHasState requires two arguments; State and Scene.\nExample:SceneHasState,1,2")
 		return 0 #False
 	try :
 		if int(arguments[0]) in char['Scenes'][arguments[1]] :
@@ -105,7 +105,7 @@ def SceneHasState(arguments) :
 		return 0 #False
 def ItemIsActive(arguments) :
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if int(arguments[0]) in char['Items']['active'] :
 		return 1
@@ -113,10 +113,10 @@ def ItemIsActive(arguments) :
 		return 0
 def ItemInInventory(arguments) : #Does not care if the inventory is active or not
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0 #False
 	if len(arguments) < 2 :
-		print "ItemInInventory requires two arguments; Item and Inventory.\nExample:ItemInInventory,1,6"
+		print("ItemInInventory requires two arguments; Item and Inventory.\nExample:ItemInInventory,1,6")
 		return 0 #False
 	try :
 		if int(arguments[0]) in char['Inventories'][arguments[1]] :
@@ -125,10 +125,10 @@ def ItemInInventory(arguments) : #Does not care if the inventory is active or no
 	return 0
 def ItemHasState(arguments) :
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if len(arguments) < 2 :
-		print "ItemHasState requires two arguments; State and Item.\nExample:ItemHasState,1,4"
+		print("ItemHasState requires two arguments; State and Item.\nExample:ItemHasState,1,4")
 		return 0 #False
 	try :
 		if int(arguments[0]) in char['Items'][arguments[1]] :
@@ -137,7 +137,7 @@ def ItemHasState(arguments) :
 	return 0
 def SlotIsActive(arguments) : #Returns 1 if slot is empty or full otherwise 0
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	active = char['Slots']['full'] + char['Slots']['empty']
 	if int(arguments[0]) in active :
@@ -146,7 +146,7 @@ def SlotIsActive(arguments) : #Returns 1 if slot is empty or full otherwise 0
 		return 0
 def SlotIsFull(arguments) : #Returns 1 if slot is full otherwise 0
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if int(arguments[0]) in char['Slots']['full'] :
 		return 1
@@ -154,7 +154,7 @@ def SlotIsFull(arguments) : #Returns 1 if slot is full otherwise 0
 		return 0
 def SlotIsEmpty(arguments) : #Returns 1 if slot is empty otherwise 0
 	if char is None:
-		print "Character data not available"
+		print("Character data not available")
 		return 0
 	if int(arguments[0]) in char['Slots']['empty'] :
 		return 1
@@ -177,26 +177,26 @@ def Solve(arg) :
 			try :
 				arguments = csv[1:]
 			except IndexError :
-				print "The function needs to be followed by it's arguments followed by commas e.g SceneHasStatus,3,6"
+				print("The function needs to be followed by it's arguments followed by commas e.g SceneHasStatus,3,6")
 				return 0
 			try :
 				return eval(funct+"("+str(arguments)+")")
 			except NameError :
-				print '"'+funct+'"'+"is not valid"
+				print('"'+funct+'"'+"is not valid")
 				return 0
 		try :
 			return eval(arg[0]+"("+arg[1:]+")") #Calls d, a, v, i or c with the rest of the argument as sides or id
 		except TypeError: #This will occur is the input is something like 8/2. The code attempts to call 8 as a function which fails because it is an integer
-			print "Sorry. The only operators I recognise at the moment are + (add), - (minus) and x (multiply)"
+			print("Sorry. The only operators I recognise at the moment are + (add), - (minus) and x (multiply)")
 			return 0
 		except NameError: #This will occur is the input is something like bert or b20
-			print "The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) s0 (current scene) and s# (gives state of given scene).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c."
+			print("The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) s0 (current scene) and s# (gives state of given scene).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c.")
 			return 0
 		except SyntaxError:
-			print "Only integers can follow d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) and s (gives state of given scene)."
+			print("Only integers can follow d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) and s (gives state of given scene).")
 			return 0
 	elif optotal == 1 :
-		oprtr = {vr: ky for ky, vr in opcounts.iteritems()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
+		oprtr = {vr: ky for ky, vr in opcounts.items()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
 		tup = arg.partition(oprtr) #Creates a tuple that will look something like 'd8', '+', '4'
 		operandA = Solve(tup[0])
 		operandB = Solve(tup[2])
@@ -212,10 +212,10 @@ def Solve(arg) :
 			oprtr = tup[0][-1] #From the example above cuts out just +
 			operandB = Solve(tup[2][:-1]) #From the example above cuts out just d6x2
 		else : #This should only happen if someone has put in something like (d8+4)x(2)
-			print "Please don't use brackets unnecessarily"
+			print("Please don't use brackets unnecessarily")
 			return 0
 	else : #This will occur if the input is something like (d8+4)x(2+d4) or ((d8+4)x2)-d10
-		print "Sorry I can't deal with nested brackets at the moment :("
+		print("Sorry I can't deal with nested brackets at the moment :(")
 		return 0
 	if oprtr is '+': return Solve(operandA)+Solve(operandB)
 	elif oprtr is '-': return Solve(operandA)-Solve(operandB)
@@ -226,7 +226,7 @@ def Solve(arg) :
 	elif oprtr is '%': return (operandA*operandB)/100 #Returns operandA % of operandB
 
 if __name__ == "__main__":
-	print "I can roll dice for you!"
+	print("I can roll dice for you!")
 	while True:
-		prompt = str(raw_input(">"))
-		if prompt is not "" : print Solve(prompt)
+		prompt = str(input(">"))
+		if prompt is not "" : print(Solve(prompt))

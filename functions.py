@@ -20,12 +20,12 @@ def Clr() :
 	elif (name == 'nt') or (name == 'ce') or (name == 'dos') : #If OS is Windows
 		system('cls') #Executes the shell command 'cls' which clears the terminal in Windows
 	else :
-		print "\n" * 10
+		print("\n" * 10)
 
 def yesno() :
 	output = None
 	while output == None :
-		input = raw_input(">")
+		input = input(">")
 		Clr()
 		if input.isdigit() :
 			output = bool(input)
@@ -36,9 +36,9 @@ def yesno() :
 			elif (input == 'n') or (input == 'no') or (input == 'nah') or (input == 'nein') or (input == 'nope') or (input == 'negative') :
 				output = False
 			else :
-				print "Input not recognised"
+				print("Input not recognised")
 		else :
-			print "Input not recognised"
+			print("Input not recognised")
 	return output
 
 def choicelist(inlist, custom=False) :
@@ -48,18 +48,18 @@ def choicelist(inlist, custom=False) :
 	printout = '\n'.join(outlist)
 	while True :
 		if custom == False:
-			print "Please enter a number corresponding to an option below:\n", printout
-		else : print custom+"\n", printout
+			print("Please enter a number corresponding to an option below:\n", printout)
+		else : print(custom+"\n", printout)
 		try :
-			input = raw_input(">")
+			input = input(">")
 			Clr()
 			input = int(input)
 			return [input,inlist[input-1]]
 			break
 		except ValueError :
-			print "Input must be a whole number.\n"
+			print("Input must be a whole number.\n")
 		except IndexError :
-			print "Input is outside of range of options.\n"
+			print("Input is outside of range of options.\n")
 
 def dupremove(seq) :
    seen = {}
@@ -75,13 +75,13 @@ def valremove(seq,val) :
 		return [x for x in seq if x != val]
 
 def replace_all(text, dic):
-    for k, l in dic.iteritems():
+    for k, l in dic.items():
         text = text.replace(k, l)
     return text
 
 def get_valid_filename(filename):
 	validFilenameChars = "-_.() %s%s" % (ascii_letters, digits)
-	cleanedFilename = normalize('NFKD', unicode(filename, errors='ignore')).encode('ASCII', 'ignore')
+	cleanedFilename = normalize('NFKD', str(filename, errors='ignore')).encode('ASCII', 'ignore')
 	return ''.join(c for c in cleanedFilename if c in validFilenameChars).strip().replace(' ', '_')
 
 def nonemptyprint(thing,char,field='text'):
@@ -94,11 +94,11 @@ def nonemptyprint(thing,char,field='text'):
 		try :
 			labeltotal = int(labeltotal)
 		except ValueError:
-			print text
+			print(text)
 			return True
 		labels = eval(text[7:8+2*labeltotal])
 		text = text[8+(2*labeltotal):]
 		for label in labels :
 			text = text.replace("lab"+str(label),char['Labels'][str(label)][1])
-	print text
+	print(text)
 	return True

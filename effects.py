@@ -59,7 +59,7 @@ def AddSceneState(arguments) :
 		current_states = char['Scenes'][str(arguments[1])]
 	except KeyError :
 		if str(arguments[1]) not in adv.f['Scenes'] : #If scene does not exist
-			print "Scene",str(arguments[1]),"does not exist"
+			print("Scene",str(arguments[1]),"does not exist")
 			return
 		char['Scenes'][str(arguments[1])] = []
 		current_states = char['Scenes'][str(arguments[1])]
@@ -156,7 +156,7 @@ def AddItemState(arguments) : #Arguments are state and item
 		current_states = char['Items'][str(arguments[1])]
 	except KeyError :
 		if str(arguments[1]) not in adv.f['Items'] : #If item does not exist
-			print "Item",str(arguments[1]),"does not exist"
+			print("Item",str(arguments[1]),"does not exist")
 			return
 		char['Items'][str(arguments[1])] = []
 		current_states = char['Items'][str(arguments[1])]
@@ -211,7 +211,7 @@ def PrintActions(arguments) :
 			description = "- "+adv.f['Actions'][str(action)]['description']
 		except (KeyError, TypeError) : #Having a description is entirely optional so we don't care if we fail to find or it is not a string
 			description = ""
-		print command+description #If the action has a description, this will print e.g. "North - Travel North" else just "North "
+		print(command+description) #If the action has a description, this will print e.g. "North - Travel North" else just "North "
 def PrintAttributes(arguments) :
 	global char
 	global adv
@@ -270,7 +270,7 @@ def SetLabel(arguments) : #Arguments are the class id and the id of the label to
 	try :
 		description = adv.f['Labels'][str(arguments[0])][str(arguments[1])]['description']
 	except KeyError :
-		print "Label to be assigned to the character does not exist"
+		print("Label to be assigned to the character does not exist")
 		raise
 	char['Labels'][str(arguments[0])] = [arguments[1],description]
 def RemoveLabel(arguments) :
