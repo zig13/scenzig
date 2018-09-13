@@ -129,13 +129,13 @@ def DetermineOutcomes(action) :
 	effects = []
 	action_data = adv.f['Actions'][str(action)]
 	all_outcomes = StripNonStates(action_data)
-	text = nonemptyprint(adv.f['Actions'][action],char)
+	text = nonemptyprint(action_data,char)
 	try :
-		effects.append(adv.f['Actions'][str(action)]['effects'])
+		effects.append(action_data['effects'])
 	except KeyError : pass #effects are optional
 	try :
-		char['Beats'] += adv.f['Actions'][action]['duration']
-		efunc.actionstack.extend(efunc.echo.Age(adv.f['Actions'][action]['duration']))
+		char['Beats'] += action_data['duration']
+		efunc.actionstack.extend(efunc.echo.Age(action_data['duration']))
 	except KeyError : pass #duration is optional
 	evaluators = [argsolve.Solve(each) for each in action_data.get('evaluators',default=[])] #Returns an empty list if there are no evaluators
 	if evaluators : #A non-empty list is 'True' and an empty list is 'False'
@@ -144,15 +144,15 @@ def DetermineOutcomes(action) :
 		outcomes = all_outcomes
 	for outcome in outcomes :
 		if text is False :
-			text = nonemptyprint(adv.f['Actions'][action][outcome],char)
+			text = nonemptyprint(action_data[outcome],char)
 		else : #If the base action or a prior outcome has text
-			nonemptyprint(adv.f['Actions'][action][outcome],char)
+			nonemptyprint(action_data[outcome],char)
 		try :
-			effects.append(adv.f['Actions'][str(action)][outcome]['effects'])
+			effects.append(action_data[outcome]['effects'])
 		except KeyError : pass #effects are optional
 		try :
-			char['Beats'] += adv.f['Actions'][action][outcome]['duration']
-			efunc.actionstack.extend(efunc.echo.Age(adv.f['Actions'][action][outcome]['duration']))
+			char['Beats'] += action_data[outcome]['duration']
+			efunc.actionstack.extend(efunc.echo.Age(action_data[outcome]['duration']))
 		except KeyError : pass #duration is optional
 	return [text,effects]
 

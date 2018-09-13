@@ -25,15 +25,15 @@ def Clr() :
 def yesno() :
 	output = None
 	while output == None :
-		input = input(">")
+		prompt = input(">")
 		Clr()
-		if input.isdigit() :
+		if prompt.isdigit() :
 			output = bool(input)
-		elif input.isalpha() :
-			input = input.lower()
-			if (input == 'y') or (input == 'yes') or (input == 'sure') or (input == 'ja') or (input == 'ok') or (input == 'affirmitive') :
+		elif prompt.isalpha() :
+			prompt = prompt.lower()
+			if (prompt == 'y') or (prompt == 'yes') or (prompt == 'sure') or (prompt == 'ja') or (prompt == 'ok') or (prompt == 'affirmitive') :
 				output = True
-			elif (input == 'n') or (input == 'no') or (input == 'nah') or (input == 'nein') or (input == 'nope') or (input == 'negative') :
+			elif (prompt == 'n') or (prompt == 'no') or (prompt == 'nah') or (prompt == 'nein') or (prompt == 'nope') or (prompt == 'negative') :
 				output = False
 			else :
 				print("Input not recognised")
@@ -48,13 +48,13 @@ def choicelist(inlist, custom=False) :
 	printout = '\n'.join(outlist)
 	while True :
 		if custom == False:
-			print("Please enter a number corresponding to an option below:\n", printout)
-		else : print(custom+"\n", printout)
+			print("Please enter a number corresponding to an option below:\n", printout, sep="")
+		else : print(custom+"\n", printout, sep="")
 		try :
-			input = input(">")
+			prompt = input(">")
 			Clr()
-			input = int(input)
-			return [input,inlist[input-1]]
+			prompt = int(prompt)
+			return [prompt,inlist[prompt-1]]
 			break
 		except ValueError :
 			print("Input must be a whole number.\n")
@@ -80,8 +80,8 @@ def replace_all(text, dic):
     return text
 
 def get_valid_filename(filename):
-	validFilenameChars = "-_.() %s%s" % (ascii_letters, digits)
-	cleanedFilename = normalize('NFKD', str(filename, errors='ignore')).encode('ASCII', 'ignore')
+	validFilenameChars = "-_() %s%s" % (ascii_letters, digits)
+	cleanedFilename = normalize('NFKD', filename)
 	return ''.join(c for c in cleanedFilename if c in validFilenameChars).strip().replace(' ', '_')
 
 def nonemptyprint(thing,char,field='text'):

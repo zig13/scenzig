@@ -31,7 +31,7 @@ elif len(adventures) == 1 :
 		input("No valid adventures installed.")
 		exit(0)
 else :
-	temptext = "Please enter a number corresponding to the adventure you wish to load:\n"
+	temptext = "Please enter a number corresponding to the adventure you wish to load:"
 	while True :
 		a = adv[choicelist(adventures, temptext)[1]]
 		if a.load() == False :
@@ -99,7 +99,7 @@ while True : #Primary loop. Below is run after an effect happens
 	statecheck.efunc.GiveList(glist)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		if statecheck.efunc.actionstack :
-			action = statecheck.efunc.actionstack.pop()
+			action = int(statecheck.efunc.actionstack.pop())
 			prompt = action
 		else :
 			nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])],c) #Scene description will be printed if there is one
@@ -130,7 +130,7 @@ while True : #Primary loop. Below is run after an effect happens
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
 			if prompt in glist :
-				action = str(prompt) #If the input matches the UID of a valid action then take note of it's UID
+				action = prompt #If the input matches the UID of a valid action then take note of it's UID
 			elif action : pass #If action is not 0 (and therefore has been set already)
 		except ValueError : #Effectively 'if input isn't a whole number'
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
@@ -144,7 +144,7 @@ while True : #Primary loop. Below is run after an effect happens
 				except KeyError : #If a whitelisted action has no commands or does not exist at all
 					missing_actions.append(actn) #Echoing actions and others using the actionstack avoid verification as they are reffered to by UID and ∴ don't need commands
 			if prompt in actdict :
-				action = str(actdict[prompt]) #If the input matches the command of a valid action then take note of it's UID
+				action = actdict[prompt] #If the input matches the command of a valid action then take note of it's UID
 			Clr()
 		for missing in missing_actions :
 			print("Action ID %s is whitelisted but does not exist in actions.scnz"%(str(missing)))
