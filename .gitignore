@@ -64,3 +64,4 @@ target/
 *.db
 *.html#
 *.stackdump
+.vscode/
