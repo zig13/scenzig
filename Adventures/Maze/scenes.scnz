@@ -8,283 +8,458 @@ wActions = [101] #The Enter The Maze action
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,2,4]
+wInventories = [1]
+printInventories = [1]
 [3]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [3]
+printInventories = [3]
 [4]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [4]
+printInventories = [4]
 [6]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [6]
+printInventories = [6]
 [7]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [7]
+printInventories = [7]
 [8]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [8]
+printInventories = [8]
 [9]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [9]
+printInventories = [9]
 [10]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,4]
+wInventories = [10]
+printInventories = [10]
 [11]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
+wInventories = [11]
+printInventories = [11]
 bActions = [3,4]
 [12]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\n"
 bActions = [1,2]
+wInventories = [12]
+printInventories = [12]
 [14]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [14]
+printInventories = [14]
 [15]
 text = "To the North is the maze entrance.\nThe East is open.\nThe South is open.\nThe West is Open."
+wInventories = [15]
+printInventories = [15]
 [16]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [16]
+printInventories = [16]
 [18]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [18]
+printInventories = [18]
 [19]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Open."
+wInventories = [19]
+printInventories = [19]
 [20]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
+wInventories = [20]
+printInventories = [20]
 bActions = [2,3]
 [21]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [21]
+printInventories = [21]
 [22]
 text = "The North is Open.\nThe East is Blocked.\nThe South is Open.\nThe West is Open."
 bActions = [2]
+wInventories = [22]
+printInventories = [22]
 [24]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [24]
+printInventories = [24]
 [25]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [25]
+printInventories = [25]
 [26]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [26]
+printInventories = [26]
 [27]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,3]
+wInventories = [27]
+printInventories = [27]
 [28]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [28]
+printInventories = [28]
 [29]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Open."
+wInventories = [29]
+printInventories = [29]
 [30]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [30]
+printInventories = [30]
 [31]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,4]
+wInventories = [31]
+printInventories = [31]
 [32]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [32]
+printInventories = [32]
 [33]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [33]
+printInventories = [33]
 [34]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [34]
+printInventories = [34]
 [35]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Open."
 bActions = [1]
+wInventories = [35]
+printInventories = [35]
 [36]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [36]
+printInventories = [36]
 [37]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [37]
+printInventories = [37]
 [38]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [38]
+printInventories = [38]
 [39]
 text = "Dead End!"
 wActions = [7]
 bActions = [2,3,4]
+wInventories = [39]
+printInventories = [39]
 [40]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [40]
+printInventories = [40]
 [41]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [4]
+wInventories = [41]
+printInventories = [41]
 [42]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Open."
+wInventories = [42]
+printInventories = [42]
 [43]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [3]
+wInventories = [43]
+printInventories = [43]
 [44]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [44]
+printInventories = [44]
 [45]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [45]
+printInventories = [45]
 [46]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [46]
+printInventories = [46]
 [47]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [47]
+printInventories = [47]
 [48]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [4]
+wInventories = [48]
+printInventories = [48]
 [49]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [49]
+printInventories = [49]
 [50]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [50]
+printInventories = [50]
 [51]
 text = "Dead End!"
 wActions = [7]
 bActions = [2,3,4]
+wInventories = [51]
+printInventories = [51]
 [52]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [52]
+printInventories = [52]
 [53]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,3]
+wInventories = [53]
+printInventories = [53]
 [54]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [54]
+printInventories = [54]
 [55]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [55]
+printInventories = [55]
 [56]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [56]
+printInventories = [56]
 [57]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [57]
+printInventories = [57]
 [58]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [4]
+wInventories = [58]
+printInventories = [58]
 [59]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Open."
 bActions = [1]
+wInventories = [59]
+printInventories = [59]
 [60]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,3]
+wInventories = [60]
+printInventories = [60]
 [61]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [61]
+printInventories = [61]
 [62]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [62]
+printInventories = [62]
 [63]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [63]
+printInventories = [63]
 [64]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [3]
+wInventories = [64]
+printInventories = [64]
 [65]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,3]
+wInventories = [65]
+printInventories = [65]
 [67]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [67]
+printInventories = [67]
 [68]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [68]
+printInventories = [68]
 [69]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [69]
+printInventories = [69]
 [71]
 text = "The North is Open.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [4]
+wInventories = [71]
+printInventories = [71]
 [72]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [72]
+printInventories = [72]
 [73]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [73]
+printInventories = [73]
 [75]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,4]
+wInventories = [75]
+printInventories = [75]
 [76]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Closed."
 bActions = [1,4]
+wInventories = [76]
+printInventories = [76]
 [77]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [77]
+printInventories = [77]
 [78]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [78]
+printInventories = [78]
 [79]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [79]
+printInventories = [79]
 [80]
 text = "Dead End!"
 wActions = [7]
 bActions = [1,2,4]
+wInventories = [80]
+printInventories = [80]
 [81]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [81]
+printInventories = [81]
 [82]
 text = "The North is Closed.\nThe East is Closed.\nThe South is Open.\nThe West is Open."
 bActions = [1,2]
+wInventories = [82]
+printInventories = [82]
 [83]
 text = "The North is Open.\nThe East is Closed.\nThe South is Open.\nThe West is Closed."
 bActions = [2,4]
+wInventories = [83]
+printInventories = [83]
 [85]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [85]
+printInventories = [85]
 [86]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [86]
+printInventories = [86]
 [87]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [87]
+printInventories = [87]
 [88]
 text = "The North is Closed.\nThe East is Open.\nThe South is Open.\nThe West is Open."
 bActions = [1]
+wInventories = [88]
+printInventories = [88]
 [89]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [89]
+printInventories = [89]
 [90]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [90]
+printInventories = [90]
 [91]
 text = "Dead End!"
 wActions = [7] #Allows the back action
 bActions = [1,3,4]
+wInventories = [91]
+printInventories = [91]
 [92]
 text = "The North is Open.\nThe East is Closed.\nThe South is Closed.\nThe West is Open."
 bActions = [2,3]
+wInventories = [92]
+printInventories = [92]
 [93]
 text = "The North is Open.\nThe East is Open.\nThe South is Closed.\nThe West is Closed."
 bActions = [3,4]
+wInventories = [93]
+printInventories = [93]
 [94]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [94]
+printInventories = [94]
 [95]
 text = "The North is Closed.\nThe East is Open.\nThe South is Closed.\nThe West is Open."
 bActions = [1,3]
+wInventories = [95]
+printInventories = [95]
 [96]
 text = "The North is Closed.\nThe East is Closed.\nTo the South is the maze exit!\nThe West is Open."
-wActions =
 bActions = [1,2]
+wInventories = [96]
+printInventories = [96]
 [98]
 text = "Dead End!"
 wActions = [7]
 bActions = [2,3,4]
+wInventories = [98]
+printInventories = [98]
 [106]
 text = "Congratulations!\nYou escaped the maze!"
 bActions = [1,2,3,4]
