@@ -141,7 +141,7 @@ def TransferItem(arguments) : #Arguments are Item, Inventory1 and Inventory2
 			try :
 				char['Inventories'][str(arguments[2])].append(arguments[0])
 			except KeyError : #If the given inventory does not exist yet this creates it
-				char['Inventories'][str(arguments[1])] = [arguments[0]]
+				char['Inventories'][str(arguments[2])] = [arguments[0]]
 	if arguments[1] in char['Inventories']['active'] :
 		listcollate.DeactivateThings('Items')
 	if arguments[2] in char['Inventories']['active'] :
