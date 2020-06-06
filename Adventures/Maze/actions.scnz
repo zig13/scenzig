@@ -39,3 +39,37 @@ effects = {'RevertScene':[]}
 [8]
 commands = ['Exit','Leave','Exit Maze','Leave Maze','Escape']
 effects = {'SetScene':[106]}
+
+[11]
+commands = ['Drop Red Stone','Drop Red','Red Stone']
+description = "Leave the Red stone here so you can recognise this part of the maze"
+effects = {'TransferItem':[1,101,'s0']}
+[12]
+commands = ['Drop Yellow Stone','Drop Yellow','Yellow Stone']
+description = "Leave the Yellow stone here so you can recognise this part of the maze"
+effects = {'TransferItem':[2,101,'s0']}
+[13]
+commands = ['Drop Blue Stone','Drop Blue','Blue Stone']
+description = "Leave the Blue stone here so you can recognise this part of the maze"
+effects = {'TransferItem':[3,101,'s0']}
+[14]
+commands = ['Drop Green Stone','Drop Green','Red Green']
+description = "Leave the Green stone here so you can recognise this part of the maze"
+effects = {'TransferItem':[4,101,'s0']}
+
+[21]
+commands = ['Pickup Red Stone','Pickup Red','Take Red Stone','Take Red','Red Stone']
+description = "Put the stone into your bag"
+effects = {'TransferItem':[1,'s0',101]}
+[22]
+commands = ['Pickup Yellow Stone','Pickup Yellow','Take Yellow Stone','Take Yellow','Yellow Stone']
+description = "Put the stone into your bag"
+effects = {'TransferItem':[2,'s0',101]}
+[23]
+commands = ['Pickup Blue Stone','Pickup Blue','Take Blue Stone','Take Blue','Blue Stone']
+description = "Put the stone into your bag"
+effects = {'TransferItem':[3,'s0',101]}
+[24]
+commands = ['Pickup Green Stone','Pickup Green','Take Green Stone','Take Green','Green Stone']
+description = "Put the stone into your bag"
+effects = {'TransferItem':[4,'s0',101]}
