@@ -7,11 +7,9 @@ previous = None
 active = []
 [Inventories]
 active = [101]
-#101 = [1,2,3,4]
-101 = []
+101 = [1,2,3,4]
 [Items]
-#active = [1,2,3,4]
-active = []
+active = [1,2,3,4]
 [Abilities]
 active = [1] #This ability whitelists the N, E, S & W actions
 [Attributes]
