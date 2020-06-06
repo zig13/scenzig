@@ -151,7 +151,7 @@ evaluators = ['s0'] #Current scene
   effects = {'TransferItem':[6,1,6]} #transfer key from player inventory to kitchen side keyhole
   [[2]]
   evalAll = {0:10} #If current scene is garden..
-  effects = {'TransferItem':[6,1,7]} #transfer key from player inventory to kitchen side keyhole
+  effects = {'TransferItem':[6,1,7]} #transfer key from player inventory to garden side keyhole
 [14]
 commands = ('Lock Door','Lock')
 text = "Okay, the kitchen door is now locked."
@@ -162,7 +162,7 @@ evaluators = ['s0'] #Current scene
   effects = {'TransferItem':[6,1,6]} #transfer key from player inventory to kitchen side keyhole
   [[2]]
   evalAll = {0:10} #If current scene is garden...
-  effects = {'TransferItem':[6,1,7]} #transfer key from player inventory to kitchen side keyhole
+  effects = {'TransferItem':[6,1,7]} #transfer key from player inventory to garden side keyhole
 [15]
 commands = 'Take Key'
 text = "You remove the key from the door and put it in your pocket."
