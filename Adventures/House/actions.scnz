@@ -58,7 +58,7 @@ evaluators = ['s0','ItemHasState,1,5']
   evaluations = {0:10,1:True} #If in garden and kitchen door is locked
   text = "The door seems to be locked."
   [[5]]
-  evaluations = {0:10,1:True} #If in garden and kitchen door is unlocked
+  evaluations = {0:10,1:False} #If in garden and kitchen door is unlocked
   effects = {'RemoveItemState':[2,5],'SetScene':[4]} #Removes door (item 5)'s closed state (state 2) and sets scene to kitchen (scene 4)
   [[6]]
   evaluations = {0:11}
