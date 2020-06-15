@@ -90,15 +90,28 @@ def nonemptyprint(thing,char,field='text'):
 	except (TypeError, KeyError):
 		return False
 	if text[:6] == ".labs." :
-		labeltotal = text[6:7]
+		part = text.split('[')
 		try :
-			labeltotal = int(labeltotal)
-		except ValueError:
-			print(text)
+			part = part[1].split(']')
+		except KeyError :
+			print("Missing '['")
+			print("'.labs.' needs to be followed by a list of what labels are used in the text")
+			print("For example: '.labs.[0]Helllo lab0 how are you?'")
+			print("You put: "+text)
 			return True
-		labels = eval(text[7:8+2*labeltotal])
-		text = text[8+(2*labeltotal):]
+		labels = part[0].split(',')
+		try :
+			text = part[1]
+		except KeyError :
+			print("Missing ']'")
+			print("'.labs.' needs to be followed by a list of what labels are used in the text")
+			print("For example: '.labs.[0]Helllo lab0 how are you?'")
+			print("You put: "+text)
+			return True
 		for label in labels :
-			text = text.replace("lab"+str(label),char['Labels'][str(label)][1])
+			try :
+				text = text.replace("lab"+str(label),char['Labels'][str(label)][1])
+			except KeyError :
+				print("Label with the ID of "+str(label)+" not found")
 	print(text)
 	return True
