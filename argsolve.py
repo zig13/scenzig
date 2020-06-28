@@ -89,74 +89,64 @@ def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 
 	except (KeyError, IndexError) :
 		return 0
 
-def SceneHasState(arguments) :
+def SceneHasState(state, scene) : #SceneHasState requires two arguments; State and Scene. Example:SceneHasState,1,2
 	if char is None:
 		print("Character data not available")
 		return 0 #False
-	if len(arguments) < 2 :
-		print("SceneHasState requires two arguments; State and Scene.\nExample:SceneHasState,1,2")
-		return 0 #False
 	try :
-		if int(arguments[0]) in char['Scenes'][arguments[1]] :
+		if int(state) in char['Scenes'][scene] :
 			return 1 #True
 		else :
 			return 0 #False
 	except KeyError :
 		return 0 #False
-def ItemIsActive(arguments) :
+def ItemIsActive(item) :
 	if char is None:
 		print("Character data not available")
 		return 0
-	if int(arguments[0]) in char['Items']['active'] :
+	if int(item) in char['Items']['active'] :
 		return 1
 	else :
 		return 0
-def ItemInInventory(arguments) : #Does not care if the inventory is active or not
+def ItemInInventory(item, inventory) : #ItemInInventory requires two arguments; Item and Inventory. Example:ItemInInventory,1,6
 	if char is None:
 		print("Character data not available")
 		return 0 #False
-	if len(arguments) < 2 :
-		print("ItemInInventory requires two arguments; Item and Inventory.\nExample:ItemInInventory,1,6")
-		return 0 #False
 	try :
-		if int(arguments[0]) in char['Inventories'][arguments[1]] :
-			return 1 #True
-	except KeyError : pass
-	return 0
-def ItemHasState(arguments) :
+		return char['Inventories'][inventory].count(int(item))
+	except KeyError :
+		return 0
+def ItemHasState(state, item) : #ItemHasState requires two arguments; State and Item. Example:ItemHasState,1,4
 	if char is None:
 		print("Character data not available")
 		return 0
-	if len(arguments) < 2 :
-		print("ItemHasState requires two arguments; State and Item.\nExample:ItemHasState,1,4")
-		return 0 #False
 	try :
-		if int(arguments[0]) in char['Items'][arguments[1]] :
+		if int(state) in char['Items'][item] :
 			return 1 #True
 	except KeyError : pass
 	return 0
-def SlotIsActive(arguments) : #Returns 1 if slot is empty or full otherwise 0
+def SlotIsActive(slot) : #Returns 1 if slot is empty or full otherwise 0
 	if char is None:
 		print("Character data not available")
 		return 0
 	active = char['Slots']['full'] + char['Slots']['empty']
-	if int(arguments[0]) in active :
+	if int(slot) in active :
 		return 1
 	else :
 		return 0
-def SlotIsFull(arguments) : #Returns 1 if slot is full otherwise 0
+def SlotIsFull(slot) : #Returns 1 if slot is full otherwise 0
 	if char is None:
 		print("Character data not available")
 		return 0
-	if int(arguments[0]) in char['Slots']['full'] :
+	if int(slot) in char['Slots']['full'] :
 		return 1
 	else :
 		return 0
-def SlotIsEmpty(arguments) : #Returns 1 if slot is empty otherwise 0
+def SlotIsEmpty(slot) : #Returns 1 if slot is empty otherwise 0
 	if char is None:
 		print("Character data not available")
 		return 0
-	if int(arguments[0]) in char['Slots']['empty'] :
+	if int(slot) in char['Slots']['empty'] :
 		return 1
 	else :
 		return 0
@@ -180,7 +170,7 @@ def Solve(arg) :
 				print("The function needs to be followed by it's arguments followed by commas e.g SceneHasStatus,3,6")
 				return 0
 			try :
-				return eval(funct+"("+str(arguments)+")")
+				return eval(funct+"(*"+str(arguments)+")")
 			except NameError :
 				print('"'+funct+'"'+"is not valid")
 				return 0
