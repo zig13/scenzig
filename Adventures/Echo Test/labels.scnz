@@ -1,0 +1,57 @@
+[0]
+[1] #Blue potions in room
+	[[1]]
+	description = 'is one Blue potion'
+	[[2]]
+	description = 'are two Blue potions'
+	[[3]]
+	description = 'are three Blue potions'
+[2] #Red potions in room
+	[[1]]
+	description = 'is one Red potion'
+	[[2]]
+	description = 'are two Red potions'
+	[[3]]
+	description = 'are three Red potions'
+[3] #Yellow potions in room
+	[[1]]
+	description = 'is one Yellow potion'
+	[[2]]
+	description = 'are two Yellow potions'
+	[[3]]
+	description = 'are three Yellow potions'
+[4] #Green potions in room
+	[[1]]
+	description = 'is one Green potion'
+	[[2]]
+	description = 'are two Green potions'
+	[[3]]
+	description = 'are three Green potions'
+[11] #Blue potions on PC
+	[[1]]
+	description = 'x1'
+	[[2]]
+	description = 'x2'
+	[[3]]
+	description = 'x3'
+[12] #Red potions on PC
+	[[1]]
+	description = 'x1'
+	[[2]]
+	description = 'x2'
+	[[3]]
+	description = 'x3'
+[13] #Yellow potions on PC
+	[[1]]
+	description = 'x1'
+	[[2]]
+	description = 'x2'
+	[[3]]
+	description = 'x3'
+[14] #Green potions on PC
+	[[1]]
+	description = 'x1'
+	[[2]]
+	description = 'x2'
+	[[3]]
+	description = 'x3'

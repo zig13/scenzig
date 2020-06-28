@@ -1,0 +1,122 @@
+[0]
+[1]
+commands = ['Help','H']
+description = 'Display available actions'
+	[[1]]
+	text = "Available actions:"
+	effects = {'PrintActions':[]}
+[2]
+commands = ['Inventory','I']
+description = 'Look at what items you are carrying'
+evaluators = ['n1'] #n1 equals the number of items in inventory 1
+	[[1]]
+	evaluations = {0:True} #Any non-zero number of items will equate to True and validate this outcome
+	text = "You are carrying:"
+	effects = {'ListInventory':[1,0]} #Inventory 1 and 0 means don't allow duplicates
+	[[2]]
+	evaluations = {0:0} #This outcome will occur only if n1 returns 0
+	text = "You're not carrying anything."
+[3]
+commands = 'Wait'
+text = 'You wait 1 beat'
+duration = 1
+[4]
+commands = 'Wait a while'
+text = 'You wait 10 beats'
+duration = 10
+[11]
+commands = ['Drink Blue Potion','Drink Blue']
+text = 'You down the sickly blue liquid'
+effects = {'StartEcho':[31,2,11]} #Arguments for StartEcho are action, interval, categories, reps
+evaluators = ['ItemInInventory,1,1']
+	[[1]]
+	evaluations = {0:True} #If the PC is carrying a Blue Potion
+	effects = {'RemoveItem':[1,1],'SetLabel':[11,'l11-1']} #Remove a Blue Potion from the PC inventory
+	[[2]]
+	evaluations = {0:False} #If the PC is not carrying a Blue Potion
+	effects = {'RemoveItem':[1,2],'SetLabel':[1,'l1-1']} #Remove a Blue Potion from the room's inventory
+[12]
+commands = ['Drink Red Potion','Drink Red']
+text = 'You down the thick red liquid'
+effects = {'TakeAction':[32],'StartEcho':[32,5,12]} #If reps is not given then the default is Infinite
+evaluators = ['ItemInInventory,2,1']
+	[[1]]
+	evaluations = {0:True} #If the PC is carrying a Red Potion
+	effects = {'RemoveItem':[2,1],'SetLabel':[12,'l12-1']} #Remove a Red Potion from the PC inventory
+	[[2]]
+	evaluations = {0:False} #If the PC is not carrying a Red Potion
+	effects = {'RemoveItem':[2,2],'SetLabel':[2,'l2-1']} #Remove a Red Potion from the room's inventory
+[13]
+commands = ['Drink Yellow Potion','Drink Yellow']
+text = 'You down the bitter yellow liquid'
+effects = {'StartEcho':[33,3,0,1]} #If 0 is given as category then the echo will not be assigned to any categories
+evaluators = ['ItemInInventory,3,1']
+	[[1]]
+	evaluations = {0:True} #If the PC is carrying a Yellow Potion
+	effects = {'RemoveItem':[3,1],'SetLabel':[13,'l13-1']} #Remove a Yellow Potion from the PC inventory
+	[[2]]
+	evaluations = {0:False} #If the PC is not carrying a Yellow Potion
+	effects = {'RemoveItem':[3,2],'SetLabel':[3,'l3-1']} #Remove a Yellow Potion from the room's inventory
+[14]
+commands = ['Drink Green Potion','Drink Green']
+text = 'You down the earthy green liquid'
+effects = {'StartEcho':[34,1,[14,44],25]} #This echo uses action 34, triggers every beat, is in categories 14 & 44 and will stop after triggering 25 times 
+evaluators = ['ItemInInventory,4,1']
+	[[1]]
+	evaluations = {0:True} #If the PC is carrying a Green Potion
+	effects = {'RemoveItem':[4,1],'SetLabel':[14,'l14-1']} #Remove a Green Potion from the PC inventory
+	[[2]]
+	evaluations = {0:False} #If the PC is not carrying a Green Potion
+	effects = {'RemoveItem':[4,2],'SetLabel':[4,'l4-1']} #Remove a Green Potion from the room's inventory
+[21]
+commands = ['Take Blue Potion','Take Blue']
+text = 'You pick up a Blue Potion and grow an arm to hold it'
+effects = {'TransferItem':[1,2,1],'SetLabel':[1,'l1-1']} #A second 'SetLabel" effect cannot go here
+	[[1]] #We get round that restriction by placing the second 'SetLabel" in a outcome with no evaluations so it always triggers
+	effects = {'SetLabel':[11,'l11+1']}
+[22]
+commands = ['Take Red Potion','Take Red']
+text = 'You pick up a Red Potion and grow an arm to hold it'
+effects = {'TransferItem':[2,2,1],'SetLabel':[2,'l2-1']}
+	[[1]]
+	effects = {'SetLabel':[12,'l12+1']}
+[23]
+commands = ['Take Yellow Potion','Take Yellow']
+text = 'You pick up a Yellow Potion and grow an arm to hold it'
+effects = {'TransferItem':[3,2,1],'SetLabel':[3,'l3-1']}
+	[[1]]
+	effects = {'SetLabel':[13,'l13+1']}
+[24]
+commands = ['Take Green Potion','Take Green']
+text = 'You pick up a Green Potion and grow an arm to hold it'
+effects = {'TransferItem':[4,2,1],'SetLabel':[4,'l4-1']}
+	[[1]]
+	effects = {'SetLabel':[14,'l14+1']}
+[31]
+text = 'This is the Blue Potion echo and occurs every 2 beats indefinitely'
+[32]
+text = 'This is the Red Potion echo. It triggers immediately and every 5 beats after'
+[33]
+text = 'This is the Yellow Potion echo. It triggers once after 7 beats'
+[34]
+text = 'This is the Green Potion echo. It triggers every beat 25 times before stopping.'
+[41]
+commands = ['Press Blue Button','Press Blue']
+text = 'You push the button and a strange feeling washes over'
+effects = {'StopEcho':[11]}
+[42]
+commands = ['Press Red Button','Press Red']
+text = 'You push the button and a strange feeling washes over'
+effects = {'StopEcho':[12]}
+[43]
+commands = ['Press Yellow Button','Press Yellow']
+text = 'You push the button and a strange feeling washes over'
+effects = {'StopEcho':[13]}
+[44]
+commands = ['Press Green Button','Press Green']
+text = 'You push the button and a strange feeling washes over'
+effects = {'StopEcho':[14]}
+[45]
+commands = ['Press Rainbow Button','Press Rainbow']
+text = 'You push the button and a strange feeling washes over'
+effects = {'StopEcho':[0]}

@@ -1,0 +1,13 @@
+[0]
+[1]
+text = '.labs.1[11]Blue Potion lab11'
+wActions = [11]
+[2]
+text = '.labs.1[12]Red Potion lab12'
+wActions = [12]
+[3]
+text = '.labs.1[13]Yellow Potion lab13'
+wActions = [13]
+[4]
+text = '.labs.1[14]Green Potion lab14'
+wActions = [14]
