@@ -10,7 +10,7 @@
 #              scenzig is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #              You should have received a copy of the GNU General Public License along with scenzig. If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
-from os import chdir, path, curdir, sep, listdir #sep and curdir produce the correct characters for the operating system in use
+from os import chdir, path, curdir, sep, listdir, remove #sep and curdir produce the correct characters for the operating system in use
 chdir(path.dirname(path.abspath(__file__)))
 try :
 	adventures = listdir(curdir+sep+"Adventures"+sep)
@@ -19,7 +19,7 @@ except OSError :
 	exit(0)
 from classes.classAdventure import Adventure
 adv = dict((foldername, Adventure(foldername)) for foldername in adventures) #Creates an instance of classAdventure for each folder found in the Adventures folder as a dictionary entry of adv
-from functions import valremove, choicelist, Clr, get_valid_filename, dupremove, nonemptyprint
+from functions import valremove, choicelist, Clr, get_valid_filename, dupremove, nonemptyprint, yesno
 for adventure in adventures : #Runs the validate function of each instance of classAdventure. If they return False (fail) then they are removed from the Adventures list
 	if adv[adventure].validate() == False : adventures = valremove(adventures, adventure)
 if len(adventures) < 1 :
@@ -57,9 +57,15 @@ for file in characters : #Removes the template character file and any files with
 from configobj import ConfigObj
 c = None #'c' refers to the active character file which will be directly edited and reguarly read by the main script
 if len(characters) != 0 :
-	characters.append("New Character")
-	choice = choicelist(characters, "Please enter a number corresponding to the character file you wish to load:\n")
-	if choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
+	choices = [*characters,"New Character"]
+	choice = choicelist(choices, "Please enter a number corresponding to the character file you wish to load:\n")
+	if choice[0] is 0 :
+		print("Do you want to delete all characters?")
+		verdict = yesno()
+		if verdict :
+			for file in characters :
+				remove(a.directory+"Characters"+sep+file)
+	elif choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
 		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
 		listcollate.GiveChar(c)
 		statecheck.GiveChar(c)
