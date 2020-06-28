@@ -106,7 +106,11 @@ while True : #Primary loop. Below is run after an effect happens
 			stateprintInventories = []
 			statelistInventories = []
 			for state in sorted(c['Scenes'][str(c['Scenes']['active'][0])]) :
-				nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
+				try :
+					nonemptyprint(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)],c)
+				except KeyError :
+					print(f"Error: {state} is not a valid state for scene {c['Scenes']['active'][0]}")
+					break
 				stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
 				statelistInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('listInventories',default=[]))
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
