@@ -114,13 +114,13 @@ while True : #Primary loop. Below is run after an effect happens
 				stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
 				statelistInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('listInventories',default=[]))
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
-				statecheck.efunc.PrintInventory([inventory])
+				statecheck.efunc.PrintInventory(inventory)
 			for inventory in stateprintInventories :
-				statecheck.efunc.PrintInventory([inventory])
+				statecheck.efunc.PrintInventory(inventory)
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('listInventories',default=[]) :
-				statecheck.efunc.ListInventory([inventory])
+				statecheck.efunc.ListInventory(inventory)
 			for inventory in statelistInventories :
-				statecheck.efunc.ListInventory([inventory])
+				statecheck.efunc.ListInventory(inventory)
 			for encounter in c['Encounters']['active'] :
 				nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
 				for state in sorted(c['Encounters'][str(encounter)]) :
@@ -159,7 +159,7 @@ while True : #Primary loop. Below is run after an effect happens
 			for outcome in effects :
 				for effect in outcome :
 					arguments = argsolve.Solve(outcome[effect])
-					eval("statecheck.efunc."+effect+"(arguments)")
+					eval("statecheck.efunc."+effect+"(*arguments)")
 			if text : #If text is True (i.e. nonemptyprint found text)
 				print("")
 			elif not effects : #If text is False and the effects list is empty

@@ -13,7 +13,8 @@
 import echo
 from functions import nonemptyprint
 adv = None
-char = None
+char = {}
+currentScene = 1
 listcollate = None
 statecheck = None
 listg = []
@@ -23,7 +24,9 @@ def GiveAdv(a) :
 	adv = a
 def GiveChar(c) :
 	global char
+	global currentScene
 	char = c
+	currentScene = char['Scenes']['active'][0]
 	echo.Initialize(c)
 def GiveListCollate(lcollate) :
 	global listcollate
@@ -35,61 +38,71 @@ def GiveList(glist) :
 	global listg
 	listg = glist
 
-def SetScene(arguments) :
+def SetScene(scene) :
 	global char
+	global currentScene
 	char['Scenes']['previous'] = char['Scenes']['active'][0]
-	char['Scenes']['active'][0] = arguments[0]
+	char['Scenes']['active'][0] = scene
+	currentScene = scene
 	listcollate.DeactivateThings('Scenes')
 	listcollate.ActivateThings('Scenes')
 	statecheck.Prepare('Scenes')
 	statecheck.Check()
-def RevertScene(arguments) :
+def RevertScene() :
 	global char
+	global currentScene
 	temp = char['Scenes']['active'][0]
 	char['Scenes']['active'][0] = char['Scenes']['previous']
+	currentScene = char['Scenes']['previous']
 	char['Scenes']['previous'] = temp
 	listcollate.DeactivateThings('Scenes')
 	listcollate.ActivateThings('Scenes')
 	statecheck.Prepare('Scenes')
 	statecheck.Check()
-def AddSceneState(arguments) :
+def AddSceneState(state, scene=None) :
 	global char
-	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0]) #If no scene is given, the given state is added to the current scene
-	try :
-		current_states = char['Scenes'][str(arguments[1])]
-	except KeyError :
-		if str(arguments[1]) not in adv.f['Scenes'] : #If scene does not exist
-			print("Scene",str(arguments[1]),"does not exist")
-			return
-		char['Scenes'][str(arguments[1])] = []
-		current_states = char['Scenes'][str(arguments[1])]
-		statecheck.auto_states['Scenes'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Scenes'][str(arguments[1])]) if statecheck.HasEvaluations(adv.f['Scenes'][str(arguments[1])][x])]
-	if arguments[0] not in current_states :
-		current_states.append(arguments[0])
-		listcollate.AddStates('Scenes', arguments[1])
-		statecheck.Check()
-def RemoveSceneState(arguments) : #Arguments are state and scene
-	global char
-	if len(arguments) <2 : arguments.append(char['Scenes']['active'][0]) #If no scene is given, the given state is removed from the current scene
-	try :
-		current_states = char['Scenes'][str(arguments[1])]
-	except KeyError :
-		char['Scenes'][str(arguments[1])] = []
-		statecheck.UpdateAutoList('Scenes', arguments[1])
+	scene = currentScene if scene is None else scene #If scene isn't supplied, the current scene will be used
+	if str(state) not in list(adv.f['Scenes'][str(scene)]) :
+		print(f"Error: {state} is not a valid state for scene {scene}")
 		return
-	if arguments[0] is 0 : #All manually set states are removed if 0 is given as an argument
-		if str(arguments[1]) not in statecheck.auto_states['Scenes'] :
-			statecheck.UpdateAutoList('Scenes', arguments[1])
-		char['Scenes'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Scenes'][str(arguments[1])]]
-	else :
-		char['Scenes'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
-	listcollate.RemoveStates('Scenes', arguments[1])
-	statecheck.Check()
+	try :
+		current_states = char['Scenes'][str(scene)]
+	except KeyError :
+		if str(scene) not in adv.f['Scenes'] : #If scene does not exist
+			print("Scene",str(scene),"does not exist")
+			return
+		char['Scenes'][str(scene)] = []
+		current_states = char['Scenes'][str(scene)]
+		statecheck.auto_states['Scenes'][str(scene)] = [int(x) for x in statecheck.StripNonStates(adv.f['Scenes'][str(scene)]) if statecheck.HasEvaluations(adv.f['Scenes'][str(scene)][x])]
+	if state not in current_states :
+		current_states.append(state)
+	if scene == currentScene :
+		listcollate.AddStates('Scenes', scene)
+		statecheck.Check()
+def RemoveSceneState(state, scene=None) :
+	global char
+	scene = currentScene if scene is None else scene #If scene isn't supplied, the current scene will be used
+	try :
+		current_states = char['Scenes'][str(scene)]
+	except KeyError :
+		char['Scenes'][str(scene)] = []
+		statecheck.UpdateAutoList('Scenes', scene)
+		return
+	if state : #If state is not 0
+		char['Scenes'][str(scene)] = [x for x in current_states if x is not state]
+	else : #All manually set states are removed if 0 is given as the 'state'
+		if scene not in statecheck.auto_states['Scenes'] :
+			statecheck.UpdateAutoList('Scenes', scene)
+		char['Scenes'][str(scene)] = [x for x in current_states if x in statecheck.auto_states['Scenes'][scene]]
+	if scene == currentScene :
+		listcollate.RemoveStates('Scenes', scene)
+		statecheck.Check()
 
-def ListInventory(arguments) :
-	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
-	if len(char['Inventories'][str(arguments[0])]) < 1 : return
-	inventory = char['Inventories'][str(arguments[0])] #Items are not sorted (new at bottom)
+def ListInventory(inventoryID=1,allowDupes=1) : #If an inventory is not specified, assume inventory 1. By default duplicates are allowed
+	if allowDupes :
+		inventory = char['Inventories'][str(inventoryID)]
+	else :
+		inventory = list(dict.fromkeys(char['Inventories'][str(inventoryID)])) #Turn into dictionary and then back into 
 	for itm in inventory :
 		states = sorted(char['Items'][str(itm)]) #States are sorted
 		printed = False
@@ -98,106 +111,96 @@ def ListInventory(arguments) :
 			if printed is True : break #Once
 		if printed is False : #Only if no state has text; print item's base text
 			nonemptyprint(adv.f['Items'][str(itm)],char)
-def PrintInventory(arguments) :
-	if len(arguments) < 1 : arguments.append(1) #If an inventory is not specified, assume inventory 1
-	if len(char['Inventories'][str(arguments[0])]) < 1 : return
-	inventory = sorted(char['Inventories'][str(arguments[0])]) #Items are sorted
-	for itm in inventory :
+def PrintInventory(inventoryID=1) : #If an inventory is not specified, assume inventory 1
+	for itm in sorted(char['Inventories'][str(inventoryID)]) :
 		nonemptyprint(adv.f['Items'][str(itm)],char) #Print item's base text
 		states = sorted(char['Items'][str(itm)]) #States are sorted
 		for state in states :
 			nonemptyprint(adv.f['Items'][str(itm)][str(state)],char)
-def RemoveItem(arguments) : #Arguments are Item and Inventory
+def RemoveItem(item, inventoryID=1) : #If an inventory is not specified, assume inventory 1
 	global char
-	if len(arguments) < 2 : arguments.append(1)
-	if arguments[0] in char['Inventories'][str(arguments[1])] :
-		char['Inventories'][str(arguments[1])].remove(arguments[0])
-	if arguments[1] in char['Inventories']['active'] :
+	if item in char['Inventories'][str(inventoryID)] :
+		char['Inventories'][str(inventoryID)].remove(item)
+	if inventoryID in char['Inventories']['active'] :
 		listcollate.CollateItems()
 		statecheck.Prepare('Items')
 		statecheck.Check()
-def AddItem(arguments) : #Arguments are Item and Inventory
+def AddItem(item, inventoryID=1) : #Arguments are Item and Inventory
 	global char
-	if len(arguments) < 2 :
-		arguments.append(1)
 	try :
-		if arguments[0] not in char['Inventories'][str(arguments[1])] :
-			char['Inventories'][str(arguments[1])].append(arguments[0])
-			if arguments[1] in char['Inventories']['active'] :
+		if item not in char['Inventories'][str(inventoryID)] :
+			char['Inventories'][str(inventoryID)].append(item)
+			if inventoryID in char['Inventories']['active'] :
 				listcollate.ActivateThings('Items')
 	except KeyError : #If the given inventory does not exist yet this creates it
-		char['Inventories'][str(arguments[1])] = [arguments[0]]
-	if arguments[1] in char['Inventories']['active'] :
+		char['Inventories'][str(inventoryID)] = [item]
+	if inventoryID in char['Inventories']['active'] :
 		listcollate.CollateItems()
 		statecheck.Prepare('Items')
 		statecheck.Check()
-def TransferItem(arguments) : #Arguments are Item, Inventory1 and Inventory2
+def TransferItem(item, inventoryOne, inventoryTwo) : #Arguments are item, inventoryOne and inventoryTwo
 	global char
-	if len(arguments) < 3 :
-		return
-	if arguments[0] in char['Inventories'].get(str(arguments[1]),default=[]) :
-		char['Inventories'][str(arguments[1])].remove(arguments[0])
-		if arguments[0] not in char['Inventories'][str(arguments[1])] :
-			try :
-				char['Inventories'][str(arguments[2])].append(arguments[0])
-			except KeyError : #If the given inventory does not exist yet this creates it
-				char['Inventories'][str(arguments[2])] = [arguments[0]]
-	if arguments[1] in char['Inventories']['active'] :
+	if item in char['Inventories'].get(str(inventoryOne),default=[]) :
+		char['Inventories'][str(inventoryOne)].remove(item)
+		try :
+			char['Inventories'][str(inventoryTwo)].append(item)
+		except KeyError : #If the given inventory does not exist yet this creates it
+			char['Inventories'][str(inventoryTwo)] = [item]
+	if inventoryOne in char['Inventories']['active'] :
 		listcollate.DeactivateThings('Items')
-	if arguments[2] in char['Inventories']['active'] :
+	if inventoryTwo in char['Inventories']['active'] :
 		listcollate.ActivateThings('Items')
-	if (arguments[1] in char['Inventories']['active']) or (arguments[2] in char['Inventories']['active']) :
+	if (inventoryOne in char['Inventories']['active']) or (inventoryTwo in char['Inventories']['active']) :
 		listcollate.CollateItems()
 		statecheck.Prepare('Items')
 		statecheck.Check()
-def AddItemState(arguments) : #Arguments are state and item
+def AddItemState(state, item) : #Arguments are state and item
 	global char
 	try :
-		current_states = char['Items'][str(arguments[1])]
+		current_states = char['Items'][str(item)]
 	except KeyError :
-		if str(arguments[1]) not in adv.f['Items'] : #If item does not exist
-			print("Item",str(arguments[1]),"does not exist")
+		if str(item) not in adv.f['Items'] : #If item does not exist
+			print("Item",str(item),"does not exist")
 			return
-		char['Items'][str(arguments[1])] = []
-		current_states = char['Items'][str(arguments[1])]
-		statecheck.auto_states['Items'][str(arguments[1])] = [int(x) for x in statecheck.StripNonStates(adv.f['Items'][str(arguments[1])]) if statecheck.HasEvaluations(adv.f['Items'][str(arguments[1])][x])]
-	if arguments[0] not in current_states :
-		current_states.append(arguments[0])
-		listcollate.AddStates('Items', arguments[1])
+		char['Items'][str(item)] = []
+		current_states = char['Items'][str(item)]
+		statecheck.auto_states['Items'][str(item)] = [int(x) for x in statecheck.StripNonStates(adv.f['Items'][str(item)]) if statecheck.HasEvaluations(adv.f['Items'][str(item)][x])]
+	if state not in current_states :
+		current_states.append(state)
+		listcollate.AddStates('Items', item)
 		statecheck.Check()
-def RemoveItemState(arguments) : #Arguments are state and item
+def RemoveItemState(state, item) : #Arguments are state and item
 	global char
-	if len(arguments) <2 : arguments.append(char['Items']['active'][0]) #If no scene is given, the given state is removed from the current scene
 	try :
-		current_states = char['Items'][str(arguments[1])]
+		current_states = char['Items'][str(item)]
 	except KeyError :
-		char['Items'][str(arguments[1])] = []
-		statecheck.UpdateAutoList('Scenes', arguments[1])
+		char['Items'][str(item)] = []
+		statecheck.UpdateAutoList('Scenes', item)
 		return
-	if arguments[0] is 0 : #All manually set states are removed if 0 is given as an argument
-		if str(arguments[1]) not in statecheck.auto_states['Items'] :
-			statecheck.UpdateAutoList('Scenes', arguments[1])
-		char['Items'][str(arguments[1])] = [x for x in current_states if x in statecheck.auto_states['Items'][str(arguments[1])]]
-	else :
-		char['Items'][str(arguments[1])] = [x for x in current_states if x is not arguments[0]]
-	listcollate.RemoveStates('Items', arguments[1])
+	if state : #If state is not 0.
+		char['Items'][str(item)] = [x for x in current_states if x is not state]
+	else : #All manually set states are removed if 0 is given as the 'state'
+		if str(item) not in statecheck.auto_states['Items'] :
+			statecheck.UpdateAutoList('Scenes', item)
+		char['Items'][str(item)] = [x for x in current_states if x in statecheck.auto_states['Items'][str(item)]]	
+	listcollate.RemoveStates('Items', item)
 	statecheck.Check()
 
-def RemoveAbility(arguments) :
+def RemoveAbility(ability) :
 	global char
-	if arguments[0] in char['Abilities']['active'] :
-		char['Abilities']['active'].remove(arguments[0])
+	if ability in char['Abilities']['active'] :
+		char['Abilities']['active'].remove(ability)
 	listcollate.DeactivateThings('Abilities')
 	statecheck.Prepare('Abilities')
 	statecheck.Check()
-def AddAbility(arguments) :
+def AddAbility(ability) :
 	global char
-	if arguments[0] not in char['Abilities']['active'] :
-		char['Abilities']['active'].append(arguments[0])
+	if ability not in char['Abilities']['active'] :
+		char['Abilities']['active'].append(ability)
 	listcollate.ActivateThings('Abilities')
 	statecheck.Prepare('Abilities')
 	statecheck.Check()
-def PrintActions(arguments) :
+def PrintActions() :
 	global listg
 	global adv
 	for action in listg :
@@ -212,90 +215,87 @@ def PrintActions(arguments) :
 		except (KeyError, TypeError) : #Having a description is entirely optional so we don't care if we fail to find or it is not a string
 			description = ""
 		print(command+description) #If the action has a description, this will print e.g. "North - Travel North" else just "North "
-def PrintAttributes(arguments) :
+def PrintAttributes() :
 	global char
 	global adv
 	for attribute in char['Attributes']['active'] :
 		if attribute not in char['Attributes']['vital'] :
 			firststate = sorted(char['Attributes'][str(attribute)])[0] #Sorts the states and takes the first numerically
 			nonemptyprint(adv.f['Attributes'][str(attribute)][str(firststate)],char)
-def DamageAttribute(arguments) :
+def DamageAttribute(attribute, value) :
 	global char
-	if str(arguments[0]) in char['Attributes'] :
-		char['AttributeVals'][str(arguments[0])][0] -= arguments[1]
-		if char['AttributeVals'][str(arguments[0])][0] < 0 :
-			char['AttributeVals'][str(arguments[0])][0] = 0
-		if arguments[0] in char['Attributes']['active'] :
-			listcollate.SetBaseAttributes(arguments[0])
-			listcollate.reBaseAttributes(arguments[0])
-			listcollate.ApplyModifiers(arguments[0])
+	if str(attribute) in char['Attributes'] :
+		char['AttributeVals'][str(attribute)][0] -= value
+		if char['AttributeVals'][str(attribute)][0] < 0 :
+			char['AttributeVals'][str(attribute)][0] = 0
+		if attribute in char['Attributes']['active'] :
+			listcollate.SetBaseAttributes(attribute)
+			listcollate.reBaseAttributes(attribute)
+			listcollate.ApplyModifiers(attribute)
 			statecheck.Check()
-def BolsterAttribute(arguments) :
+def BolsterAttribute(attribute, value) :
 	global char
-	if str(arguments[0]) in char['Attributes'] :
-		char['AttributeVals'][str(arguments[0])][0] += arguments[1]
+	if str(attribute) in char['Attributes'] :
+		char['AttributeVals'][str(attribute)][0] += value
 		try : #For each attribute, the character stores it's state, value and max value (list indexes 0,1,2). Below the value is set to the max value is it exceeds it.
-			if char['AttributeVals'][str(arguments[0])][0] > char['AttributeVals'][str(arguments[0])][1] : char['AttributeVals'][str(arguments[0])][0] = char['AttributeVals'][str(arguments[0])][1]
+			if char['AttributeVals'][str(attribute)][0] > char['AttributeVals'][str(attribute)][1] : char['AttributeVals'][str(attribute)][0] = char['AttributeVals'][str(attribute)][1]
 		except IndexError:
 			pass #Max value is optional
-		if arguments[0] in char['Attributes']['active'] :
-			listcollate.SetBaseAttributes(arguments[0])
-			listcollate.reBaseAttributes(arguments[0])
-			listcollate.ApplyModifiers(arguments[0])
+		if attribute in char['Attributes']['active'] :
+			listcollate.SetBaseAttributes(attribute)
+			listcollate.reBaseAttributes(attribute)
+			listcollate.ApplyModifiers(attribute)
 			statecheck.Check()
 
-def ActivateSlot(arguments) :
+def ActivateSlot(slot) :
 	global char
-	if arguments[0] not in char['Slots']['empty'] and arguments[0] not in char['Slots']['full'] :
-		char['Slots']['full'].append(arguments[0])
-def DeactivateSlot(arguments) :
+	if slot not in char['Slots']['empty'] and slot not in char['Slots']['full'] :
+		char['Slots']['full'].append(slot)
+def DeactivateSlot(slot) :
 	global char
-	if arguments[0] in char['Slots']['empty'] :
-		char['Slots']['empty'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
-	if arguments[0] in char['Slots']['full'] :
-		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
-def FillSlot(arguments) :
+	if slot in char['Slots']['empty'] :
+		char['Slots']['empty'] = [x for x in char['Slots']['empty'] if x is not slot]
+	if slot in char['Slots']['full'] :
+		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not slot]
+def FillSlot(slot) :
 	global char
-	if arguments[0] in char['Slots']['empty'] and arguments[0] not in char['Slots']['full'] :
-		char['Slots']['full'].append(arguments[0])
-		char['Slots']['empty'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
-def EmptySlot(arguments) :
+	if slot in char['Slots']['empty'] and slot not in char['Slots']['full'] :
+		char['Slots']['full'].append(slot)
+		char['Slots']['empty'] = [x for x in char['Slots']['empty'] if x is not slot]
+def EmptySlot(slot) :
 	global char
-	if arguments[0] not in char['Slots']['empty'] and arguments[0] in char['Slots']['full'] :
-		char['Slots']['empty'].append(arguments[0])
-		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not arguments[0]]
+	if slot not in char['Slots']['empty'] and slot in char['Slots']['full'] :
+		char['Slots']['empty'].append(slot)
+		char['Slots']['full'] = [x for x in char['Slots']['empty'] if x is not slot]
 
-def SetLabel(arguments) : #Arguments are the class id and the id of the label to be assigned to it
+def SetLabel(classID, labelID) : #Arguments are the class id and the id of the label to be assigned to it
 	global char
 	try :
-		description = adv.f['Labels'][str(arguments[0])][str(arguments[1])]['description']
+		description = adv.f['Labels'][str(classID)][str(labelID)]['description']
+		char['Labels'][str(classID)] = [labelID,description]
 	except KeyError :
-		print("Label to be assigned to the character does not exist")
-		raise
-	char['Labels'][str(arguments[0])] = [arguments[1],description]
-def RemoveLabel(arguments) :
+		if labelID == 0 :
+			char['Labels'][str(classID)] = [0]
+		else :
+			print("Label to be assigned to the character does not exist")
+			raise
+	
+def RemoveLabel(labelID) :
 	global char
-	if str(arguments[0]) in char['Labels'] :
-		char['Labels'][str(arguments[0])] = []
+	if str(labelID) in char['Labels'] :
+		char['Labels'][str(labelID)] = []
 
-def TakeAction(arguments) :
-	actionstack.append(str(arguments[0]))
-def StartEcho(arguments) :
-	action = arguments[0]
-	interval = arguments[1]
-	try :
-		categories = arguments[2]
-	except IndexError :
-		echo.Start(action, interval)
-		return
-	try :
-		repetitions = arguments[3]
-	except IndexError :
-		echo.Start(action, interval, category)
-		return
-	echo.Start(action, interval, category, repetitions)
-def StopEcho(arguments) :
-	echo.Stop(str(arguments[0]))
-def ClearStack(arguments) :
+def TakeAction(action) : #Argument is Action ID
+	actionstack.append(str(action))
+def StartEcho(action, interval, categor=0, reps="Infinite") : #If not supplied, category will default to 0 and reps to infinite
+	try : #If categor is a single category
+		int(categor) #Will fail if categories is already a list i.e. there are multiple categories
+		echo.Start(action, interval, [categor], reps) #echo.Start expects a list of categories so even if there is only one we make it a list
+	except TypeError :	
+		echo.Start(action, interval, categor, reps) #If categor is already a list we can pass it straight through
+def StopEcho(categor) : #The argument is either a single category or a list of categories
+	echo.Stop(categor)
+	
+def ClearStack() :
 	global actionstack
 	actionstack = []

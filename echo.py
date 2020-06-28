@@ -10,58 +10,87 @@
 #              scenzig is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 #              You should have received a copy of the GNU General Public License along with scenzig. If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
-echoes = {}
-categories = {'1':[]}
+Echoes = {}
+EchoCategories = {'1':[]}
 index = 1
 
 def Initialize(c) :
 	global char
-	global echoes
-	global categories
-	char = c
-	echoes = char['Echoes']
-	categories = char['EchoCats']
-
-def Start(action, interval, cat=1, reps="Infinite") :
+	global Echoes
+	global EchoCategories
 	global index
-	echoes[str(index)] = {'action':action,'interval':interval,'elapsed':0,'reps':reps}
+	char = c
+	Echoes = char['Echoes'] #Copies echo information from the character file to the echo script
+	EchoCategories = char['EchoCategories']
 	try :
-		categories[str(cat)].append(str(index))
-	except KeyError :
-		categories[str(cat)] = [str(index)]
+		index = int(list(char['Echoes'])[-1]) + 1 #On startup sets index to 1 higher than the current highest index
+	except IndexError:
+		index = 1 #If there are no active echoes at startup then index is left at 1
+
+def Start(action, interval, categories, reps) :
+	global index
+	Echoes[str(index)] = {'action':action,'interval':interval,'categories':categories,'elapsed':0,'reps':reps}
+	for category in categories :
+		if category : #If the category is non 0
+			try :
+				EchoCategories[str(category)].append(str(index))
+			except KeyError :
+				EchoCategories[str(category)] = [str(index)]
+		else : #If the category is 0...
+			break #The echo is not listed under any categories
 	index += 1
-	char['Echoes'] = echoes
-	char['EchoCats'] = categories
+	char['Echoes'] = Echoes #Copies the echo script's echo information back to the character file
+	char['EchoCategories'] = EchoCategories
 	char.write()
 
-def Stop(category) :
-	try :
-		stopechoes = categories[category]
-	except KeyError :
-		if category == '0' :
-			global echoes
-			echoes = {} #If the argument of 0 is given, all echoes are stopped/destroyed
-		return
-	for echo in stopechoes :
-		del echoes[echo]
-	del categories[category]
+def Stop(categor) : #Argument can be a single category or list of categories
+	global Echoes
+	try : #If categor is a single category
+		int(categor) #Will fail if categories is already a list i.e. there are multiple categories
+		if categor is 0 :
+			Echoes.clear() #If the argument of 0 is given, all echoes are stopped/destroyed
+			EchoCategories.clear()
+		else :
+			for echo in EchoCategories(str(categor)) :
+				for category in Echoes[echo]['categories'] :
+					try :
+						EchoCategories[category].remove(echo)
+					except ValueError :
+						pass
+				del Echoes[echo]
+	except TypeError : #If categor is a list of categories
+		echoesToStop = []
+		for category in categor :
+			echoesToStop.extend(char['EchoCategories'][str(category)])
+			del EchoCategories[category]
+		echoesToStop = list(dict.fromkeys(echoesToStop)) #Turns into dict and then back into list to remove duplicates
+		for echo in echoesToStop :
+			for category in Echoes[echo]['categories'] :
+				try :
+					EchoCategories[category].remove(echo)
+				except ValueError :
+					pass
+			del Echoes[echo]
+	char['Echoes'] = Echoes #Copies the echo script's echo information back to the character file
+	char['EchoCategories'] = EchoCategories
+	char.write()
 
 def Age(beats) :
 	actions = []
-	for echo in echoes.copy() :
-		echoes[echo]['elapsed'] += beats
-		activations = echoes[echo]['elapsed']/echoes[echo]['interval']
+	for echo in Echoes.copy() :
+		Echoes[echo]['elapsed'] += beats
+		activations = Echoes[echo]['elapsed']/Echoes[echo]['interval']
 		while activations >= 1 :
-			actions.append(str(echoes[echo]['action']))
-			echoes[echo]['elapsed'] -= echoes[echo]['interval']
-			activations = echoes[echo]['elapsed']/echoes[echo]['interval']
+			actions.append(str(Echoes[echo]['action']))
+			Echoes[echo]['elapsed'] -= Echoes[echo]['interval']
+			activations = Echoes[echo]['elapsed']/Echoes[echo]['interval']
 			try :
-				echoes[echo]['reps'] -= 1
-				if echoes[echo]['reps'] < 1 :
-					del echoes[echo]
+				Echoes[echo]['reps'] -= 1
+				if Echoes[echo]['reps'] < 1 :
+					del Echoes[echo]
 					break
 			except TypeError : #Will be raised if reps is Infinite
 				pass
-	char['Echoes'] = echoes
+	char['Echoes'] = Echoes
 	char.write()
 	return actions
