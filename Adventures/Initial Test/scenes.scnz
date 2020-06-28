@@ -2,7 +2,6 @@
 [1]
 text = ".labs.1[0]This is the first scene lab0"
 wActions = [1,2,3]
-bActions = []
 evaluators = ['i4']
 	[[1]]
 	evaluations = {0:[1,1]}
@@ -14,10 +13,13 @@ evaluators = ['i4']
 	text = "There is a stone on the ground"
 	wActions = [7,9]
 	bActions =[6]
+	[[3]] #Lever not pulled
+	wActions = [25]
+	[[4]]
+	text = "You pulled the lever in the second scene!"
 [2]
 text = "This is the second scene"
 wActions = [2]
-bActions = []
 evaluators = ['i4']
 	[[1]]
 	evaluations = {0:[1,1]}
@@ -29,6 +31,10 @@ evaluators = ['i4']
 	text = "There is a stone on the ground"
 	wActions = [7,9]
 	bActions =[6]
+	[[3]] #Lever not pulled
+	wActions = [25]
+	[[4]]
+	text = "You pulled the lever in the first scene!"
 [3]
 wActions = []
 bActions = []

@@ -3,6 +3,8 @@ Beats = 0
 [Scenes]
 active = [1]
 previous = None
+1 = [3]
+2 = [3]
 [Encounters]
 active = []
 [Inventories]

@@ -116,3 +116,14 @@ duration = 1
 commands = 'Wait a while'
 text = 'You wait 10 beats'
 duration = 10
+[25]
+commands = 'Pull Lever'
+text = 'You pull the lever into the down position and hear a dull clunk'
+evaluators = ['s0']
+	[[1]]
+	evaluations = {0:1} #If PC is in scene 1
+	effects = {'RemoveSceneState':[3,1],'AddSceneState':[4,2]}
+	[[2]]
+	evaluations = {0:2} #If PC is in scene 2
+	effects = {'RemoveSceneState':[3,2],'AddSceneState':[4,1]}
+
