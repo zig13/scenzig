@@ -126,10 +126,11 @@ def RemoveStates(aspect, thing) :
 	alteredcollections = []
 	collatedstates = [int(x) for x in collated['wActions'][aspect].get(str(thing),{})] #Converts the list keys to integers so they can be compared to the state list in the character file
 	for state in set(collatedstates).difference(char[aspect][str(thing)]) : #Finds states that are no longer valid but have been collated
-		for collection in collated :
-			if collated[collection][aspect][str(thing)][str(state)] :
-				alteredcollections.append(collection)
-			del collated[collection][aspect][str(thing)][str(state)]
+		if state : #If state is non-zero. Without this things granted from the base (stored as state 0) would also be removed
+			for collection in collated :
+				if collated[collection][aspect][str(thing)][str(state)] :
+					alteredcollections.append(collection)
+				del collated[collection][aspect][str(thing)][str(state)]
 	if "wActions" in alteredcollections or "bActions" in alteredcollections :
 		actions = None
 	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
