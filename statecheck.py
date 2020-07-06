@@ -115,7 +115,7 @@ def Check(remit="All") :
 				char[aspect][str(thing)] = new_states
 			for effect in effects :
 				arguments = argsolve.Solve(effects[effect])
-				eval("efunc."+effect+"(arguments)")
+				eval("efunc."+effect+"(*arguments)")
 			if states_removed :
 				listcollate.RemoveStates(aspect, thing)
 			if states_added :
