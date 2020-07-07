@@ -4,79 +4,52 @@ name = 'Health'
 evaluators = ['a1']
 	[[1]]
 	evaluations = {0:[976,1000]}
-	wActions = []
-	entereffects = {}
-	leaveeffects = {}
 	[[2]]
 	evaluations = {0:[901,975]}
 	text = 'You are a bit worse for wear'
-	entereffects = {}
-	leaveeffects = {}
 	[[3]]
 	evaluations = {0:[801,900]}
 	text = 'You are hurt'
-	entereffects = {}
-	leaveeffects = {}
 	[[4]]
 	evaluations = {0:[501,800]}
 	text = 'You are injured'
-	entereffects = {}
-	leaveeffects = {}
 	[[5]]
 	evaluations = {0:[181,500]}
 	text = 'You are severely injured'
-	entereffects = {}
-	leaveeffects = {}
 	[[6]]
 	evaluations = {0:[1,180]}
 	text = 'You are near death'
-	entereffects = {}
-	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[0,0]}
-	entereffects = {'SetScene': [4],'ClearStack': []}
-	entertext = 'The world fades to black...'
+	enterEffects = {'SetScene': [4],'ClearStack': []}
+	enterText = 'The world fades to black...'
 [2]
 name = 'Energy'
 evaluators = ['a2']
 	[[1]]
 	evaluations = {0:[976,1000]}
-	entereffects = {}
-	leaveeffects = {}
 	[[2]]
 	evaluations = {0:[901,975]}
 	text = 'You are mildly fatigued'
-	entereffects = {}
-	leaveeffects = {}
 	[[3]]
 	evaluations = {0:[801,900]}
 	text = 'You are weary'
-	entereffects = {}
-	leaveeffects = {}
 	[[4]]
 	evaluations = {0:[501,800]}
 	text = 'You are tired'
-	entereffects = {}
-	leaveeffects = {}
 	[[5]]
 	evaluations = {0:[251,500]}
 	text = 'You are worn out'
-	entereffects = {}
-	leaveeffects = {}
 	[[6]]
 	evaluations = {0:[181,250]}
 	text = 'You are exhausted'
-	entereffects = {}
-	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[1,180]}
 	text = 'You are totally cream crackered'
-	entereffects = {}
-	leaveeffects = {}
 	[[8]]
 	evaluations = {0:[0,0]}
-	entereffects = {'SetScene': [4]}
-	leaveeffects = {}
+	enterEffects = {'SetScene': [4],'ClearStack': []}
+	enterText = 'The world fades to black...'
 [3]
 name = 'Strength'
 evaluators = ['a3']
@@ -126,50 +99,30 @@ evaluators = ['a4']
 	[[1]]
 	evaluations = {0:[0,10]}
 	text = 'You are Vegetative'
-	entereffects = {}
-	leaveeffects = {}
 	[[2]]
 	evaluations = {0:[11,20]}
 	text = 'You are Naive'
-	entereffects = {}
-	leaveeffects = {}
 	[[11]]
 	evaluations = {0:[21,30]}
 	text = 'You are Ignorant'
-	entereffects = {}
-	leaveeffects = {}
 	[[4]]
 	evaluations = {0:[31,40]}
 	text = 'You are Dumb'
-	entereffects = {}
-	leaveeffects = {}
 	[[5]]
 	evaluations = {0:[41,50]}
 	text = 'You are Poorly Educated'
-	entereffects = {}
-	leaveeffects = {}
 	[[6]]
 	evaluations = {0:[51,60]}
 	text = 'You are Very Knowledgeable'
-	entereffects = {}
-	leaveeffects = {}
 	[[7]]
 	evaluations = {0:[61,70]}
 	text = 'You are Highly Educated'
-	entereffects = {}
-	leaveeffects = {}
 	[[8]]
 	evaluations = {0:[71,80]}
 	text = 'You are Learned'
-	entereffects = {}
-	leaveeffects = {}
 	[[9]]
 	evaluations = {0:[81,90]}
 	text = 'You are Enlightened'
-	entereffects = {}
-	leaveeffects = {}
 	[[10]]
 	evaluations = {0:[91,100]}
 	text = 'You are Omniscient'
-	entereffects = {}
-	leaveeffects = {}
