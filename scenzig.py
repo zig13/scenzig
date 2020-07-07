@@ -11,6 +11,7 @@
 #              You should have received a copy of the GNU General Public License along with scenzig. If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 from os import chdir, path, curdir, sep, listdir, remove #sep and curdir produce the correct characters for the operating system in use
+from shutil import copy as fileclone
 chdir(path.dirname(path.abspath(__file__)))
 try :
 	adventures = listdir(curdir+sep+"Adventures"+sep)
@@ -33,7 +34,7 @@ elif len(adventures) == 1 :
 else :
 	temptext = "Please enter a number corresponding to the adventure you wish to load:"
 	while True :
-		a = adv[choicelist(adventures, temptext)[1]]
+		a = adv[choicelist(adventures, temptext)]
 		if a.load() == False :
 			temptext = "The selected adventure failed to load. One or more data files lacked key values.\nPlease select a different Adventure:"
 			Clr()
@@ -56,22 +57,25 @@ for file in characters : #Removes the template character file and any files with
 	if file == "template.scz" or file[-4:] != ".scz" : characters = valremove(characters, file)
 from configobj import ConfigObj
 c = None #'c' refers to the active character file which will be directly edited and reguarly read by the main script
-if len(characters) != 0 :
+if characters : #If there are characters. An empty list would skip this section
 	choices = [*characters,"New Character"]
-	choice = choicelist(choices, "Please enter a number corresponding to the character file you wish to load:\n")
-	if choice[0] is 0 :
+	choice = choicelist(choices, "Please enter a number corresponding to the character file you wish to load:", allowzero=True)
+	if choice : #One of the listed options was chosen
+		if choice != "New Character" :
+			c = ConfigObj(a.directory+"Characters"+sep+choice, unrepr=True, raise_errors=True)
+			listcollate.GiveChar(c)
+			statecheck.GiveChar(c)
+			firstrun = False
+	else : #The unlisted option of 0) Delete All Characters was chosen which returns as None
 		print("Do you want to delete all characters?")
 		verdict = yesno()
 		if verdict :
 			for file in characters :
 				remove(a.directory+"Characters"+sep+file)
-	elif choice[0] < len(characters) : #The last option is always 'New Character'. Options less than the total number of options will therefore be pre-existing characters.
-		c = ConfigObj(a.directory+"Characters"+sep+choice[1], unrepr=True, raise_errors=True)
-		listcollate.GiveChar(c)
-		statecheck.GiveChar(c)
-		firstrun = False
-if c == None : from shutil import copy as fileclone
-while c == None : #i.e. If there are no pre-existing characters or New Character was selected
+			print("Characters successfully deleted.")
+		else :
+			print("Characters were not deleted.\nGoing into character creation.\nQuit and relaunch to pick an existing character")	
+while c is None : #i.e. If there are no pre-existing characters or New Character was selected
 	filename = get_valid_filename(input("Please enter a name for your new character file:\n"))+".scz"
 	if filename in characters :
 		print("There is already a character file with that name")

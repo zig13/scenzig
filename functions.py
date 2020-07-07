@@ -41,25 +41,30 @@ def yesno() :
 			print("Input not recognised")
 	return output
 
-def choicelist(inlist, custom=False) :
+def choicelist(inlist, custom=False, allowzero=False) :
 	outlist = []
-	for element in range(len(inlist)) :
-		outlist.append("%s) %s" %(element+1,inlist[element]))
-	printout = '\n'.join(outlist)
+	for counter, element in enumerate(inlist, 1) :
+		outlist.append(f"{counter}) {element}") #Creates a list that'll look like ['1) First Option', '2) Second Option']
+	statement = custom if custom else "Please enter a number corresponding to an option below:"
 	while True :
-		if custom == False:
-			print("Please enter a number corresponding to an option below:\n", printout, sep="")
-		else : print(custom+"\n", printout, sep="")
+		print(statement, *outlist, sep='\n')
+		prompt = input(">")
+		Clr()
 		try :
-			prompt = input(">")
-			Clr()
 			prompt = int(prompt)
-			return [prompt,inlist[prompt-1]]
-			break
 		except ValueError :
 			print("Input must be a whole number.\n")
-		except IndexError :
-			print("Input is outside of range of options.\n")
+			continue
+		if prompt > 0 :
+			try :
+				elementText = inlist[prompt-1]
+			except IndexError :
+				print("Input is outside of range of options.\n")
+				continue
+			return elementText
+		elif prompt == 0 and allowzero :
+			return None
+		print("Input must be a positive number.\n")
 
 def dupremove(seq) :
    seen = {}
