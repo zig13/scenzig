@@ -11,6 +11,8 @@
 #              You should have received a copy of the GNU General Public License along with scenzig. If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 from random import randint
+from itertools import chain
+from inspect import signature
 import listcollate
 from sys import modules
 char = None
@@ -19,136 +21,77 @@ def GiveChar(c) : #Called from the main script to give this module access to the
 	global char
 	char = c
 
-def d(sides) :
-	global randint
-	return randint(1,sides)
-def a(id) :
-	global char
-	attributes = listcollate.attributes
-	if char is None:
-		print("Character data not available")
-		return 0
-	if str(id) in attributes :
-		return attributes[str(id)]
-	else : #If the character does not have an attribute of the given ID, it is taken to be 0.
-		return 0
-def c(id) :
-	global char
-	if char is None:
-		print("Character data not available")
-		return 0
-	if str(id) in char['Currencies'] :
-		return char['Currencies'][str(id)]
-	else : #If the character does not have a currency of the given ID, it is taken to be 0.
-		return 0
-def i(id) : #i will return the active inventory the item is present in else 0
-	global char
-	if char is None:
-		print("Character data not available")
-		return 0
-	inventories = [x for x in char['Inventories'] if x.isdigit()]
-	for inventory in inventories :
-		if id in char['Inventories'][inventory] :
-			return int(inventory)
-	return 0
-def t(id) : #t will return the (first) state of the item with the given id
-	global char
-	if char is None:
-		print("Character data not available")
-		return 0
-	try :
-		return sorted(char['Items'][str(id)])[0]
-	except KeyError :
-		return 0
-def s(id) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
-	global char
-	if char is None:
-		print("Character data not available")
-		return 0
-	if id is 0 :
-		return char['Scenes']['active'][0]
-	else :
-		try :
-			return sorted(char['Scenes'][str(id)])[0]
-		except KeyError :
-			return 0
-def n(id) : #Returns length of given Inventory
-	if char is None:
-		print("Character data not available")
-		return 0
-	try :
-		return len(char['Inventories'][str(id)])
-	except KeyError :
-		return 0
-def l(id) : #Returns the id of the label assigned to the given class. Retunns 0 if not label is assigned
-	if char is None:
-		print("Character data not available")
-		return 0
-	try :
-		return char['Labels'][str(id)][0]
-	except (KeyError, IndexError) :
+class letterFunctions :
+	#These functions are in a class purely so they can be looked up using getattr()
+	def d(strNumber,intNumber) : #Rolls a die with n sides
+		if intNumber : #If intNumber is non-zero.
+			return randint(1,intNumber)
 		return 0
 
-def SceneHasState(state, scene) : #SceneHasState requires two arguments; State and Scene. Example:SceneHasState,1,2
-	if char is None:
-		print("Character data not available")
-		return 0 #False
-	try :
-		if int(state) in char['Scenes'][scene] :
-			return 1 #True
-		else :
-			return 0 #False
-	except KeyError :
-		return 0 #False
-def ItemIsActive(item) :
-	if char is None:
-		print("Character data not available")
+	def a(strNumber,intNumber) : #Returns the numerical value of an attribute
+		return listcollate.attributes.get(strNumber,0) #If the attribute of the given ID is not found, 0 is returned
+
+	def c(strNumber,intNumber) :
+		return char['Currencies'].get(strNumber,0) #If the currency of the given ID is not found, 0 is returned
+
+	def i(strNumber,intNumber) : #i will return the active inventory the item is present in else 0
+		for inventory in char['Inventories'].keys()[1:] : #The first key 'active' is excluded using the [1:] slice
+			if intNumber in char['Inventories'][inventory] :
+				return int(inventory)
 		return 0
-	if int(item) in char['Items']['active'] :
-		return 1
-	else :
+
+	def t(strNumber,intNumber) : #t will return the lowest numbered state of the item with the given id
+		itemStates = char['Items'].get(strNumber,[]) #If an item of the given ID isn't found assign an empty list
+		return sorted(itemStates)[0] if itemStates else 0 #Get the first state if there are any else 0
+
+	def s(strNumber,intNumber) : #s has two functions. If passed 0 it will return the current scene else it will return the state of the given scene
+		if intNumber : #If number is non-zero
+			sceneStates = char['Scenes'].get(strNumber,[]) #If a scene of the given ID isn't found assign an empty list
+			return sorted(sceneStates)[0] if sceneStates else 0 #Get the first state if there are any else 0
+		else : #If number is 0
+			return char['Scenes']['active'][0]
+
+	def n(strNumber,intNumber) : #Returns length of given Inventory
+		inventory = char['Inventories'].get(strNumber,[])
+		return len(inventory)
+
+	def l(strNumber,intNumber) : #Returns the id of the label assigned to the given class. Retunns 0 if no label is assigned
+		labelClass = char['Labels'].get(strNumber,[]) #If a class of the given ID isn't found assign and empty list
+		return labelClass[0] if labelClass else 0
+
+class wordFunctions :
+	#These functions are in a class purely so they can be looked up using getattr()
+	def SceneHasState(state, scene) : #SceneHasState requires two arguments; State and Scene. Example:SceneHasState,1,2
+		return 1 if state in char['Scenes'].get(str(scene),[]) else 0
+
+	def ItemIsActive(item) :
+		return 1 if item in char['Items']['active'] else 0
+
+	def ItemInInventory(item, inventory) : #ItemInInventory requires two arguments; Item and Inventory. Example:ItemInInventory,1,6
+		return char['Inventories'].get(str(inventory),[]).count(item)
+
+	def ItemHasState(state, item) : #ItemHasState requires two arguments; State and Item. Example:ItemHasState,1,4
+		return 1 if state in char['Items'].get(str(item),[]) else 0
+
+	def SlotIsActive(slot) : #Returns 1 if slot is empty or full otherwise 0
+		if char.get('Slots') :
+			if char['Slots'].get('full') and char['Slots'].get('empty') :
+				return 1 if slot in chain(char['Slots']['full'],char['Slots']['empty']) else 0 #chain efficiently combines the full and empty lists
+		print("Character file does not have a valid [Slots] section")
 		return 0
-def ItemInInventory(item, inventory) : #ItemInInventory requires two arguments; Item and Inventory. Example:ItemInInventory,1,6
-	if char is None:
-		print("Character data not available")
-		return 0 #False
-	try :
-		return char['Inventories'][inventory].count(int(item))
-	except KeyError :
+
+	def SlotIsFull(slot) : #Returns 1 if slot is full otherwise 0
+		if char.get('Slots') :
+			if char['Slots'].get('full') :
+				return 1 if slot in char['Slots']['full'] else 0
+		print("Character file does not have a valid [Slots] section")
 		return 0
-def ItemHasState(state, item) : #ItemHasState requires two arguments; State and Item. Example:ItemHasState,1,4
-	if char is None:
-		print("Character data not available")
-		return 0
-	try :
-		if int(state) in char['Items'][item] :
-			return 1 #True
-	except KeyError : pass
-	return 0
-def SlotIsActive(slot) : #Returns 1 if slot is empty or full otherwise 0
-	if char is None:
-		print("Character data not available")
-		return 0
-	active = char['Slots']['full'] + char['Slots']['empty']
-	if int(slot) in active :
-		return 1
-	else :
-		return 0
-def SlotIsFull(slot) : #Returns 1 if slot is full otherwise 0
-	if char is None:
-		print("Character data not available")
-		return 0
-	if int(slot) in char['Slots']['full'] :
-		return 1
-	else :
-		return 0
-def SlotIsEmpty(slot) : #Returns 1 if slot is empty otherwise 0
-	if char is None:
-		print("Character data not available")
-		return 0
-	if int(slot) in char['Slots']['empty'] :
-		return 1
-	else :
+
+	def SlotIsEmpty(slot) : #Returns 1 if slot is empty otherwise 0
+		if char.get('Slots') :
+			if char['Slots'].get('empty') :
+				return 1 if slot in char['Slots']['empty'] else 0
+		print("Character file does not have a valid [Slots] section")
 		return 0
 
 def Solve(arg) :
@@ -162,41 +105,69 @@ def Solve(arg) :
 	optotal = sum(opcounts.values())
 	if optotal == 0 : #If the argument is not yet a number but has no operators. At this point the argument is expected to be something like d8 or SceneHasState,1,1.
 		if arg[:1].isupper() : #If the first character is an uppercase letter
-			csv = arg.split(",") #Splits the string up based on comma placement
-			funct = csv[0]
-			try :
-				arguments = csv[1:]
-			except IndexError :
-				print("The function needs to be followed by it's arguments followed by commas e.g SceneHasStatus,3,6")
-				return 0
-			try :
-				return eval(funct+"(*"+str(arguments)+")")
-			except NameError :
-				print('"'+funct+'"'+"is not valid")
-				return 0
-		try :
-			return eval(arg[0]+"("+arg[1:]+")") #Calls d, a, v, i or c with the rest of the argument as sides or id
-		except TypeError: #This will occur is the input is something like 8/2. The code attempts to call 8 as a function which fails because it is an integer
+			seperatedValues = arg.split(",") #Splits the string up based on comma placement
+			words = seperatedValues[0]
+			wordFunction = getattr(wordFunctions,words,None) #Returns a function matching the words given or returns None if it fails
+			if wordFunction : #If a function was successfully found
+				if char : #All the multi-word functions require access to a character so pointless to progress further if one is not available
+					strArguments = seperatedValues[1:]
+					if strArguments :
+						try :
+							intArguments = [int(x) for x in strArguments]
+						except ValueError :
+							print(f"{words} should be followed by it's numerical arguments seperated by commas e.g {words},3,6\nWhat it got was {strArguments}")
+							return 0
+						try :
+							return wordFunction(*intArguments) #Only if all the conditions are passed will the function finnally be exexuted
+						except TypeError :
+							argumentsRequired = signature(wordFunction).parameters
+							print(f"{words} requires exactly {len(argumentsRequired)} arguments but {len(intArguments)} was given\nThe format should be:")
+							print(words, *argumentsRequired, sep=',')
+					else :
+						argumentsRequired = signature(wordFunction).parameters
+						print(f"{words} is a valid function but needs to be followed by it's arguments in the format:")
+						print(words, *argumentsRequired, sep=',')
+				else :
+					print("Character data not available")
+			else :
+				print(f"{words} is not a valid function")
+				print("The multi-word functions are:",*dir(wordFunctions)[:7])
+			return 0 #If any of the preceeding ifs are failed, bespoke error text is printed and then this line will be reached
+		elif arg[:1].islower() : #If the first character is a lowercase letter
+			letter = arg[0]
+			strNumber = arg[1:]
+			letterFunction = getattr(letterFunctions,letter,None) #Returns a function matching the letter given or returns None if it fails
+			if letterFunction :
+				if char or letter == "d": #d is the only function that does not require access to the a character
+					if strNumber :
+						try :
+							intNumber = int(strNumber)
+						except ValueError :
+							print(f"Only a number should follow a single letter function\n{letter} was successfully called but {strNumber} is not a valid input for it.")
+							return 0
+						return letterFunction(strNumber,intNumber) #Only if all the conditions are passed will the function finnally be exexuted
+					else :
+						print(f"{letter} is a valid function but it needs an argument in the form of a number directly after it e.g {letter}6")
+				else :
+					print("Character data not available")
+			else :
+				print(f"{letter} is not a valid function")
+				print("The single letter functions are: d (dice roll), a (attribute lookup), c (currency lookup), i (inventory item is in), t (item state lookup), s0 (current scene), s# (gives state of given scene), n (length of inventory) and l (id of label of given class).\nThe letter should be immediately followed by the number of dice sides for d or ID for the rest.")
+		else : #This should only occur if the input is something like 8/2
 			print("Sorry. The only operators I recognise at the moment are + (add), - (minus) and x (multiply)")
-			return 0
-		except NameError: #This will occur is the input is something like bert or b20
-			print("The only letters I accept are d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) s0 (current scene) and s# (gives state of given scene).\nThe letter should be immediately followed by the number of dice sides for d or ID for v, a and c.")
-			return 0
-		except SyntaxError:
-			print("Only integers can follow d (dice roll), v (vital lookup), a (attribute lookup), i (character has item), c (currency lookup) and s (gives state of given scene).")
-			return 0
+		return 0 #If any of the preceeding ifs are failed, bespoke error text is printed and then this line will be reached
 	elif optotal == 1 :
 		oprtr = {vr: ky for ky, vr in opcounts.items()}[1] #Inverts the opcounts dictionary so the count is the key and the operator is the value. We can then quickly find the operator with a count of 1
 		tup = arg.partition(oprtr) #Creates a tuple that will look something like 'd8', '+', '4'
 		operandA = Solve(tup[0])
 		operandB = Solve(tup[2])
 	elif optotal == 2 :
-		if arg[-1] is not ")" :
+		if arg[-1] != ")" :
 			tup = arg.partition(")") #Creates a tuple that will look something like '(d8+4', ')', 'x2'
 			operandA = Solve(tup[0][1:]) #From the example above cuts out just d8+4
 			oprtr = tup[2][0] #From the example above cuts out just x
 			operandB = Solve(tup[2][1:]) #From the example above cuts out just 2
-		elif arg[0] is not "(" :
+		elif arg[0] != "(" :
 			tup = arg.partition("(") #Creates a tuple that will look something like '6+', '(', 'd6x2)'
 			operandA = Solve(tup[0][:-1]) #From the example above cuts out just 6
 			oprtr = tup[0][-1] #From the example above cuts out just +
@@ -207,16 +178,24 @@ def Solve(arg) :
 	else : #This will occur if the input is something like (d8+4)x(2+d4) or ((d8+4)x2)-d10
 		print("Sorry I can't deal with nested brackets at the moment :(")
 		return 0
-	if oprtr is '+': return Solve(operandA)+Solve(operandB)
-	elif oprtr is '-': return Solve(operandA)-Solve(operandB)
-	elif oprtr is 'x': return Solve(operandA)*Solve(operandB)
-	elif oprtr is '^': return max(operandA,operandB) #Returns the greater of two operands
-	elif oprtr is '_': return min(operandA,operandB)
-	elif oprtr is '~': return (operandA+operandB)/2
-	elif oprtr is '%': return (operandA*operandB)/100 #Returns operandA % of operandB
+	if oprtr == '+': return Solve(operandA)+Solve(operandB)
+	elif oprtr == '-': return Solve(operandA)-Solve(operandB)
+	elif oprtr == 'x': return Solve(operandA)*Solve(operandB)
+	elif oprtr == '^': return max(operandA,operandB) #Returns the greater of two operands
+	elif oprtr == '_': return min(operandA,operandB)
+	elif oprtr == '~': return (operandA+operandB)/2
+	elif oprtr == '%': return (operandA*operandB)/100 #Returns operandA % of operandB
 
 if __name__ == "__main__":
+	adventure = None
+	character = None
+	if adventure and character : #adventure and character can be assigned so argsolve can access a character for testing purposes
+		from os import curdir, sep
+		from configobj import ConfigObj
+		adventureFolder = f"{curdir}{sep}Adventures{sep}"
+		characterFolder = f"{sep}Characters{sep}"
+		char = ConfigObj(f"{adventureFolder}{adventure}{characterFolder}{character}.scz", unrepr=True, raise_errors=True)
 	print("I can roll dice for you!")
 	while True:
 		prompt = str(input(">"))
-		if prompt is not "" : print(Solve(prompt))
+		if prompt != "" : print(Solve(prompt))
