@@ -13,7 +13,7 @@
 adv = None
 char = None
 statecheck = None
-collated = {'wActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wEncounters':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bEncounters':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bonuses':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'penalties':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}}}
+collated = {'wActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bActions':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'wInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bInventories':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'bonuses':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}},'penalties':{'Abilities':{}, 'Attributes':{}, 'Encounters':{}, 'Items':{}, 'Scenes':{}}}
 actions = None
 attributesbase = {}
 attributes = {}
@@ -74,8 +74,6 @@ def DeactivateThings(aspect) :
 			del collated[collection][aspect][str(thing)]
 	if ("wActions" in alteredcollections) or ("bActions" in alteredcollections) :
 		actions = None
-	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
-		CollateEncounters()
 	if "wInventories" in alteredcollections or "bInventories" in alteredcollections :
 		CollateInventories()
 	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
@@ -113,8 +111,6 @@ def AddStates(aspect, thing) :
 				except KeyError : pass
 	if ("wActions" in alteredcollections) or ("bActions" in alteredcollections) :
 		actions = None
-	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
-		CollateEncounters()
 	if "wInventories" in alteredcollections or "bInventories" in alteredcollections :
 		CollateInventories()
 	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
@@ -133,8 +129,6 @@ def RemoveStates(aspect, thing) :
 				del collated[collection][aspect][str(thing)][str(state)]
 	if "wActions" in alteredcollections or "bActions" in alteredcollections :
 		actions = None
-	if "wEncounters" in alteredcollections or "bEncounters" in alteredcollections :
-		CollateEncounters()
 	if "wInventories" in alteredcollections or "bInventories" in alteredcollections :
 		CollateInventories()
 	if "bonuses" in alteredcollections or "penalties" in alteredcollections :
@@ -159,12 +153,6 @@ def CollateItems() :
 		char['Items']['active'] = activeItems
 		DeactivateThings('Items')
 		ActivateThings('Items')
-
-def CollateEncounters() :
-	activeEncounters = GreyList('wEncounters', 'bEncounters')
-	if set(activeEncounters) != set(char['Encounters']['active']) :
-		char['Encounters']['active'] = activeEncounters
-		ActivateThings('Encounters')
 
 def CollateActions() :
 	global actions
