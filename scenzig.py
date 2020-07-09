@@ -163,16 +163,20 @@ while True : #Primary loop. Below is run after an effect happens
 		for missing in missing_actions :
 			print("Action ID %s is whitelisted but does not exist in actions.scnz"%(str(missing)))
 		if action > 0 :
-			results = statecheck.DetermineOutcomes(action)
-			text = results[0]
-			effects = results[1]
-			for outcome in effects :
-				for effect in outcome :
-					arguments = argsolve.Solve(outcome[effect])
-					eval("statecheck.efunc."+effect+"(*arguments)")
-			if text : #If text is True (i.e. nonemptyprint found text)
+			outcomes = statecheck.DetermineOutcomes(action)
+			textOutcomes = outcomes[0]
+			effectOutcomes = outcomes[1]
+			for outcome in effectOutcomes :
+				for effectName in outcome :
+					effectFunction = getattr(statecheck.efunc.Effects,effectName,None)
+					if effectFunction :
+						arguments = argsolve.Solve(outcome[effectName])
+						effectFunction(*arguments)
+					else :
+						print(f"{effectName} is not a valid effect.\nThe possible effects are:",*dir(statecheck.efunc.Effects)[:27])
+			if textOutcomes : #If text is True (i.e. nonemptyprint found text)
 				print("")
-			elif not effects : #If text is False and the effects list is empty
+			elif not effectOutcomes : #If text is False and the effects list is empty
 				print("Nothing Happens\n")
-			if effects : #If effects is nonempty
+			if effectOutcomes : #If effects is nonempty
 				break #Leave the secondary loop and re-enter the primary loop

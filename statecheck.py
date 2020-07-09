@@ -113,9 +113,13 @@ def Check(remit="All") :
 				except KeyError : pass #enter text is optional
 			if states_removed or states_added :
 				char[aspect][str(thing)] = new_states
-			for effect in effects :
-				arguments = argsolve.Solve(effects[effect])
-				eval("efunc."+effect+"(*arguments)")
+			for effectName in effects :
+				effectFunction = getattr(efunc.Effects,effectName,None)
+				if effectFunction :
+					arguments = argsolve.Solve(effects[effectName])
+					effectFunction(*arguments)
+				else :
+					print(f"{effectName} is not a valid effect.\nThe possible effects are:",*dir(efunc.Effects)[:27])
 			if states_removed :
 				listcollate.RemoveStates(aspect, thing)
 			if states_added :
