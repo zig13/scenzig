@@ -322,3 +322,48 @@ class Effects :
 	def ClearStack() :
 		global actionstack
 		actionstack = []
+
+#Recreates all the nessasary code from scenzig.py to allow effects.py to run standalone for testing purposes
+if __name__ == "__main__":
+	from os import curdir, sep
+	from inspect import signature
+	from configobj import ConfigObj
+	from classes.classAdventure import Adventure
+	import statecheck
+	import listcollate
+	adventure = None
+	character = None
+	adventureFolder = f"{curdir}{sep}Adventures{sep}"
+	characterFolder = f"{sep}Characters{sep}"
+	adv = Adventure(adventure)
+	char = ConfigObj(f"{adventureFolder}{adventure}{characterFolder}{character}.scz", unrepr=True, raise_errors=True)
+	if char and adv.validate():
+		adv.load()
+		statecheck.GiveAdv(adv)
+		listcollate.GiveAdv(adv)
+		statecheck.GiveChar(char)
+		listcollate.GiveChar(char)
+		statecheck.GiveListCollate(listcollate)
+		listcollate.Setup(statecheck)
+		while True :
+			effectFunction = None
+			effectName = None
+			arguments = []
+			listg = listcollate.CollateActions()
+			while not effectFunction :
+				if effectName : #A sneaky way of checking if while not effect has looped
+					print(f"{effectName} is not a valid effect.\nThe possible effects are:",*dir(Effects)[:27])
+				effectName = input("Please type the effect you want to test: ")
+				effectFunction = getattr(Effects,effectName,None)
+			argumentsRequired = signature(effectFunction).parameters
+			if len(argumentsRequired) > 0 :
+				print(f"Okay {effectName} requires {len(argumentsRequired)} arguments.\nThey are:",*argumentsRequired)
+				for argName in argumentsRequired :
+					argValue = input(f"Please enter the {argName}: ")
+					if argValue : arguments.append(int(argValue))
+			effectFunction(*arguments)
+			char.write()
+	else :
+		print("If you want to run effects.py standalone to test effects you need\nto write in a valid adventure and character name at the bottom.")
+		input()
+		exit(0)
