@@ -200,8 +200,6 @@ class Effects :
 	def RemoveAbility(ability) :
 		global char
 		if ability in char['Abilities']['active'] :
-			print(ability)
-			print(char['Abilities']['active'])
 			char['Abilities']['active'].remove(ability)
 		listcollate.DeactivateThings('Abilities')
 		statecheck.Prepare('Abilities')
