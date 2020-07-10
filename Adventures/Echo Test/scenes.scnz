@@ -1,22 +1,22 @@
 [0]
 [1]
 text = "You are surrounded by potion vials"
-wActions = [1,41,42,43,44,45]
-wInventories = [2]
+allowedActions = [1,41,42,43,44,45]
+allowedInventories = [2]
 evaluators = ['ItemInInventory,1,2','ItemInInventory,2,2','ItemInInventory,3,2','ItemInInventory,4,2']
 	[[1]]
 	evalAny = {0:True} #Are there any Blue Potions in the room?
 	text = ".labs.[1]There lab1" #lab1 will be replaced with words describing how many Blue Potions there are (see labels.scnz)
-	wActions = [21]
+	allowedActions = [21]
 	[[2]]
 	evalAny = {1:True} #Are there any Red Potions in the room?
 	text = ".labs.[2]There lab2" #lab1 will be replaced with words describing how many Red Potions there are (see labels.scnz)
-	wActions = [22]
+	allowedActions = [22]
 	[[3]]
 	evalAny = {2:True} #Are there any Yellow Potions in the room?
 	text = ".labs.[3]There lab3" #lab1 will be replaced with words describing how many Yellow Potions there are (see labels.scnz)
-	wActions = [23]
+	allowedActions = [23]
 	[[4]]
 	evalAny = {3:True} #Are there any Green Potions in the room?
 	text = ".labs.[4]There lab4" #lab1 will be replaced with words describing how many Green Potions there are (see labels.scnz)
-	wActions = [24]
+	allowedActions = [24]

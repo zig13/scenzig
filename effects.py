@@ -17,7 +17,7 @@ char = {}
 currentScene = 1
 listcollate = None
 statecheck = None
-listg = []
+activeActions = []
 actionstack = []
 def GiveAdv(a) :
 	global adv
@@ -34,9 +34,9 @@ def GiveListCollate(lcollate) :
 def GiveStateCheck(scheck) :
 	global statecheck
 	statecheck = scheck
-def GiveList(glist) :
-	global listg
-	listg = glist
+def GiveActiveActions(ActiveActions) :
+	global activeActions
+	activeActions = ActiveActions
 
 class Effects :
 	#These functions are in a class purely so they can be looked up using getattr()
@@ -214,13 +214,11 @@ class Effects :
 		statecheck.Check()
 
 	def PrintActions() :
-		global listg
-		global adv
-		for action in listg :
+		for action in activeActions :
 			try : #By trying to stick a space character on the end of 'commands', I can test if it is a string or a list
 				command = adv.f['Actions'][str(action)]['commands']+" " #This will succeed only if 'commands' is a singular string
 			except KeyError : #If the action has no commands
-				continue #On the off-chance an action is whitelisted but has no commands, it will be ignored
+				continue #On the off-chance an action is active but has no commands, it will be ignored
 			except TypeError: #If the action has a list of commands (rather than a singular string command)
 				command = adv.f['Actions'][str(action)]['commands'][0]+" " #Takes the first command from the list
 			try :
@@ -347,7 +345,7 @@ if __name__ == "__main__":
 			effectFunction = None
 			effectName = None
 			arguments = []
-			listg = listcollate.CollateActions()
+			activeActions = listcollate.CollateActions()
 			while not effectFunction :
 				if effectName : #A sneaky way of checking if while not effect has looped
 					print(f"{effectName} is not a valid effect.\nThe possible effects are:",*dir(Effects)[:27])

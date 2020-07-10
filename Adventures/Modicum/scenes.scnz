@@ -1,6 +1,6 @@
 [0]
 [1]
 text = "You stand on a dance floor"
-wActions = [1]
+allowedActions = [1]
 	[[1]]
-	wActions = [2]
+	allowedActions = [2]

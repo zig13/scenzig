@@ -56,43 +56,43 @@ evaluators = ['a3']
 	[[1]]
 	evaluations = {0:[0,10]}
 	text = 'You are Incapacitated'
-	bActions = [11]
+	blockedActions = [11]
 	[[2]]
 	evaluations = {0:[11,20]}
 	text = 'You are Incapacitated'
-	bActions = [11]
+	blockedActions = [11]
 	[[11]]
 	evaluations = {0:[21,30]}
 	text = 'You are Frail'
-	bActions = [11]
+	blockedActions = [11]
 	[[4]]
 	evaluations = {0:[31,40]}
 	text = 'You are Feeble'
-	bActions = [11]
+	blockedActions = [11]
 	[[5]]
 	evaluations = {0:[41,50]}
 	text = 'You are Weak'
-	bActions = [11]
+	blockedActions = [11]
 	[[6]]
 	evaluations = {0:[51,60]}
 	text = 'You are Very Strong'
-	wActions = [11]
+	allowedActions = [11]
 	[[7]]
 	evaluations = {0:[61,70]}
 	text = 'You are Mighty'
-	wActions = [11]
+	allowedActions = [11]
 	[[8]]
 	evaluations = {0:[71,80]}
 	text = 'You are Immensely Strong'
-	wActions = [11]
+	allowedActions = [11]
 	[[9]]
 	evaluations = {0:[81,90]}
 	text = 'You are Incredibly Strong'
-	wActions = [11]
+	allowedActions = [11]
 	[[10]]
 	evaluations = {0:[91,100]}
 	text = 'You are Herculean'
-	wActions = [11]
+	allowedActions = [11]
 [4]
 name = 'Knowledge'
 evaluators = ['a4']

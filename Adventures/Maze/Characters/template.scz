@@ -11,7 +11,7 @@ active = [101]
 [Items]
 active = [1,2,3,4]
 [Abilities]
-active = [1] #This ability whitelists the N, E, S & W actions
+active = [1] #This ability allows the N, E, S & W actions
 [Attributes]
 vital = []
 active = []

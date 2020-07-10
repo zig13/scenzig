@@ -105,8 +105,8 @@ while True : #Primary loop. Below is run after an effect happens
 	text = False
 	listcollate.CapModifiers() #Ensures Attributes do not exceed thier maximum values
 	c.write()
-	glist = listcollate.CollateActions() # These are the actions available to the player.
-	statecheck.efunc.GiveList(glist)
+	activeActions = listcollate.CollateActions() # These are the actions available to the player.
+	statecheck.efunc.GiveActiveActions(activeActions)
 	while True : #Secondary loop. Below is run when anything is put into the prompt regardless of validity.
 		if statecheck.efunc.actionstack :
 			action = int(statecheck.efunc.actionstack.pop())
@@ -143,25 +143,25 @@ while True : #Primary loop. Below is run after an effect happens
 		missing_actions = []
 		try : #Effectively 'if input is a whole number'
 			prompt = int(prompt)
-			if prompt in glist :
+			if prompt in activeActions :
 				action = prompt #If the input matches the UID of a valid action then take note of it's UID
 			elif action : pass #If action is not 0 (and therefore has been set already)
 		except ValueError : #Effectively 'if input isn't a whole number'
 			prompt = prompt.lower() #Makes all inputted characters lower case where applicable
 			actdict = {}
-			for actn in glist : #Builds a dictionary that pairs the command(s) of each valid action with it's UID
+			for actn in activeActions : #Builds a dictionary that pairs the command(s) of each valid action with it's UID
 				try :
 					actdict[a.f['Actions'][str(actn)]['commands'].lower()] = actn #This will succeed only if 'commands' is a singular string
 				except AttributeError : #If the action has a list of commands (rather than a singular string command)
 					for command in a.f['Actions'][str(actn)]['commands'] :
 						actdict[command.lower()] = actn #Makes a record in actdict for each command the action has
-				except KeyError : #If a whitelisted action has no commands or does not exist at all
+				except KeyError : #If a allowListed action has no commands or does not exist at all
 					missing_actions.append(actn) #Echoing actions and others using the actionstack avoid verification as they are reffered to by UID and ∴ don't need commands
 			if prompt in actdict :
 				action = actdict[prompt] #If the input matches the command of a valid action then take note of it's UID
 			Clr()
 		for missing in missing_actions :
-			print("Action ID %s is whitelisted but does not exist in actions.scnz"%(str(missing)))
+			print("Action ID %s is active but does not exist in actions.scnz"%(str(missing)))
 		if action > 0 :
 			outcomes = statecheck.DetermineOutcomes(action)
 			textOutcomes = outcomes[0]

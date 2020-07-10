@@ -10,7 +10,7 @@ active = []
 [Items]
 active = []
 [Abilities]
-active = [1] #This ability whitelists the N, E, S & W actions
+active = [1] #This ability allows the N, E, S & W actions
 [Attributes]
 vital = []
 active = []

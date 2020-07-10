@@ -3,14 +3,14 @@
 evaluators = ['s0','ItemHasState,2,5','ItemHasState,8,5','ItemInInventory,6,1','ItemInInventory,6,6','ItemInInventory,6,7']
   [[1]] #Locked
   [[2]] #Closed
-  wActions = [9] #Allow the open action when the door is closed
+  allowedActions = [9] #Allow the open action when the door is closed
   [[3]] #Open
   evalAll = {1:False} #This state will automatically appear when state 2 (closed) is removed
-  wActions = [10] #Allow the close action when the door is open
+  allowedActions = [10] #Allow the close action when the door is open
   [[4]]
   evalAll = {0:4,1:True} #In kitchen and door is closed
   text = "To the North is a closed door that leads to the garden."
-  wActions = [11] #Look through door
+  allowedActions = [11] #Look through door
   [[5]]
   evalAll = {0:10,1:True} #In garden and door is closed
   text = "To the South is a closed door that leads to the kitchen."
@@ -22,7 +22,7 @@ evaluators = ['s0','ItemHasState,2,5','ItemHasState,8,5','ItemInInventory,6,1','
   text = "To the South is an open door that leads to the kitchen."
   [[8]] #Intact Window
   text = "In the upper half of the door is a window."
-  wActions = [18]
+  allowedActions = [18]
   [[10]]
   evalAny = {3:True,5:True} #and key in player inventory or garden keyhole...
   evalAll = {0:4} #If in the kitchen...
@@ -45,26 +45,26 @@ evaluators = ['ItemInInventory,6,1','ItemInInventory,6,6','ItemInInventory,6,7',
   [[2]]
   evalAny = {1:True,2:True} #Key is in a keyhole
   text = "Protruding from the keyhole is an old rusty metal key."
-  wActions = [15]
+  allowedActions = [15]
   [[3]]
   evalAll = {3:True,4:True,5:True} #If Door is active (~in the room), closed and locked...
-  wActions = [13] #Whitelist the Unlock Door action
+  allowedActions = [13] #Allows the Unlock Door action
   [[4]]
   evalAll = {3:True,4:True,5:False} #If Door is active (~in the room), closed and not locked...
-  wActions = [14] #Whitelist the Lock Door action
+  allowedActions = [14] #Allows the Lock Door action
 [7] #Toaster
 evaluators = ['ItemInInventory,7,1']
-wActions = [12] #Examine toaster
+allowedActions = [12] #Examine toaster
   [[1]]
   evaluations = {0:True}  #Toaster is carried by player
   text = "An old toaster"
   [[2]]
   evaluations = {0:False} #Toaster is in kitchen
   text = "There's a toaster here."
-  wActions = [17]
+  allowedActions = [17]
 [8] #Hacksaw
 evaluators = ['ItemInInventory,8,1']
-wActions = [16] #Examine hacksaw
+allowedActions = [16] #Examine hacksaw
   [[1]] #Worn
   [[2]]
   evaluations = {0:True}  #Hacksaw is carried by player
@@ -72,23 +72,23 @@ wActions = [16] #Examine hacksaw
   [[3]]
   evaluations = {0:False} #Hacksaw is in the shed
   text = "There's a hacksaw here."
-  wActions = [25]
+  allowedActions = [25]
 [9] #Glass fragment
 evaluators = ['ItemInInventory,9,1','s0']
-wActions = [20] #Examine glass fragment
+allowedActions = [20] #Examine glass fragment
   [[1]]
   evaluations = {0:True}  #Glass fragment is carried by player
   text = "A fragment of glass"
   [[2]]
   evaluations = {0:False} #Glass fragment is on kitchen floor
   text = "There is a glass fragment here."
-  wActions = [21]
+  allowedActions = [21]
   [[3]]
   evaluations = {1:5} #If player is in the closet...
-  wActions = [24]
+  allowedActions = [24]
 [10] #Carpet
 text = "On the floor is an old carpet."
-wActions = [22,23]
+allowedActions = [22,23]
   [[1]] #Cut
 [11] #Trapdoor
 text = "In the middle of the floor is a trapdoor."

@@ -1,8 +1,8 @@
 [0]
 [4]
 text = 'A Stone'
-wActions = [6,20]
-bActions = [7]
+allowedActions = [6,20]
+blockedActions = [7]
 evaluators = []
 	[[1]]
 	penalties = {'3':15}
@@ -12,11 +12,11 @@ evaluators = []
 	[[1]]
 [6]
 text = 'A small bottle with a skull motif on the label'
-wActions = [12,21]
+allowedActions = [12,21]
 evaluators = ['c1']
 	[[1]]
 [7]
 text = 'A large bottle with a bicep motif on the label'
-wActions = [13]
+allowedActions = [13]
 evaluators = ['c2']
 	[[1]]

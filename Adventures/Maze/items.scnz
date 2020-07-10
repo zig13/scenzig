@@ -4,38 +4,38 @@ evaluators = ['ItemInInventory,1,101']
   [[1]]
   evaluations = {0:True}  #Stone is carried by player
   text = "A Red Stone"
-  wActions = [11]
+  allowedActions = [11]
   [[2]]
   evaluations = {0:False} #Stone is on the floor
   text = "There's a Red Stone here."
-  wActions = [21]
+  allowedActions = [21]
 [2] #Yellow stone
 evaluators = ['ItemInInventory,2,101']
   [[1]]
   evaluations = {0:True}  #Stone is carried by player
   text = "A Yellow Stone"
-  wActions = [12]
+  allowedActions = [12]
   [[2]]
   evaluations = {0:False} #Stone is on the floor
   text = "There's a Yellow Stone here."
-  wActions = [22]
+  allowedActions = [22]
 [3] #Blue stone
 evaluators = ['ItemInInventory,3,101']
   [[1]]
   evaluations = {0:True}  #Stone is carried by player
   text = "A Blue Stone"
-  wActions = [13]
+  allowedActions = [13]
   [[2]]
   evaluations = {0:False} #Stone is on the floor
   text = "There's a Blue Stone here."
-  wActions = [23]
+  allowedActions = [23]
 [4] #Green stone
 evaluators = ['ItemInInventory,4,101']
   [[1]]
   evaluations = {0:True}  #Stone is carried by player
   text = "A Green Stone"
-  wActions = [14]
+  allowedActions = [14]
   [[2]]
   evaluations = {0:False} #Stone is on the floor
   text = "There's a Green Stone here."
-  wActions = [24]
+  allowedActions = [24]

@@ -1,4 +1,4 @@
 [0]
 [1]
-wActions = [1,2,3,4]
+allowedActions = [1,2,3,4]
 # Allows the player to go North, East, South or West

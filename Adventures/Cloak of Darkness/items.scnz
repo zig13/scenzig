@@ -1,26 +1,26 @@
 [0]
 [1]
 evaluators = ['i1']
-wActions = [12]
+allowedActions = [12]
 	[[1]]
 	text = 'a velvet cloak'
 	evaluations = {0:[1,1]}
-	wActions = [9]
-	bActions = [14]
+	allowedActions = [9]
+	blockedActions = [14]
 	[[2]]
 	text = 'a velvet cloak'
 	evaluations = {0:[2,2]}
-	wActions = [10,16]
+	allowedActions = [10,16]
 	[[3]]
 	text = 'There is a cloak piled messily in the centre of the floor'
 	evaluations = {0:[3,3]}
-	wActions = [13]
-	bActions = [14]
+	allowedActions = [13]
+	blockedActions = [14]
 	[[4]]
 	text = 'Hanging from the hook is a dark cloak.'
 	evaluations = {0:[4,4]}
-	wActions = [15]
-	bActions = [14]
+	allowedActions = [15]
+	blockedActions = [14]
 [2]
-wActions = [14]
+allowedActions = [14]
 	[[1]]

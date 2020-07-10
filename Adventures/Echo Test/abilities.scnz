@@ -1,4 +1,4 @@
 [0]
 [1]
-wActions = [1,2,3,4]
-wInventories = [1]
+allowedActions = [1,2,3,4]
+allowedInventories = [1]

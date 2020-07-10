@@ -1,16 +1,16 @@
 [0]
 [1]
-wActions = [1,2,3,4,5,6]
-wInventories = [1]
+allowedActions = [1,2,3,4,5,6]
+allowedInventories = [1]
 [2] #Tried to smash window with fist...
-bActions = [18] #Don't try again
+blockedActions = [18] #Don't try again
 [3] #Seen key on other side of door
 evaluators = ['s0']
   [[1]]
   evalAll = {0:4} #If in the kitchen...
-  wActions = [15,19] #Allows the player to take the key or turn it in the lock...
+  allowedActions = [15,19] #Allows the player to take the key or turn it in the lock...
 # despite the key being in the other side of the door and hence not active
 [4] #Have stuck head through door and seen key
-bActions = [11] #Don't need to do that again
+blockedActions = [11] #Don't need to do that again
 [5] #Tried to take up carpet when stuck down
-bActions = [23]
+blockedActions = [23]
