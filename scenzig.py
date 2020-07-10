@@ -124,13 +124,13 @@ while True : #Primary loop. Below is run after an effect happens
 				stateprintInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('printInventories',default=[]))
 				statelistInventories.extend(a.f['Scenes'][str(c['Scenes']['active'][0])][str(state)].get('listInventories',default=[]))
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('printInventories',default=[]) :
-				statecheck.efunc.PrintInventory(inventory)
+				statecheck.efunc.Effects.PrintInventory(inventory)
 			for inventory in stateprintInventories :
-				statecheck.efunc.PrintInventory(inventory)
+				statecheck.efunc.Effects.PrintInventory(inventory)
 			for inventory in a.f['Scenes'][str(c['Scenes']['active'][0])].get('listInventories',default=[]) :
-				statecheck.efunc.ListInventory(inventory)
+				statecheck.efunc.Effects.ListInventory(inventory)
 			for inventory in statelistInventories :
-				statecheck.efunc.ListInventory(inventory)
+				statecheck.efunc.Effects.ListInventory(inventory)
 			for encounter in c['Encounters']['active'] :
 				nonemptyprint(a.f['Encounters'][str(encounter)],c) #Encounter description will be printed if there is one
 				for state in sorted(c['Encounters'][str(encounter)]) :
